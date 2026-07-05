@@ -14,7 +14,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || "appLJfM0uboPvSB0E";
-const AIRTABLE_TABLE = "Articles";
+// Table referenced by permanent ID (name is "Imported table" — ID survives renames)
+const AIRTABLE_TABLE = "tblzRNwo2f1hIGpIF";
 
 const FEEDS = [
   { url: "https://pandaily.com/feed/",  sourceEN: "Pandaily",      sourceZH: "Pandaily",  hint: "tech" },

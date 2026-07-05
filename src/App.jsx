@@ -5,7 +5,8 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 // visible in the browser bundle). The server-side write token is separate.
 const AIRTABLE_TOKEN   = import.meta.env.VITE_AIRTABLE_TOKEN || "";
 const AIRTABLE_BASE_ID = import.meta.env.VITE_AIRTABLE_BASE  || "appLJfM0uboPvSB0E";
-const AIRTABLE_TABLE   = "Articles";
+// Table referenced by permanent ID (name is "Imported table" — ID survives renames)
+const AIRTABLE_TABLE   = "tblzRNwo2f1hIGpIF";
 
 const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // re-fetch from Airtable every 10 minutes
 
