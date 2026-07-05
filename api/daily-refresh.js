@@ -146,9 +146,8 @@ async function generateEdition(items, dateStr) {
   ).join("\n\n");
 
   const stream = client.messages.stream({
-    model: "claude-opus-4-8",
+    model: "claude-haiku-4-5",
     max_tokens: 32000,
-    thinking: { type: "adaptive" },
     system: `You are the editorial engine of ChinaPulse (中国脉搏), a daily China business intelligence platform for global executives, investors, and China watchers who don't read Chinese. Your writing style follows Bloomberg/The Economist: precise, analytical, business-focused English.
 
 Compliance rules (strict):
