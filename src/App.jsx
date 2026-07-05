@@ -65,24 +65,24 @@ const SAMPLE_ARTICLES = [
     body:"This is sample content.", matters:"Sample only.", author:"ChinaPulse Editorial" },
 ];
 
-// ─── DESIGN TOKENS — DARK TERMINAL ────────────────────────────────────────────
+// ─── DESIGN TOKENS — WHITE EDITORIAL ──────────────────────────────────────────
 const C = {
-  bg:"#0A0C10", panel:"#10141A", panel2:"#151A22", panelHover:"#1A2029",
-  border:"#232B36", borderLight:"#1A212B",
-  red:"#E5484D", redDim:"#C8102E", amber:"#E8A33D", green:"#3DD68C",
-  text:"#E9E4D6", textSub:"#A7A89E", textMuted:"#697180",
+  bg:"#FFFFFF", panel:"#FAFAF8", panel2:"#F4F3EF", panelHover:"#F0EFE9",
+  border:"#E2E0DB", borderLight:"#ECEAE4",
+  red:"#C8102E", redDim:"#C8102E", amber:"#B87A1E", green:"#1E7F4F",
+  text:"#1A1A1A", textSub:"#4A4A4A", textMuted:"#8A8880",
   serif:"Georgia,'Times New Roman',serif",
   sans:"'Arial',Helvetica,sans-serif",
   mono:"'Courier New',Courier,monospace",
 };
 
 const CATS = [
-  { id:"all",      label:"All",      color:"#E5484D" },
-  { id:"consumer", label:"Consumer", color:"#3DD68C" },
-  { id:"retail",   label:"Retail",   color:"#E8A33D" },
-  { id:"policy",   label:"Policy",   color:"#5EB1EF" },
-  { id:"tech",     label:"Tech",     color:"#B18AF8" },
-  { id:"travel",   label:"Travel",   color:"#46C2CB" },
+  { id:"all",      label:"All",      color:"#C8102E" },
+  { id:"consumer", label:"Consumer", color:"#1E7F4F" },
+  { id:"retail",   label:"Retail",   color:"#B87A1E" },
+  { id:"policy",   label:"Policy",   color:"#1B5FA8" },
+  { id:"tech",     label:"Tech",     color:"#6B3A8A" },
+  { id:"travel",   label:"Travel",   color:"#1B7A8A" },
 ];
 
 const catById = id => CATS.find(c=>c.id===(id||"").toLowerCase())||CATS[0];
@@ -100,7 +100,7 @@ function Header({ onNav, search, setSearch, showSources, setShowSources, headlin
     ? headlines.map(h=>`● ${h}`).join("   ···   ")
     : "Daily China intelligence — Consumer · Retail · Policy · Tech · Travel";
   return (
-    <header style={{ position:"sticky", top:0, zIndex:90, background:"rgba(10,12,16,0.96)", backdropFilter:"blur(10px)", borderBottom:`1px solid ${C.border}` }}>
+    <header style={{ position:"sticky", top:0, zIndex:90, background:"rgba(255,255,255,0.97)", backdropFilter:"blur(10px)", borderBottom:`1px solid ${C.border}` }}>
       {/* ticker bar */}
       <div style={{ background:C.redDim, display:"flex", alignItems:"center", overflow:"hidden" }}>
         <span style={{ fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.12em", color:"#fff", background:"#9C0B22", padding:"0.32rem 1rem", whiteSpace:"nowrap", flexShrink:0 }}>
@@ -134,8 +134,8 @@ function Header({ onNav, search, setSearch, showSources, setShowSources, headlin
               <input placeholder="Search..." value={search} onChange={e=>setSearch(e.target.value)}
                 style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:"3px", color:C.text, padding:"0.42rem 0.75rem 0.42rem 1.8rem", fontSize:"13px", fontFamily:C.mono, outline:"none", width:150 }} />
             </div>
-            <button onClick={()=>setShowSources(!showSources)} style={{ background:showSources?"rgba(229,72,77,0.12)":C.panel, border:`1px solid ${showSources?C.red:C.border}`, color:showSources?C.red:C.textSub, padding:"0.42rem 0.78rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>SOURCES</button>
-            <button onClick={()=>onNav("submit")} style={{ background:C.red, color:"#0A0C10", border:"none", padding:"0.42rem 0.88rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>+ SUBMIT</button>
+            <button onClick={()=>setShowSources(!showSources)} style={{ background:showSources?"rgba(200,16,46,0.07)":C.panel, border:`1px solid ${showSources?C.red:C.border}`, color:showSources?C.red:C.textSub, padding:"0.42rem 0.78rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>SOURCES</button>
+            <button onClick={()=>onNav("submit")} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.42rem 0.88rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>+ SUBMIT</button>
           </div>
         </div>
       </div>
@@ -219,7 +219,7 @@ function ArticleRow({ article, index, onClick, isLast }) {
         </div>
       </div>
       <h3 style={{ fontFamily:C.serif, fontSize:article.isLead?"20px":"16px", fontWeight:700, lineHeight:1.35, color:hovered?C.red:C.text, margin:"0 0 0.55rem", letterSpacing:"-0.01em", transition:"color 0.15s" }}>
-        {article.isLead && <span style={{ display:"inline-block", background:C.red, color:"#0A0C10", fontSize:"10px", padding:"0.12rem 0.4rem", borderRadius:"2px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, marginRight:"0.48rem", verticalAlign:"middle", position:"relative", top:"-2px" }}>LEAD</span>}
+        {article.isLead && <span style={{ display:"inline-block", background:C.red, color:"#FFFFFF", fontSize:"10px", padding:"0.12rem 0.4rem", borderRadius:"2px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, marginRight:"0.48rem", verticalAlign:"middle", position:"relative", top:"-2px" }}>LEAD</span>}
         {article.headline}
       </h3>
       <p style={{ fontFamily:C.serif, fontSize:"14px", lineHeight:"1.72", color:C.textSub, margin:"0 0 0.55rem", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
@@ -242,15 +242,15 @@ function ExecBriefing({ articles, editionLabel }) {
   const pick = cats => articles.find(a=>cats.includes(a.category));
   const lead = articles.find(a=>a.isLead) || articles[0];
   const audiences = [
-    { id:"investors", icon:"📈", label:"For Investors",     sublabel:"VCs · Analysts · Fund Managers",     color:"#5EB1EF", article: pick(["policy"]) || lead },
-    { id:"brand",     icon:"🏢", label:"For Brand Leaders",  sublabel:"CMOs · China GMs · Regional VPs",    color:"#E5484D", article: pick(["consumer","retail"]) || lead },
-    { id:"watchers",  icon:"🔍", label:"For China Watchers", sublabel:"Advisors · Consultants · Researchers", color:"#3DD68C", article: pick(["tech","travel"]) || lead },
+    { id:"investors", icon:"📈", label:"For Investors",     sublabel:"VCs · Analysts · Fund Managers",     color:"#1B5FA8", article: pick(["policy"]) || lead },
+    { id:"brand",     icon:"🏢", label:"For Brand Leaders",  sublabel:"CMOs · China GMs · Regional VPs",    color:"#C8102E", article: pick(["consumer","retail"]) || lead },
+    { id:"watchers",  icon:"🔍", label:"For China Watchers", sublabel:"Advisors · Consultants · Researchers", color:"#1E7F4F", article: pick(["tech","travel"]) || lead },
   ];
   return (
     <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.red}`, borderRadius:"3px", marginBottom:"1.4rem", overflow:"hidden" }}>
       <div onClick={()=>setOpen(!open)} style={{ padding:"0.82rem 1.3rem", display:"flex", alignItems:"center", justifyContent:"space-between", cursor:"pointer", background:C.panel2, borderBottom:open?`1px solid ${C.border}`:"none" }}>
         <div style={{ display:"flex", alignItems:"center", gap:"0.85rem" }}>
-          <span style={{ background:C.red, color:"#0A0C10", padding:"0.15rem 0.55rem", fontSize:"10px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, borderRadius:"2px" }}>EXEC BRIEFING</span>
+          <span style={{ background:C.red, color:"#FFFFFF", padding:"0.15rem 0.55rem", fontSize:"10px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, borderRadius:"2px" }}>EXEC BRIEFING</span>
           <span style={{ fontFamily:C.mono, fontSize:"12px", color:C.textSub, fontWeight:700 }}>KEY SIGNALS — {editionLabel}</span>
         </div>
         <span style={{ color:C.textMuted, fontSize:"11px", fontFamily:C.mono }}>{open?"▲":"▼"}</span>
@@ -340,9 +340,9 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
             const active = activeCat===cat.id;
             return (
               <button key={cat.id} onClick={()=>setActiveCat(cat.id)}
-                style={{ background:active?cat.color:C.panel, color:active?"#0A0C10":C.textSub, border:`1px solid ${active?cat.color:C.border}`, padding:"0.3rem 0.75rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.04em", transition:"all .18s", display:"flex", alignItems:"center", gap:"0.35rem", textTransform:"uppercase" }}>
+                style={{ background:active?cat.color:C.panel, color:active?"#FFFFFF":C.textSub, border:`1px solid ${active?cat.color:C.border}`, padding:"0.3rem 0.75rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.04em", transition:"all .18s", display:"flex", alignItems:"center", gap:"0.35rem", textTransform:"uppercase" }}>
                 {cat.label}
-                <span style={{ background:active?"rgba(0,0,0,0.2)":C.panel2, color:active?"#0A0C10":C.textMuted, borderRadius:"2px", padding:"0.02rem 0.35rem", fontSize:"10px" }}>{count}</span>
+                <span style={{ background:active?"rgba(0,0,0,0.2)":C.panel2, color:active?"#FFFFFF":C.textMuted, borderRadius:"2px", padding:"0.02rem 0.35rem", fontSize:"10px" }}>{count}</span>
               </button>
             );
           })}
@@ -350,7 +350,7 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
 
         {/* sample-data banner */}
         {usingSample && (
-          <div style={{ background:"rgba(232,163,61,0.08)", border:`1px solid rgba(232,163,61,0.4)`, borderRadius:"3px", padding:"0.8rem 1.1rem", marginBottom:"1rem", fontFamily:C.mono, fontSize:"12px", color:C.amber }}>
+          <div style={{ background:"rgba(184,122,30,0.07)", border:`1px solid rgba(184,122,30,0.35)`, borderRadius:"3px", padding:"0.8rem 1.1rem", marginBottom:"1rem", fontFamily:C.mono, fontSize:"12px", color:C.amber }}>
             ⚠ LIVE DATA UNAVAILABLE — showing sample edition. Check the Airtable connection.
           </div>
         )}
@@ -358,7 +358,7 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
         {activeCat==="all" && !search && !loading && articles.length>0 && <ExecBriefing articles={articles} editionLabel={editionLabel} />}
 
         {error && !usingSample && (
-          <div style={{ background:"rgba(229,72,77,0.08)", border:`1px solid rgba(229,72,77,0.4)`, borderRadius:"3px", padding:"1rem 1.2rem", marginBottom:"1rem", fontFamily:C.mono, fontSize:"12px", color:C.red }}>
+          <div style={{ background:"rgba(200,16,46,0.05)", border:`1px solid rgba(200,16,46,0.3)`, borderRadius:"3px", padding:"1rem 1.2rem", marginBottom:"1rem", fontFamily:C.mono, fontSize:"12px", color:C.red }}>
             ⚠ COULD NOT LOAD ARTICLES — please refresh the page.
           </div>
         )}
@@ -416,7 +416,7 @@ function ArticlePage({ articleId, articles, onNav }) {
       </h1>
       <div style={{ display:"flex", alignItems:"center", gap:"1rem", marginBottom:"1.5rem", paddingBottom:"1.1rem", borderBottom:`1px solid ${C.border}` }}>
         <div style={{ display:"flex", alignItems:"center", gap:"0.42rem" }}>
-          <div style={{ width:28, height:28, borderRadius:"3px", background:C.red, display:"flex", alignItems:"center", justifyContent:"center", color:"#0A0C10", fontSize:"11px", fontFamily:C.mono, fontWeight:700 }}>CP</div>
+          <div style={{ width:28, height:28, borderRadius:"3px", background:C.red, display:"flex", alignItems:"center", justifyContent:"center", color:"#FFFFFF", fontSize:"11px", fontFamily:C.mono, fontWeight:700 }}>CP</div>
           <div>
             <div style={{ fontFamily:C.sans, fontSize:"12px", fontWeight:700, color:C.text }}>{article.author}</div>
             <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>{article.date} · {article.readTime} read</div>
@@ -446,7 +446,7 @@ function ArticlePage({ articleId, articles, onNav }) {
             <div style={{ fontFamily:C.mono, fontSize:"11px", color:C.textMuted, marginTop:"0.15rem" }}>{article.sourceZH}</div>
           </div>
           <a href={article.url} target="_blank" rel="noopener noreferrer"
-            style={{ display:"inline-flex", alignItems:"center", gap:"0.4rem", background:C.red, color:"#0A0C10", padding:"0.52rem 1.1rem", borderRadius:"3px", fontSize:"12px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em", textDecoration:"none" }}>
+            style={{ display:"inline-flex", alignItems:"center", gap:"0.4rem", background:C.red, color:"#FFFFFF", padding:"0.52rem 1.1rem", borderRadius:"3px", fontSize:"12px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em", textDecoration:"none" }}>
             READ ORIGINAL →
           </a>
         </div>
@@ -524,7 +524,7 @@ function ContactPage({ onNav }) {
       <div style={{ fontSize:"2rem", marginBottom:"0.8rem", color:C.green }}>✓</div>
       <h2 style={{ fontFamily:C.serif, fontSize:"22px", fontWeight:700, color:C.text, marginBottom:"0.5rem" }}>Message sent!</h2>
       <p style={{ fontFamily:C.serif, fontSize:"15px", color:C.textSub, marginBottom:"1.5rem" }}>We'll get back to you within 48 hours.</p>
-      <button onClick={()=>onNav("home")} style={{ background:C.red, color:"#0A0C10", border:"none", padding:"0.65rem 1.4rem", borderRadius:"3px", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700 }}>BACK TO HOME</button>
+      <button onClick={()=>onNav("home")} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.65rem 1.4rem", borderRadius:"3px", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700 }}>BACK TO HOME</button>
     </main>
   );
   return (
@@ -542,7 +542,7 @@ function ContactPage({ onNav }) {
       <textarea style={{ ...iStyle, height:140, resize:"vertical", lineHeight:1.7 }} placeholder="Your message..." value={form.message} onChange={e=>set("message",e.target.value)} />
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginTop:"0.4rem" }}>
         <span style={{ fontFamily:C.mono, fontSize:"11px", color:C.textMuted }}>Replies to: giadadeng1203@gmail.com</span>
-        <button onClick={()=>{ if(form.email&&form.message) setSent(true); }} style={{ background:C.red, color:"#0A0C10", border:"none", padding:"0.65rem 1.4rem", borderRadius:"3px", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700 }}>SEND →</button>
+        <button onClick={()=>{ if(form.email&&form.message) setSent(true); }} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.65rem 1.4rem", borderRadius:"3px", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700 }}>SEND →</button>
       </div>
     </main>
   );
@@ -576,7 +576,7 @@ function SubmitPage({ onNav }) {
           <div style={lStyle}>Select Source</div>
           <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0.4rem", marginBottom:"1rem" }}>
             {SOURCES_LIST.map(s=>(
-              <button key={s} onClick={()=>set("sourceKey",s)} style={{ background:form.sourceKey===s?"rgba(229,72,77,0.12)":C.panel, border:`1px solid ${form.sourceKey===s?C.red:C.border}`, borderRadius:"3px", padding:"0.5rem 0.7rem", textAlign:"left", cursor:"pointer" }}>
+              <button key={s} onClick={()=>set("sourceKey",s)} style={{ background:form.sourceKey===s?"rgba(200,16,46,0.07)":C.panel, border:`1px solid ${form.sourceKey===s?C.red:C.border}`, borderRadius:"3px", padding:"0.5rem 0.7rem", textAlign:"left", cursor:"pointer" }}>
                 <div style={{ fontSize:"12px", fontFamily:C.sans, fontWeight:600, color:form.sourceKey===s?C.red:C.textSub }}>{s}</div>
               </button>
             ))}
@@ -625,14 +625,14 @@ function SubmitPage({ onNav }) {
             <p style={{ fontFamily:C.serif, fontSize:"13.5px", color:C.textSub, lineHeight:1.7, margin:"0 0 0.7rem" }}>{form.summary||"Your summary here..."}</p>
             {form.matters&&<div style={{ background:C.panel2, border:`1px solid ${cat.color}40`, borderRadius:"3px", padding:"0.65rem 0.85rem" }}><div style={{ fontSize:"10px", fontFamily:C.mono, fontWeight:700, color:cat.color, marginBottom:"0.25rem" }}>WHY IT MATTERS</div><p style={{ fontFamily:C.serif, fontSize:"13px", color:C.textSub, margin:0, lineHeight:1.7 }}>{form.matters}</p></div>}
           </div>
-          <div style={{ background:"rgba(61,214,140,0.08)", border:"1px solid rgba(61,214,140,0.35)", borderRadius:"3px", padding:"0.8rem 1rem", fontSize:"13px", color:C.green, fontFamily:C.serif, lineHeight:1.6 }}>
+          <div style={{ background:"rgba(30,127,79,0.07)", border:"1px solid rgba(30,127,79,0.3)", borderRadius:"3px", padding:"0.8rem 1rem", fontSize:"13px", color:C.green, fontFamily:C.serif, lineHeight:1.6 }}>
             ✓ Copy this content into your Airtable ChinaPulse CMS base and tick the Published checkbox to make it live. (The daily pipeline publishes automatically at 6 AM HKT — manual submission is only needed for extra articles.)
           </div>
         </div>
       )}
       <div style={{ display:"flex", justifyContent:"space-between", marginTop:"1.4rem", paddingTop:"1rem", borderTop:`1px solid ${C.border}` }}>
         <button onClick={()=>step>0?setStep(step-1):onNav("home")} style={{ background:C.panel, border:`1px solid ${C.border}`, color:C.textSub, padding:"0.56rem 1.05rem", borderRadius:"3px", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700 }}>{step===0?"CANCEL":"← BACK"}</button>
-        <button onClick={()=>step<3?setStep(step+1):onNav("home")} style={{ background:step===3?C.green:C.red, color:"#0A0C10", border:"none", padding:"0.56rem 1.35rem", borderRadius:"3px", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700 }}>{step===3?"✓ DONE":"NEXT →"}</button>
+        <button onClick={()=>step<3?setStep(step+1):onNav("home")} style={{ background:step===3?C.green:C.red, color:"#FFFFFF", border:"none", padding:"0.56rem 1.35rem", borderRadius:"3px", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700 }}>{step===3?"✓ DONE":"NEXT →"}</button>
       </div>
     </main>
   );
@@ -642,18 +642,18 @@ function SubmitPage({ onNav }) {
 function SubscribeWidget() {
   const [email,setEmail]=useState(""); const [freq,setFreq]=useState("daily"); const [done,setDone]=useState(false);
   const submit=()=>{ if(email.includes("@")) setDone(true); };
-  if(done) return <div style={{ background:"rgba(61,214,140,0.08)", border:"1px solid rgba(61,214,140,0.35)", borderRadius:"3px", padding:"1.2rem", textAlign:"center" }}><div style={{ fontSize:"1.4rem", marginBottom:"0.35rem", color:C.green }}>✓</div><div style={{ fontFamily:C.serif, fontSize:"14px", color:C.text, fontWeight:700, marginBottom:"0.25rem" }}>You're subscribed!</div><div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>FIRST EMAIL TOMORROW 7 AM HKT</div></div>;
+  if(done) return <div style={{ background:"rgba(30,127,79,0.07)", border:"1px solid rgba(30,127,79,0.3)", borderRadius:"3px", padding:"1.2rem", textAlign:"center" }}><div style={{ fontSize:"1.4rem", marginBottom:"0.35rem", color:C.green }}>✓</div><div style={{ fontFamily:C.serif, fontSize:"14px", color:C.text, fontWeight:700, marginBottom:"0.25rem" }}>You're subscribed!</div><div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>FIRST EMAIL TOMORROW 7 AM HKT</div></div>;
   return (
     <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.red}`, borderRadius:"3px", padding:"1.15rem" }}>
       <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.red, letterSpacing:"0.1em", marginBottom:"0.42rem", textTransform:"uppercase" }}>Daily Digest</div>
       <h3 style={{ fontFamily:C.serif, fontSize:"14px", fontWeight:700, color:C.text, margin:"0 0 0.3rem" }}>Top 10 China stories in your inbox</h3>
       <p style={{ fontFamily:C.serif, fontSize:"12.5px", color:C.textSub, lineHeight:1.6, margin:"0 0 0.8rem" }}>Translated & decoded — every day 7 AM HKT.</p>
       <div style={{ display:"flex", gap:"0.38rem", marginBottom:"0.62rem" }}>
-        {["daily","weekly"].map(f=><button key={f} onClick={()=>setFreq(f)} style={{ background:freq===f?C.red:C.panel2, border:`1px solid ${freq===f?C.red:C.border}`, color:freq===f?"#0A0C10":C.textSub, padding:"0.25rem 0.7rem", borderRadius:"2px", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.06em", cursor:"pointer", textTransform:"uppercase" }}>{f}</button>)}
+        {["daily","weekly"].map(f=><button key={f} onClick={()=>setFreq(f)} style={{ background:freq===f?C.red:C.panel2, border:`1px solid ${freq===f?C.red:C.border}`, color:freq===f?"#FFFFFF":C.textSub, padding:"0.25rem 0.7rem", borderRadius:"2px", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.06em", cursor:"pointer", textTransform:"uppercase" }}>{f}</button>)}
       </div>
       <div style={{ display:"flex" }}>
         <input type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()} style={{ flex:1, background:C.panel2, border:`1px solid ${C.border}`, borderRight:"none", borderRadius:"3px 0 0 3px", color:C.text, padding:"0.55rem 0.8rem", fontSize:"13px", fontFamily:C.mono, outline:"none", minWidth:0 }} />
-        <button onClick={submit} style={{ background:C.red, color:"#0A0C10", border:"none", padding:"0.55rem 0.88rem", borderRadius:"0 3px 3px 0", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.07em", cursor:"pointer", whiteSpace:"nowrap" }}>JOIN →</button>
+        <button onClick={submit} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.55rem 0.88rem", borderRadius:"0 3px 3px 0", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.07em", cursor:"pointer", whiteSpace:"nowrap" }}>JOIN →</button>
       </div>
       <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, marginTop:"0.4rem" }}>No spam. Unsubscribe anytime.</div>
     </div>
@@ -831,20 +831,20 @@ export default function ChinaPulse() {
     <div style={{ minHeight:"100vh", background:C.bg, color:C.text }}>
       <style>{`
         *{box-sizing:border-box;margin:0;padding:0;}
-        html{background:#0A0C10;}
-        body{background:#0A0C10;color:#E9E4D6;-webkit-font-smoothing:antialiased;}
+        html{background:#FFFFFF;}
+        body{background:#FFFFFF;color:#1A1A1A;-webkit-font-smoothing:antialiased;}
         input,textarea,button{font-family:inherit;}
-        input::placeholder,textarea::placeholder{color:#697180;}
+        input::placeholder,textarea::placeholder{color:#8A8880;}
         @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
         @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         ::-webkit-scrollbar{width:5px;height:5px;}
-        ::-webkit-scrollbar-track{background:#0A0C10;}
-        ::-webkit-scrollbar-thumb{background:#232B36;border-radius:2px;}
-        button:hover{filter:brightness(1.15);}
+        ::-webkit-scrollbar-track{background:#FFFFFF;}
+        ::-webkit-scrollbar-thumb{background:#CCCCCC;border-radius:2px;}
+        button:hover{opacity:0.88;}
         a:hover{opacity:0.85;}
-        ::selection{background:rgba(229,72,77,0.35);}
+        ::selection{background:rgba(200,16,46,0.18);}
         @media (max-width: 900px){
           .cp-main-grid{grid-template-columns:1fr !important;}
           .cp-sidebar{position:static !important;}
