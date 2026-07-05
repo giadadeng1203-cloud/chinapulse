@@ -27,7 +27,7 @@ Vercel → your project (`china-pulse-daily`) → **Settings → Environment Var
 
 | Name | Value |
 |---|---|
-| `ANTHROPIC_API_KEY` | Your Anthropic API key (https://platform.claude.com) |
+| `DEEPSEEK_API_KEY` | Your DeepSeek API key (https://platform.deepseek.com — top up via Alipay/WeChat Pay; the daily run costs well under ¥0.5) |
 | `AIRTABLE_TOKEN` | The **read + write** token (server-side pipeline) |
 | `VITE_AIRTABLE_TOKEN` | The **read-only** token (website) |
 | `CRON_SECRET` | Any random string, e.g. from https://generate-secret.vercel.app/32 |

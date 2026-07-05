@@ -1,17 +1,15 @@
 // ChinaPulse daily auto-publish pipeline
 // Runs on a Vercel cron (see vercel.json) every day at 22:00 UTC = 6:00 AM HKT.
 // 1. Pulls fresh articles from RSS-able China business sources
-// 2. Claude writes 10 original English summaries balanced across the 5 categories
-// 3. Publishes them straight into the Airtable "Articles" table (Published = true)
+// 2. DeepSeek writes 10 original English summaries balanced across the 5 categories
+// 3. Publishes them straight into the Airtable CMS table (Published = true)
 //
 // Required env vars (Vercel → Project → Settings → Environment Variables):
-//   ANTHROPIC_API_KEY  — Anthropic API key
+//   DEEPSEEK_API_KEY   — from https://platform.deepseek.com
 //   AIRTABLE_TOKEN     — Airtable PAT with data.records:read + data.records:write on the base
 //   CRON_SECRET        — any random string; Vercel sends it automatically on cron requests
 // Optional:
 //   AIRTABLE_BASE_ID   — defaults to appLJfM0uboPvSB0E
-
-import Anthropic from "@anthropic-ai/sdk";
 
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || "appLJfM0uboPvSB0E";
 // Table referenced by permanent ID (name is "Imported table" — ID survives renames)
@@ -107,84 +105,141 @@ async function editionExists(dateStr) {
   return data.records.length > 0;
 }
 
-// ─── Claude generation ───────────────────────────────────────────────────────
-const ARTICLE_SCHEMA = {
-  type: "object",
-  properties: {
-    articles: {
-      type: "array",
-      items: {
-        type: "object",
-        properties: {
-          slot:           { type: "integer" },
-          category:       { type: "string", enum: ["Consumer", "Retail", "Policy", "Tech", "Travel"] },
-          tag:            { type: "string" },
-          is_lead:        { type: "boolean" },
-          headline:       { type: "string" },
-          summary:        { type: "string" },
-          body:           { type: "string" },
-          why_it_matters: { type: "string" },
-          source_en:      { type: "string" },
-          source_zh:      { type: "string" },
-          original_url:   { type: "string" },
-          read_time:      { type: "string" },
-        },
-        required: ["slot", "category", "tag", "is_lead", "headline", "summary", "body", "why_it_matters", "source_en", "source_zh", "original_url", "read_time"],
-        additionalProperties: false,
-      },
-    },
-  },
-  required: ["articles"],
-  additionalProperties: false,
-};
+// ─── DeepSeek generation ─────────────────────────────────────────────────────
+// DeepSeek's JSON mode has no strict schema enforcement, so every call is
+// validated and retried once. Writing is split into two batches of 5 articles
+// to stay well inside deepseek-chat's 8K output-token limit.
+const CATEGORIES = ["Consumer", "Retail", "Policy", "Tech", "Travel"];
 
-async function generateEdition(items, dateStr) {
-  const client = new Anthropic();
-
-  const itemList = items.map((it, i) =>
-    `[${i + 1}] (${it.hint}) ${it.title}\n    source: ${it.sourceEN}${it.sourceZH ? ` / ${it.sourceZH}` : ""} | url: ${it.link}\n    ${it.description || "(no description)"}`
-  ).join("\n\n");
-
-  const stream = client.messages.stream({
-    model: "claude-opus-4-8",
-    max_tokens: 32000,
-    thinking: { type: "adaptive" },
-    system: `You are the editorial engine of ChinaPulse (中国脉搏), a daily China business intelligence platform for global executives, investors, and China watchers who don't read Chinese. Your writing style follows Bloomberg/The Economist: precise, analytical, business-focused English.
+const EDITORIAL_SYSTEM = `You are the editorial engine of ChinaPulse (中国脉搏), a daily China business intelligence platform for global executives, investors, and China watchers who don't read Chinese. Your writing style follows Bloomberg/The Economist: precise, analytical, business-focused English.
 
 Compliance rules (strict):
 - Every article must be ORIGINAL English editorial writing — a news digest plus business analysis. Never translate source text verbatim.
 - Attribute facts: "According to [source], ...". Do not invent specific figures, quotes, or names that are not in the provided material. Where the source material is thin, keep the body analytical and general rather than fabricating detail.
-- Chinese-language source items should be handled the same way: write in English, attribute the source.`,
-    messages: [{
-      role: "user",
-      content: `Below are candidate news items collected in the last 48 hours from ChinaPulse's monitored feeds. Today's edition date is ${dateStr}.
+- Chinese-language source items should be handled the same way: write in English, attribute the source.
+
+You always respond with a single valid JSON object and nothing else.`;
+
+async function deepseekCall(userPrompt, maxTokens) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 240000);
+  try {
+    const res = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      signal: controller.signal,
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        max_tokens: maxTokens,
+        response_format: { type: "json_object" },
+        messages: [
+          { role: "system", content: EDITORIAL_SYSTEM },
+          { role: "user", content: userPrompt },
+        ],
+      }),
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(`DeepSeek ${res.status}: ${JSON.stringify(body.error || body).slice(0, 300)}`);
+    return body.choices[0].message.content;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// Call DeepSeek, parse + validate the JSON, retry once on failure
+async function deepseekJSON(userPrompt, maxTokens, validate) {
+  let lastErr;
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      const data = JSON.parse(await deepseekCall(userPrompt, maxTokens));
+      validate(data);
+      return data;
+    } catch (e) {
+      lastErr = e;
+      console.error(`DeepSeek attempt ${attempt} failed: ${e.message}`);
+    }
+  }
+  throw new Error(`DeepSeek generation failed after 2 attempts: ${lastErr.message}`);
+}
+
+async function generateEdition(items, dateStr) {
+  const itemList = items.map((it, i) =>
+    `[${i + 1}] (${it.hint}) ${it.title}\n    source: ${it.sourceEN}${it.sourceZH ? ` / ${it.sourceZH}` : ""} | url: ${it.link}\n    ${it.description || "(no description)"}`
+  ).join("\n\n");
+
+  // Step 1: select 10 items, balanced across categories
+  const selection = await deepseekJSON(
+    `Below are candidate news items collected in the last 48 hours from ChinaPulse's monitored feeds. Today's edition date is ${dateStr}.
 
 ${itemList}
 
-Produce today's ChinaPulse edition: select EXACTLY 10 items and write an article for each.
-
-Selection rules:
-- Exactly 2 articles per category: Consumer, Retail, Policy, Tech, Travel (use the (hint) as guidance but reassign category by actual content).
+Select EXACTLY 10 items for today's edition:
+- Exactly 2 per category: Consumer, Retail, Policy, Tech, Travel (the (hint) is guidance only — assign category by actual content).
 - Choose the most business-relevant, consequential stories. Skip duplicates and pure politics/sports.
-- Slot 1-10 by importance; mark exactly one article (slot 1) as is_lead.
+- slot 1-10 by importance; the slot-1 story has is_lead true, all others false.
+- tag: short label like TREND REPORT, REGULATION, ANALYSIS, MARKET MOVE, DEAL WATCH.
+
+Respond with JSON only, exactly this shape:
+{"selections": [{"item": <item number>, "category": "Consumer|Retail|Policy|Tech|Travel", "slot": 1, "is_lead": true, "tag": "TREND REPORT"}, ...10 entries total]}`,
+    2000,
+    (d) => {
+      if (!Array.isArray(d.selections) || d.selections.length !== 10) throw new Error("need exactly 10 selections");
+      for (const s of d.selections) {
+        if (!CATEGORIES.includes(s.category)) throw new Error(`bad category: ${s.category}`);
+        if (!items[s.item - 1]) throw new Error(`bad item number: ${s.item}`);
+      }
+    },
+  );
+
+  // Step 2: write full articles in two batches of 5 (parallel)
+  const sorted = [...selection.selections].sort((a, b) => a.slot - b.slot);
+  const batches = [sorted.slice(0, 5), sorted.slice(5)];
+
+  const writeBatch = (batch) => {
+    const brief = batch.map((s) => {
+      const it = items[s.item - 1];
+      return `SLOT ${s.slot} | category: ${s.category} | tag: ${s.tag} | is_lead: ${!!s.is_lead}
+TITLE: ${it.title}
+SOURCE: ${it.sourceEN}${it.sourceZH ? ` / ${it.sourceZH}` : ""}
+URL: ${it.link}
+NOTES: ${it.description || "(none)"}`;
+    }).join("\n\n");
+
+    return deepseekJSON(
+      `Write the ChinaPulse article for each of these ${batch.length} selected stories (edition date ${dateStr}):
+
+${brief}
 
 Per-article rules:
 - headline: punchy, under 15 words, no clickbait.
 - summary: 2-3 sentences for the homepage feed.
-- body: 250-400 words of original English analysis in 3-4 paragraphs separated by blank lines. Lead with what happened (attributed), then context, then implications for global business.
+- body: 250-350 words of original English analysis in 3-4 paragraphs separated by blank lines (\\n\\n). Lead with what happened (attributed), then context, then implications for global business.
 - why_it_matters: 2-3 sentences of concrete takeaway for investors/brand leaders.
-- tag: short label like TREND REPORT, REGULATION, ANALYSIS, MARKET MOVE, DEAL WATCH.
-- source_en / source_zh: the real publisher. For Google News items the real publisher is at the end of the title after " - "; use that name and leave source_zh as the Chinese name if you know it, otherwise repeat the English name.
-- original_url: copy the item's url EXACTLY as given. Never modify or shorten it.
-- read_time: like "4 min" based on body length.`,
-    }],
-    output_config: { format: { type: "json_schema", schema: ARTICLE_SCHEMA } },
-  });
+- source_en / source_zh: the real publisher. For Google News items the real publisher is at the end of the TITLE after " - "; use that name, and use its Chinese name for source_zh if you know it, otherwise repeat the English name.
+- original_url: copy the URL exactly as given above. Never modify or shorten it.
+- read_time: like "4 min" based on body length.
+- Keep slot, category, tag, is_lead exactly as given above.
 
-  const message = await stream.finalMessage();
-  if (message.stop_reason === "refusal") throw new Error("Claude declined the generation request");
-  const text = message.content.filter(b => b.type === "text").map(b => b.text).join("");
-  return JSON.parse(text).articles;
+Respond with JSON only, exactly this shape:
+{"articles": [{"slot": 1, "category": "...", "tag": "...", "is_lead": true, "headline": "...", "summary": "...", "body": "...", "why_it_matters": "...", "source_en": "...", "source_zh": "...", "original_url": "...", "read_time": "4 min"}, ...${batch.length} entries]}`,
+      8000,
+      (d) => {
+        if (!Array.isArray(d.articles) || d.articles.length !== batch.length) throw new Error(`need exactly ${batch.length} articles`);
+        for (const a of d.articles) {
+          for (const f of ["headline", "summary", "body", "why_it_matters", "source_en", "original_url"]) {
+            if (typeof a[f] !== "string" || !a[f].trim()) throw new Error(`missing field: ${f}`);
+          }
+          if (!CATEGORIES.includes(a.category)) throw new Error(`bad category: ${a.category}`);
+        }
+      },
+    );
+  };
+
+  const written = await Promise.all(batches.map(writeBatch));
+  return written.flatMap((w) => w.articles).sort((a, b) => a.slot - b.slot);
 }
 
 // ─── Handler ─────────────────────────────────────────────────────────────────
@@ -199,7 +254,7 @@ export default async function handler(req, res) {
     }
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) return res.status(500).json({ error: "ANTHROPIC_API_KEY is not set" });
+  if (!process.env.DEEPSEEK_API_KEY) return res.status(500).json({ error: "DEEPSEEK_API_KEY is not set" });
   if (!process.env.AIRTABLE_TOKEN) return res.status(500).json({ error: "AIRTABLE_TOKEN is not set" });
 
   const force = new URL(req.url, "http://x").searchParams.get("force") === "1";
