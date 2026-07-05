@@ -1,0 +1,13 @@
+{
+  "crons": [
+    {
+      "path": "/api/daily-refresh",
+      "schedule": "0 22 * * *"
+    }
+  ],
+  "functions": {
+    "api/daily-refresh.js": {
+      "maxDuration": 300
+    }
+  }
+}
