@@ -11,6 +11,8 @@
 // Optional:
 //   AIRTABLE_BASE_ID   — defaults to appLJfM0uboPvSB0E
 
+import { sendDigest } from "./_lib.js";
+
 const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || "appLJfM0uboPvSB0E";
 // Table referenced by permanent ID (name is "Imported table" — ID survives renames)
 const AIRTABLE_TABLE = "tblzRNwo2f1hIGpIF";
@@ -306,11 +308,30 @@ export default async function handler(req, res) {
       body: JSON.stringify({ records, typecast: true }),
     });
 
+    // 4. Email the daily digest to subscribers (non-fatal if Resend not configured)
+    let digest = { sent: 0 };
+    try {
+      digest = await sendDigest({
+        frequency: "Daily",
+        subject: `ChinaPulse Daily — ${dateStr}`,
+        title: "Today's Edition",
+        intro: "The 10 China business stories that matter today, translated and decoded.",
+        articles: articles.map(a => ({
+          headline: a.headline, summary: a.summary, category: a.category,
+          tag: a.tag, url: a.original_url, source: a.source_en,
+        })),
+      });
+    } catch (e) {
+      console.error(`daily digest failed: ${e.message}`);
+      digest = { error: e.message };
+    }
+
     return res.status(200).json({
       ok: true,
       date: dateStr,
       itemsCollected: items.length,
       published: created.records.length,
+      digest,
       headlines: articles.map(a => a.headline),
     });
   } catch (e) {

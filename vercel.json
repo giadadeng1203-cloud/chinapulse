@@ -3,10 +3,17 @@
     {
       "path": "/api/daily-refresh",
       "schedule": "0 22 * * *"
+    },
+    {
+      "path": "/api/weekly-digest",
+      "schedule": "0 23 * * 0"
     }
   ],
   "functions": {
     "api/daily-refresh.js": {
+      "maxDuration": 300
+    },
+    "api/weekly-digest.js": {
       "maxDuration": 300
     }
   }

@@ -31,6 +31,18 @@ Vercel → your project (`china-pulse-daily`) → **Settings → Environment Var
 | `AIRTABLE_TOKEN` | The **read + write** token (server-side pipeline) |
 | `VITE_AIRTABLE_TOKEN` | The **read-only** token (website) |
 | `CRON_SECRET` | Any random string, e.g. from https://generate-secret.vercel.app/32 |
+| `RESEND_API_KEY` | From https://resend.com (free — 3,000 emails/month) — powers welcome, daily-digest, and weekly-digest emails |
+| `EMAIL_FROM` | Optional. Sender address, e.g. `ChinaPulse <news@arcohk.com>` after verifying the arcohk.com domain in Resend; defaults to Resend's test sender |
+
+## Email subscriptions
+
+- Signups on the site call `/api/subscribe`, which stores each subscriber in the Airtable
+  **Subscribers** table (fields: Email, Frequency = Daily/Weekly, Status = Active/Unsubscribed,
+  Subscribed At) and sends a welcome email.
+- Daily subscribers get the digest automatically at the end of each 6 AM pipeline run.
+- Weekly subscribers get a top-10-of-the-week digest every **Monday 7 AM HKT**
+  (cron `/api/weekly-digest`, manual test: `/api/weekly-digest?key=CRON_SECRET`).
+- Every email has a one-click unsubscribe link that flips the subscriber's Status in Airtable.
 
 Then **redeploy** (Deployments → ⋯ → Redeploy) so the variables take effect.
 
