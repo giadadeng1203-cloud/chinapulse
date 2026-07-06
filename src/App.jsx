@@ -641,9 +641,18 @@ function SubmitPage({ onNav }) {
 
 // ─── SIDEBAR WIDGETS ──────────────────────────────────────────────────────────
 function SubscribeWidget() {
-  const [email,setEmail]=useState(""); const [freq,setFreq]=useState("daily"); const [done,setDone]=useState(false);
-  const submit=()=>{ if(email.includes("@")) setDone(true); };
-  if(done) return <div style={{ background:"rgba(30,127,79,0.07)", border:"1px solid rgba(30,127,79,0.3)", borderRadius:"3px", padding:"1.2rem", textAlign:"center" }}><div style={{ fontSize:"1.4rem", marginBottom:"0.35rem", color:C.green }}>✓</div><div style={{ fontFamily:C.serif, fontSize:"14px", color:C.text, fontWeight:700, marginBottom:"0.25rem" }}>You're subscribed!</div><div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>FIRST EMAIL TOMORROW 7 AM HKT</div></div>;
+  const [email,setEmail]=useState(""); const [freq,setFreq]=useState("daily");
+  const [state,setState]=useState("idle"); // idle | sending | done | error
+  const submit=async()=>{
+    if(!email.includes("@")||state==="sending") return;
+    setState("sending");
+    try {
+      const res = await fetch("/api/subscribe", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ email, freq }) });
+      if(!res.ok) throw new Error("subscribe failed");
+      setState("done");
+    } catch(e) { console.error(e); setState("error"); }
+  };
+  if(state==="done") return <div style={{ background:"rgba(30,127,79,0.07)", border:"1px solid rgba(30,127,79,0.3)", borderRadius:"3px", padding:"1.2rem", textAlign:"center" }}><div style={{ fontSize:"1.4rem", marginBottom:"0.35rem", color:C.green }}>✓</div><div style={{ fontFamily:C.serif, fontSize:"14px", color:C.text, fontWeight:700, marginBottom:"0.25rem" }}>You're subscribed!</div><div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>{freq==="weekly"?"FIRST EMAIL MONDAY 7 AM HKT":"FIRST EMAIL TOMORROW 7 AM HKT"} — CHECK YOUR INBOX FOR A WELCOME NOTE</div></div>;
   return (
     <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.red}`, borderRadius:"3px", padding:"1.15rem" }}>
       <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.red, letterSpacing:"0.1em", marginBottom:"0.42rem", textTransform:"uppercase" }}>Daily Digest</div>
@@ -654,8 +663,9 @@ function SubscribeWidget() {
       </div>
       <div style={{ display:"flex" }}>
         <input type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()} style={{ flex:1, background:C.panel2, border:`1px solid ${C.border}`, borderRight:"none", borderRadius:"3px 0 0 3px", color:C.text, padding:"0.55rem 0.8rem", fontSize:"13px", fontFamily:C.mono, outline:"none", minWidth:0 }} />
-        <button onClick={submit} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.55rem 0.88rem", borderRadius:"0 3px 3px 0", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.07em", cursor:"pointer", whiteSpace:"nowrap" }}>JOIN →</button>
+        <button onClick={submit} disabled={state==="sending"} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.55rem 0.88rem", borderRadius:"0 3px 3px 0", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.07em", cursor:"pointer", whiteSpace:"nowrap", opacity:state==="sending"?0.6:1 }}>{state==="sending"?"...":"JOIN →"}</button>
       </div>
+      {state==="error" && <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.red, marginTop:"0.4rem" }}>⚠ Subscription failed — please try again.</div>}
       <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, marginTop:"0.4rem" }}>No spam. Unsubscribe anytime.</div>
     </div>
   );
