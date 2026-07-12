@@ -68,10 +68,20 @@ Date, Time, Slot, Is Lead, Published, Read Time, Author` — same schema as befo
 ## Edition structure
 
 10 articles daily, ordered macro-first: **Policy/Macro (slots 1-2, slot 1 is the lead) →
-Consumer (2-3) → Retail (2) → Travel (2-3) → Tech (exactly 1, always slot 10)**.
-The category quotas are validated in code — a run fails rather than publish a tech-heavy
-edition. The site nav shows the same order (the Policy tab is labeled "Macro"; the
-underlying Airtable category is still `Policy`).
+Consumer (2-3) → Retail (1-2) → Travel (2-4) → Tech (exactly 1, always slot 10)**.
+If quality Retail candidates are thin, the spare slot goes to a strong Travel or Consumer
+story instead of forcing a weak pick. The category quotas are validated in code — a run
+fails rather than publish a tech-heavy edition. The site nav shows the same order (the
+Policy tab is labeled "Macro"; the underlying Airtable category is still `Policy`).
+
+**Editorial rules baked into selection** (from Giada's review of the 2026-07-13 edition):
+every pick needs a clear China angle (global luxury/sports stories are out, even from core
+sources); demographic/structural analyses are flagship material; Chinese homegrown brand
+breakouts are priority Consumer picks; brand stories must carry an actionable lesson (no
+award shortlists or minor franchise deals); duty-free concession wins are priority
+Retail/Travel; OTA seasonal reports are must-covers and may be up to ~4 weeks old.
+Stories already published in a recent edition are automatically excluded from the pool
+(URL match against the last ~100 published records).
 
 ## News sources the pipeline monitors
 

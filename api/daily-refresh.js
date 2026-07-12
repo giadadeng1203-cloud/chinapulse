@@ -268,6 +268,19 @@ async function editionExists(dateStr) {
   return data.records.length > 0;
 }
 
+// Cross-edition dedupe: URLs already published in recent editions are removed from
+// the candidate pool, so a story is never covered twice — and older data/trend
+// reports stay eligible until the day they're actually used.
+const normUrl = u => (u || "").replace(/[?#].*$/, "").replace(/\/$/, "");
+
+async function recentlyCoveredUrls() {
+  const params = `?filterByFormula=${encodeURIComponent("{Published}=1")}&pageSize=100` +
+    `&sort%5B0%5D%5Bfield%5D=Date&sort%5B0%5D%5Bdirection%5D=desc` +
+    `&fields%5B%5D=${encodeURIComponent("Original URL")}`;
+  const data = await airtable(`${encodeURIComponent(AIRTABLE_TABLE)}${params}`);
+  return new Set(data.records.map(r => normUrl(r.fields["Original URL"])).filter(Boolean));
+}
+
 // ─── DeepSeek generation ─────────────────────────────────────────────────────
 // DeepSeek's JSON mode has no strict schema enforcement, so every call is
 // validated and retried once. Writing is split into two batches of 5 articles
@@ -340,13 +353,24 @@ async function generateEdition(items, dateStr) {
 
 ${itemList}
 
-Select EXACTLY 10 items for today's edition. Category quotas (assign category by actual content — the (hint) is guidance only):
-- Policy: exactly 2 — macro & policy: official data releases (NBS retail sales, CPI, PMI, GDP, trade), macroeconomic shifts, government regulation. If a fresh NBS monthly indicator is in the pool — especially Total Retail Sales of Consumer Goods — it MUST be one of the two.
+Select EXACTLY 10 items for today's edition.
+
+CHINA RELEVANCE (hard rule): every selection must have a clear China angle — Chinese consumers, Chinese brands, the China market, Chinese travelers, or Chinese policy. Skip stories that are merely global luxury / sports / entertainment / business with no China connection (a European designer-archive auction, a global sports-rights story, a Western brand executive's general musings, a Chinese brand's minor deal in an unrelated overseas market) — even when they come from [CORE] sources.
+
+Category quotas (assign category by actual content — the (hint) is guidance only):
+- Policy: exactly 2 — macro & policy: official data releases (NBS retail sales, CPI, PMI, GDP, trade), macroeconomic shifts, demographics, government regulation. If a fresh NBS monthly indicator is in the pool — especially Total Retail Sales of Consumer Goods — it MUST be one of the two.
 - Consumer: 2 or 3 — consumer behavior, spending shifts, brand strategy, lifestyle trends. NOT gadget launches or startup funding.
-- Retail: exactly 2 — commercial real estate, malls, e-commerce, luxury retail.
-- Travel: 2 or 3 — inbound/outbound travel, passenger data, visa policy, hotels, duty free (Hainan policy, airport concessions), and OTA reports (Trip.com/Ctrip, Tuniu, Tongcheng — golden week / CNY season reports get priority when present).
+- Retail: 1 or 2 — commercial real estate, malls, e-commerce, luxury retail, and duty-free/travel-retail concessions.
+- Travel: 2 to 4 — inbound/outbound travel, passenger data, visa policy, hotels, duty free (Hainan policy, airport concessions), and OTA reports (Trip.com/Ctrip, Tuniu, Tongcheng — 暑运 / golden week / CNY season reports get priority when present).
 - Tech: exactly 1 — the business of technology only (platform economics, AI commercialization, e-commerce infrastructure). Never product reviews or funding rounds.
-(Consumer + Travel must total 5, so the 10 add up.)
+(Consumer + Retail + Travel must total 7. If high-quality Retail candidates are scarce, do NOT force a weak Retail pick — give the spare slot to a strong Travel or Consumer story instead.)
+
+Editorial priorities (from the editor-in-chief — apply these when choosing between candidates):
+- Demographic and structural-shift analyses (population trends, aging, urbanization, city finances, 人口/啃老-type pieces) are flagship material — prefer them over corporate color stories for Policy and Consumer.
+- Chinese homegrown brand breakout stories (a Chinese brand going viral or winning young consumers, e.g. gold jewelry, new tea, designer toys) are priority Consumer picks — global readers rarely see these.
+- A brand story must carry an actionable lesson for brand leaders (a PR misstep, a positioning shift, a channel change). Brand-adjacent trivia — award shortlists, small franchise or partnership announcements, store-opening roundups — is low value.
+- Duty-free and travel-retail wins (Hainan policy moves, airport arrivals concessions) are priority picks, classed as Retail or Travel.
+- OTA seasonal/annual reports are must-covers when present. For data/trend REPORTS (anything styled 报告/报表 or a named seasonal report), up to ~4 weeks old is acceptable; ordinary news must still be fresh.
 
 Ordering — slots follow category blocks, not raw importance: Policy takes slots 1-2 (slot 1 = the most consequential macro story, is_lead true, all others false), then Consumer, then Retail, then Travel, and the single Tech story is always slot 10.
 
@@ -369,10 +393,10 @@ Respond with JSON only, exactly this shape:
         counts[s.category] = (counts[s.category] || 0) + 1;
       }
       if (counts.Policy !== 2) throw new Error(`need exactly 2 Policy, got ${counts.Policy || 0}`);
-      if (counts.Retail !== 2) throw new Error(`need exactly 2 Retail, got ${counts.Retail || 0}`);
+      if (!(counts.Retail >= 1 && counts.Retail <= 2)) throw new Error(`need 1-2 Retail, got ${counts.Retail || 0}`);
       if (counts.Tech !== 1) throw new Error(`need exactly 1 Tech, got ${counts.Tech || 0}`);
       if (!(counts.Consumer >= 2 && counts.Consumer <= 3)) throw new Error(`need 2-3 Consumer, got ${counts.Consumer || 0}`);
-      if (!(counts.Travel >= 2 && counts.Travel <= 3)) throw new Error(`need 2-3 Travel, got ${counts.Travel || 0}`);
+      if (!(counts.Travel >= 2 && counts.Travel <= 4)) throw new Error(`need 2-4 Travel, got ${counts.Travel || 0}`);
     },
   );
 
@@ -452,12 +476,24 @@ export default async function handler(req, res) {
     // 1. Collect news
     const results = await Promise.all(FEEDS.map(fetchFeed));
     const seen = new Set();
-    const items = results.flat().filter(it => {
+    let items = results.flat().filter(it => {
       const k = it.title.toLowerCase().slice(0, 60);
       if (seen.has(k)) return false;
       seen.add(k);
       return true;
     });
+
+    // Drop anything already published in a recent edition (non-fatal if the lookup fails)
+    let alreadyCovered = 0;
+    try {
+      const covered = await recentlyCoveredUrls();
+      const before = items.length;
+      items = items.filter(it => !covered.has(normUrl(it.link)));
+      alreadyCovered = before - items.length;
+    } catch (e) {
+      console.error(`covered-urls lookup failed: ${e.message}`);
+    }
+
     if (items.length < 10) throw new Error(`Only ${items.length} feed items collected — not enough to build an edition`);
 
     // 2. Generate the edition with Claude
@@ -514,6 +550,7 @@ export default async function handler(req, res) {
       ok: true,
       date: dateStr,
       itemsCollected: items.length,
+      alreadyCovered,
       itemsBySource,
       published: created.records.length,
       publishedSources: articles.map(a => a.source_en),
