@@ -65,12 +65,43 @@ To force a re-run for the same day (e.g. for testing): add `&force=1`.
 Date, Time, Slot, Is Lead, Published, Read Time, Author` — same schema as before.
 `typecast: true` is used, so new Category select options are created automatically if missing.
 
+## Edition structure
+
+10 articles daily, ordered macro-first: **Policy/Macro (slots 1-2, slot 1 is the lead) →
+Consumer (2-3) → Retail (2) → Travel (2-3) → Tech (exactly 1, always slot 10)**.
+The category quotas are validated in code — a run fails rather than publish a tech-heavy
+edition. The site nav shows the same order (the Policy tab is labeled "Macro"; the
+underlying Airtable category is still `Policy`).
+
 ## News sources the pipeline monitors
 
-Pandaily, TechNode, Sixth Tone, SCMP (China + Business), 36Kr, plus targeted Google News
-queries for retail, luxury/consumer, travel, and policy — filtered to the last 48 hours.
-(WeChat 公众号 sources can't be fetched automatically; use the + Submit page / Airtable
-directly to add those manually when needed.)
+**Core sources** (the platform's positioning — the selection step is instructed to draw at
+least 6 of the 10 daily articles from these):
+
+| Source | How it's fetched |
+|---|---|
+| 虎嗅 Huxiu | RSS (`rss.huxiu.com`) |
+| 36氪 (incl. 未来消费 coverage) | RSS (`36kr.com/feed`) |
+| 华丽志 Luxe.CO | RSS (`luxe.co/feed`) |
+| 赢商网 Winshang | HTML scrape of `news.winshang.com` |
+| 环球旅讯 TravelDaily | HTML scrape of `traveldaily.cn` (PR/corporate posts skipped) |
+| Jing Daily | RSS (Feedburner) |
+| DT商业观察 | JSON endpoint on `dt.yicai.com` (free; publishes ~monthly, 14-day window) |
+| 国家统计局 NBS (English) | HTML scrape of `stats.gov.cn/english/PressRelease/` — retail sales, CPI, PMI, GDP; 10-day window; a fresh monthly retail-sales release is a mandatory pick |
+| 品橙旅游 Pinchain | HTML scrape of 3 category pages: tourism (inbound/outbound), datacenter (pax data), onlinetravel (OTA reports incl. Ctrip/Tuniu/Tongcheng seasonal reports) |
+| Dragon Trail 龙途互动 | HTML scrape of `dragontrail.com.cn/resources/blog` (English Chinese-traveler insights) |
+
+**Secondary English sources:** CGTN (Business + Travel), The Moodie Davitt Report
+(duty-free/travel retail — the selector only picks its China/Hainan/Asia-Pacific-relevant
+items), SCMP (China + Business), Sixth Tone, Pandaily (tech, capped at 4 items).
+**Fallback:** Reuters China coverage via a Google News query — at most 2 wire picks per
+edition, macro/policy only. Everything is filtered to the last 48 hours where feeds carry
+dates.
+
+**Still manual (via the + Submit page):** 要客研究院 (WeChat-only, no feed anywhere),
+DT商业观察's WeChat-only pieces, and 亿邦动力 Ebrun (its site blocks automated fetching
+and Google barely indexes it — submit its occasional relevant retail/cross-border pieces
+by hand).
 
 ## Notes
 

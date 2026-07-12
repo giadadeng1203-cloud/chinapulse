@@ -70,7 +70,7 @@ const SAMPLE_ARTICLES = [
 const C = {
   bg:"#FFFFFF", panel:"#FAFAF8", panel2:"#F4F3EF", panelHover:"#F0EFE9",
   border:"#E2E0DB", borderLight:"#ECEAE4",
-  red:"#C8102E", redDim:"#C8102E", amber:"#B87A1E", green:"#1E7F4F",
+  red:"#C8102E", redDim:"#C8102E", ink:"#141414", amber:"#B87A1E", green:"#1E7F4F",
   text:"#1A1A1A", textSub:"#4A4A4A", textMuted:"#8A8880",
   serif:"Georgia,'Times New Roman',serif",
   sans:"'Arial',Helvetica,sans-serif",
@@ -78,12 +78,12 @@ const C = {
 };
 
 const CATS = [
-  { id:"all",      label:"All",      color:"#C8102E" },
-  { id:"consumer", label:"Consumer", color:"#1E7F4F" },
-  { id:"retail",   label:"Retail",   color:"#B87A1E" },
-  { id:"policy",   label:"Policy",   color:"#1B5FA8" },
-  { id:"tech",     label:"Tech",     color:"#6B3A8A" },
-  { id:"travel",   label:"Travel",   color:"#1B7A8A" },
+  { id:"all",      label:"All",      color:"#141414", glyph:"脉" },
+  { id:"policy",   label:"Macro",    color:"#1B5FA8", glyph:"宏" }, // Airtable category stays "Policy"; display-only label
+  { id:"consumer", label:"Consumer", color:"#1E7F4F", glyph:"消" },
+  { id:"retail",   label:"Retail",   color:"#B87A1E", glyph:"零" },
+  { id:"travel",   label:"Travel",   color:"#1B7A8A", glyph:"旅" },
+  { id:"tech",     label:"Tech",     color:"#6B3A8A", glyph:"科" },
 ];
 
 const catById = id => CATS.find(c=>c.id===(id||"").toLowerCase())||CATS[0];
@@ -95,27 +95,10 @@ const LEGAL = {
   terms:`**Terms of Use**\n\nLast updated: March 2026\n\n**Content and Copyright**\n\nAll original editorial content on ChinaPulse — including summaries, translations, analysis, and commentary — is the intellectual property of ChinaPulse and may not be reproduced without written permission.\n\nChinaPulse summarises and translates content from third-party sources for editorial and informational purposes. We link to and credit all original sources.\n\n**Not Investment Advice**\n\nNothing on ChinaPulse constitutes financial, investment, legal, or business advice. All content is provided for informational purposes only.\n\n**Accuracy**\n\nWe endeavour to ensure all content is accurate at time of publication. ChinaPulse is not liable for errors or omissions.\n\n**External Links**\n\nLinks to third-party websites are provided for convenience. ChinaPulse is not responsible for the content of external sites.\n\n**Contact**\n\ninfo@arcohk.com`,
 };
 
-// ─── HEADER + TICKER ──────────────────────────────────────────────────────────
-function Header({ onNav, search, setSearch, showSources, setShowSources, headlines, lastUpdated }) {
-  const tickerText = headlines.length
-    ? headlines.map(h=>`● ${h}`).join("   ···   ")
-    : "Daily China intelligence — Consumer · Retail · Policy · Tech · Travel";
+// ─── HEADER ──────────────────────────────────────────────────────────────────
+function Header({ onNav, search, setSearch, showSources, setShowSources, lastUpdated }) {
   return (
     <header style={{ position:"sticky", top:0, zIndex:90, background:"rgba(255,255,255,0.97)", backdropFilter:"blur(10px)", borderBottom:`1px solid ${C.border}` }}>
-      {/* ticker bar */}
-      <div style={{ background:C.redDim, display:"flex", alignItems:"center", overflow:"hidden" }}>
-        <span style={{ fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.12em", color:"#fff", background:"#9C0B22", padding:"0.32rem 1rem", whiteSpace:"nowrap", flexShrink:0 }}>
-          <span style={{ display:"inline-block", width:7, height:7, borderRadius:"50%", background:"#3DD68C", marginRight:"0.5rem", animation:"blink 1.6s infinite" }} />LIVE
-        </span>
-        <div style={{ flex:1, overflow:"hidden", position:"relative" }}>
-          <div style={{ display:"inline-block", whiteSpace:"nowrap", color:"rgba(255,255,255,0.92)", fontSize:"12px", fontFamily:C.mono, padding:"0.32rem 0", animation:"marquee 60s linear infinite" }}>
-            {tickerText}&nbsp;&nbsp;&nbsp;···&nbsp;&nbsp;&nbsp;{tickerText}
-          </div>
-        </div>
-        <span style={{ fontSize:"11px", fontFamily:C.mono, color:"rgba(255,255,255,0.75)", whiteSpace:"nowrap", padding:"0 1rem", flexShrink:0 }}>
-          {new Date().toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase()}
-        </span>
-      </div>
       <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 1.5rem" }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0.85rem 0 0.75rem", flexWrap:"wrap", gap:"0.6rem" }}>
           <div onClick={()=>onNav("home")} style={{ cursor:"pointer" }}>
@@ -136,7 +119,7 @@ function Header({ onNav, search, setSearch, showSources, setShowSources, headlin
                 style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:"3px", color:C.text, padding:"0.42rem 0.75rem 0.42rem 1.8rem", fontSize:"13px", fontFamily:C.mono, outline:"none", width:150 }} />
             </div>
             <button onClick={()=>setShowSources(!showSources)} style={{ background:showSources?"rgba(200,16,46,0.07)":C.panel, border:`1px solid ${showSources?C.red:C.border}`, color:showSources?C.red:C.textSub, padding:"0.42rem 0.78rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>SOURCES</button>
-            <button onClick={()=>onNav("submit")} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.42rem 0.88rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>+ SUBMIT</button>
+            <button onClick={()=>onNav("submit")} style={{ background:C.ink, color:"#FFFFFF", border:"none", padding:"0.42rem 0.88rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>+ SUBMIT</button>
           </div>
         </div>
       </div>
@@ -198,21 +181,48 @@ function LoadingSkeleton() {
   );
 }
 
+// ─── CATEGORY VISUALS (design-level "imagery": glyph tiles, no photos) ────────
+// Subtle graph-paper pattern in the category colour — gives tiles a data-terminal
+// texture without any external assets.
+const gridPattern = color =>
+  `repeating-linear-gradient(0deg, transparent, transparent 11px, ${color}14 11px, ${color}14 12px),
+   repeating-linear-gradient(90deg, transparent, transparent 11px, ${color}14 11px, ${color}14 12px)`;
+
+function CatTile({ cat, slot }) {
+  return (
+    <div style={{ width:92, alignSelf:"stretch", flexShrink:0, position:"relative", overflow:"hidden",
+      background:`linear-gradient(135deg, ${cat.color}0D, ${cat.color}26), ${C.panel2}`,
+      borderRight:`1px solid ${C.borderLight}`, display:"flex", alignItems:"center", justifyContent:"center" }}>
+      <div style={{ position:"absolute", inset:0, background:gridPattern(cat.color) }} />
+      <span style={{ fontFamily:C.serif, fontSize:"46px", fontWeight:700, color:cat.color, opacity:0.35, lineHeight:1, userSelect:"none" }}>{cat.glyph}</span>
+      <span style={{ position:"absolute", top:7, left:9, fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:cat.color, opacity:0.85 }}>{slot}</span>
+    </div>
+  );
+}
+
+function LeadBanner({ cat, article }) {
+  return (
+    <div style={{ position:"relative", height:88, overflow:"hidden",
+      background:`linear-gradient(105deg, ${cat.color}26 0%, ${cat.color}0D 55%, transparent 100%), ${C.panel2}`,
+      borderBottom:`1px solid ${C.borderLight}` }}>
+      <div style={{ position:"absolute", inset:0, background:gridPattern(cat.color) }} />
+      <span style={{ position:"absolute", right:-8, top:-28, fontFamily:C.serif, fontSize:"130px", fontWeight:700, color:cat.color, opacity:0.13, lineHeight:1, userSelect:"none" }}>{cat.glyph}</span>
+      <div style={{ position:"absolute", left:"1.3rem", bottom:"0.85rem" }}>
+        <span style={{ background:C.red, color:"#FFFFFF", fontSize:"10px", padding:"0.15rem 0.5rem", borderRadius:"2px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, marginRight:"0.6rem" }}>LEAD</span>
+        <span style={{ fontFamily:C.mono, fontSize:"11px", fontWeight:700, color:cat.color, letterSpacing:"0.1em" }}>{cat.label.toUpperCase()}</span>
+        {article.tag && <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, marginLeft:"0.6rem", letterSpacing:"0.07em" }}>{article.tag}</span>}
+      </div>
+    </div>
+  );
+}
+
 // ─── ARTICLE ROW ─────────────────────────────────────────────────────────────
 function ArticleRow({ article, index, onClick, isLast }) {
   const cat = catById(article.category);
   const [hovered, setHovered] = useState(false);
-  return (
-    <div onClick={onClick}
-      onMouseEnter={()=>setHovered(true)}
-      onMouseLeave={()=>setHovered(false)}
-      style={{ padding:"1.1rem 1.3rem", borderLeft:`3px solid ${cat.color}`,
-        borderBottom: isLast?"none":`1px solid ${C.borderLight}`,
-        background: hovered ? C.panelHover : C.panel,
-        cursor:"pointer", transition:"background 0.15s ease",
-        animation:`fadeUp .4s ease ${index*0.05}s both` }}>
+  const body = (
+    <div style={{ flex:1, minWidth:0, padding:"1.1rem 1.3rem" }}>
       <div style={{ display:"flex", alignItems:"center", gap:"0.55rem", marginBottom:"0.5rem", flexWrap:"wrap" }}>
-        <span style={{ fontFamily:C.mono, fontSize:"11px", color:cat.color, fontWeight:700 }}>{String(article.slot||index+1).padStart(2,"0")}</span>
         {article.tag && <span style={{ background:"transparent", color:cat.color, border:`1px solid ${cat.color}55`, padding:"0.1rem 0.42rem", borderRadius:"2px", fontSize:"10px", fontFamily:C.mono, letterSpacing:"0.07em", fontWeight:700 }}>{article.tag}</span>}
         <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{cat.label.toUpperCase()}</span>
         <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:"0.45rem" }}>
@@ -220,7 +230,6 @@ function ArticleRow({ article, index, onClick, isLast }) {
         </div>
       </div>
       <h3 style={{ fontFamily:C.serif, fontSize:article.isLead?"20px":"16px", fontWeight:700, lineHeight:1.35, color:hovered?C.red:C.text, margin:"0 0 0.55rem", letterSpacing:"-0.01em", transition:"color 0.15s" }}>
-        {article.isLead && <span style={{ display:"inline-block", background:C.red, color:"#FFFFFF", fontSize:"10px", padding:"0.12rem 0.4rem", borderRadius:"2px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, marginRight:"0.48rem", verticalAlign:"middle", position:"relative", top:"-2px" }}>LEAD</span>}
         {article.headline}
       </h3>
       <p style={{ fontFamily:C.serif, fontSize:"14px", lineHeight:"1.72", color:C.textSub, margin:"0 0 0.55rem", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
@@ -229,10 +238,24 @@ function ArticleRow({ article, index, onClick, isLast }) {
       <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ display:"flex", alignItems:"center", gap:"0.4rem" }}>
           <div style={{ width:5, height:5, borderRadius:"50%", background:cat.color }} />
-          <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{article.sourceZH} · {article.source}</span>
+          <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{article.source}</span>
         </div>
         <span style={{ fontSize:"11px", fontFamily:C.mono, fontWeight:700, color:hovered?C.red:C.textMuted, transition:"color 0.15s" }}>READ →</span>
       </div>
+    </div>
+  );
+  return (
+    <div onClick={onClick}
+      onMouseEnter={()=>setHovered(true)}
+      onMouseLeave={()=>setHovered(false)}
+      style={{ borderLeft:`3px solid ${cat.color}`,
+        borderBottom: isLast?"none":`1px solid ${C.borderLight}`,
+        background: hovered ? C.panelHover : C.panel,
+        cursor:"pointer", transition:"background 0.15s ease",
+        animation:`fadeUp .4s ease ${index*0.05}s both` }}>
+      {article.isLead
+        ? <div><LeadBanner cat={cat} article={article} />{body}</div>
+        : <div style={{ display:"flex", alignItems:"stretch" }}><CatTile cat={cat} slot={String(article.slot||index+1).padStart(2,"0")} />{body}</div>}
     </div>
   );
 }
@@ -248,17 +271,17 @@ function ExecBriefing({ articles, editionLabel }) {
     { id:"watchers",  icon:"🔍", label:"For China Watchers", sublabel:"Advisors · Consultants · Researchers", color:"#1E7F4F", article: pick(["tech","travel"]) || lead },
   ];
   return (
-    <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.red}`, borderRadius:"3px", marginBottom:"1.4rem", overflow:"hidden" }}>
+    <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.ink}`, borderRadius:"3px", marginBottom:"1.4rem", overflow:"hidden" }}>
       <div onClick={()=>setOpen(!open)} style={{ padding:"0.82rem 1.3rem", display:"flex", alignItems:"center", justifyContent:"space-between", cursor:"pointer", background:C.panel2, borderBottom:open?`1px solid ${C.border}`:"none" }}>
         <div style={{ display:"flex", alignItems:"center", gap:"0.85rem" }}>
-          <span style={{ background:C.red, color:"#FFFFFF", padding:"0.15rem 0.55rem", fontSize:"10px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, borderRadius:"2px" }}>EXEC BRIEFING</span>
+          <span style={{ background:C.ink, color:"#FFFFFF", padding:"0.15rem 0.55rem", fontSize:"10px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, borderRadius:"2px" }}>EXEC BRIEFING</span>
           <span style={{ fontFamily:C.mono, fontSize:"12px", color:C.textSub, fontWeight:700 }}>KEY SIGNALS — {editionLabel}</span>
         </div>
         <span style={{ color:C.textMuted, fontSize:"11px", fontFamily:C.mono }}>{open?"▲":"▼"}</span>
       </div>
       {open && (
         <div style={{ padding:"1.1rem 1.3rem" }}>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(220px,1fr))", gap:"0.85rem", marginBottom:"1.1rem" }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(220px,1fr))", gap:"0.85rem" }}>
             {audiences.map(a=>(
               <div key={a.id} style={{ background:C.panel2, border:`1px solid ${C.border}`, borderTop:`3px solid ${a.color}`, borderRadius:"3px", padding:"0.9rem 1rem" }}>
                 <div style={{ display:"flex", alignItems:"center", gap:"0.4rem", marginBottom:"0.15rem" }}>
@@ -275,24 +298,6 @@ function ExecBriefing({ articles, editionLabel }) {
                 )}
               </div>
             ))}
-          </div>
-          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"0.85rem" }}>
-            <div style={{ background:C.panel2, border:`1px solid ${C.border}`, borderRadius:"3px", padding:"0.9rem" }}>
-              <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.red, letterSpacing:"0.1em", marginBottom:"0.35rem" }}>ARTICLES THIS EDITION</div>
-              <div style={{ fontFamily:C.mono, fontSize:"2rem", fontWeight:700, color:C.text, lineHeight:1.1, margin:"0.2rem 0 0.28rem" }}>{articles.length}<span style={{ fontSize:"1rem", color:C.textMuted }}>/10</span></div>
-              <div style={{ fontFamily:C.mono, fontSize:"11px", color:C.textSub }}>ACROSS {[...new Set(articles.map(a=>a.category))].length} CATEGORIES</div>
-            </div>
-            <div style={{ background:C.panel2, border:`1px solid ${C.border}`, borderRadius:"3px", padding:"0.9rem" }}>
-              <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.textMuted, letterSpacing:"0.1em", marginBottom:"0.45rem" }}>MARKET SENTIMENT</div>
-              <div style={{ fontFamily:C.serif, fontSize:"1.2rem", fontWeight:700, color:C.green, marginBottom:"0.65rem" }}>Cautiously Optimistic</div>
-              <div style={{ display:"flex", alignItems:"center", gap:"0.45rem" }}>
-                <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>BEAR</span>
-                <div style={{ flex:1, height:"4px", background:C.border, borderRadius:2, position:"relative" }}>
-                  <div style={{ position:"absolute", left:0, top:0, height:"100%", width:"65%", background:`linear-gradient(90deg, ${C.red}, ${C.amber}, ${C.green})`, borderRadius:2 }} />
-                </div>
-                <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>BULL</span>
-              </div>
-            </div>
           </div>
         </div>
       )}
@@ -328,7 +333,7 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
           </div>
           <div style={{ textAlign:"right" }}>
             <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.textMuted, letterSpacing:"0.08em", textTransform:"uppercase" }}>Showing</div>
-            <div style={{ fontFamily:C.mono, fontSize:"26px", fontWeight:700, color:C.red, lineHeight:1 }}>
+            <div style={{ fontFamily:C.mono, fontSize:"26px", fontWeight:700, color:C.ink, lineHeight:1 }}>
               {loading ? "–" : filtered.length}<span style={{ fontSize:"13px", color:C.textMuted }}>/10</span>
             </div>
           </div>
@@ -383,9 +388,9 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
       </div>
 
       {/* SIDEBAR */}
-      <div style={{ display:"flex", flexDirection:"column", gap:"1rem", position:"sticky", top:118 }} className="cp-sidebar">
+      <div style={{ display:"flex", flexDirection:"column", gap:"1rem", position:"sticky", top:90 }} className="cp-sidebar">
         <SubscribeWidget />
-        <CoverageWidget articles={articles} loading={loading} />
+        <SentimentWidget />
         <ArchiveWidget editionDates={editionDates} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
     </main>
@@ -424,6 +429,16 @@ function ArticlePage({ articleId, articles, onNav }) {
           </div>
         </div>
       </div>
+      <div style={{ position:"relative", height:130, borderRadius:"3px", overflow:"hidden", marginBottom:"1.5rem",
+        background:`linear-gradient(105deg, ${cat.color}2E 0%, ${cat.color}10 60%, transparent 100%), ${C.panel2}`,
+        border:`1px solid ${C.border}` }}>
+        <div style={{ position:"absolute", inset:0, background:gridPattern(cat.color) }} />
+        <span style={{ position:"absolute", right:6, top:-42, fontFamily:C.serif, fontSize:"190px", fontWeight:700, color:cat.color, opacity:0.14, lineHeight:1, userSelect:"none" }}>{cat.glyph}</span>
+        <div style={{ position:"absolute", left:"1.3rem", bottom:"1rem" }}>
+          <div style={{ fontFamily:C.mono, fontSize:"11px", fontWeight:700, color:cat.color, letterSpacing:"0.12em", marginBottom:"0.2rem" }}>{cat.label.toUpperCase()} — 中国脉搏</div>
+          <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, letterSpacing:"0.07em" }}>CHINAPULSE DAILY INTELLIGENCE</div>
+        </div>
+      </div>
       <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderLeft:`3px solid ${cat.color}`, borderRadius:"3px", padding:"1rem 1.2rem", marginBottom:"1.5rem" }}>
         <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:cat.color, letterSpacing:"0.1em", marginBottom:"0.4rem", textTransform:"uppercase" }}>Summary</div>
         <p style={{ fontFamily:C.serif, fontSize:"15px", lineHeight:"1.75", color:C.textSub, margin:0, fontStyle:"italic" }}>{article.summary}</p>
@@ -444,7 +459,6 @@ function ArticlePage({ articleId, articles, onNav }) {
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", flexWrap:"wrap", gap:"0.8rem" }}>
           <div>
             <div style={{ fontFamily:C.sans, fontSize:"13px", fontWeight:700, color:C.text }}>{article.source}</div>
-            <div style={{ fontFamily:C.mono, fontSize:"11px", color:C.textMuted, marginTop:"0.15rem" }}>{article.sourceZH}</div>
           </div>
           <a href={article.url} target="_blank" rel="noopener noreferrer"
             style={{ display:"inline-flex", alignItems:"center", gap:"0.4rem", background:C.red, color:"#FFFFFF", padding:"0.52rem 1.1rem", borderRadius:"3px", fontSize:"12px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em", textDecoration:"none" }}>
@@ -654,16 +668,16 @@ function SubscribeWidget() {
   };
   if(state==="done") return <div style={{ background:"rgba(30,127,79,0.07)", border:"1px solid rgba(30,127,79,0.3)", borderRadius:"3px", padding:"1.2rem", textAlign:"center" }}><div style={{ fontSize:"1.4rem", marginBottom:"0.35rem", color:C.green }}>✓</div><div style={{ fontFamily:C.serif, fontSize:"14px", color:C.text, fontWeight:700, marginBottom:"0.25rem" }}>You're subscribed!</div><div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>{freq==="weekly"?"FIRST EMAIL MONDAY 7 AM HKT":"FIRST EMAIL TOMORROW 7 AM HKT"} — CHECK YOUR INBOX FOR A WELCOME NOTE</div></div>;
   return (
-    <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.red}`, borderRadius:"3px", padding:"1.15rem" }}>
-      <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.red, letterSpacing:"0.1em", marginBottom:"0.42rem", textTransform:"uppercase" }}>Daily Digest</div>
+    <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.ink}`, borderRadius:"3px", padding:"1.15rem" }}>
+      <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.ink, letterSpacing:"0.1em", marginBottom:"0.42rem", textTransform:"uppercase" }}>Daily Digest</div>
       <h3 style={{ fontFamily:C.serif, fontSize:"14px", fontWeight:700, color:C.text, margin:"0 0 0.3rem" }}>Top 10 China stories in your inbox</h3>
       <p style={{ fontFamily:C.serif, fontSize:"12.5px", color:C.textSub, lineHeight:1.6, margin:"0 0 0.8rem" }}>Translated & decoded — every day 7 AM HKT.</p>
       <div style={{ display:"flex", gap:"0.38rem", marginBottom:"0.62rem" }}>
-        {["daily","weekly"].map(f=><button key={f} onClick={()=>setFreq(f)} style={{ background:freq===f?C.red:C.panel2, border:`1px solid ${freq===f?C.red:C.border}`, color:freq===f?"#FFFFFF":C.textSub, padding:"0.25rem 0.7rem", borderRadius:"2px", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.06em", cursor:"pointer", textTransform:"uppercase" }}>{f}</button>)}
+        {["daily","weekly"].map(f=><button key={f} onClick={()=>setFreq(f)} style={{ background:freq===f?C.ink:C.panel2, border:`1px solid ${freq===f?C.ink:C.border}`, color:freq===f?"#FFFFFF":C.textSub, padding:"0.25rem 0.7rem", borderRadius:"2px", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.06em", cursor:"pointer", textTransform:"uppercase" }}>{f}</button>)}
       </div>
       <div style={{ display:"flex" }}>
         <input type="email" placeholder="your@email.com" value={email} onChange={e=>setEmail(e.target.value)} onKeyDown={e=>e.key==="Enter"&&submit()} style={{ flex:1, background:C.panel2, border:`1px solid ${C.border}`, borderRight:"none", borderRadius:"3px 0 0 3px", color:C.text, padding:"0.55rem 0.8rem", fontSize:"13px", fontFamily:C.mono, outline:"none", minWidth:0 }} />
-        <button onClick={submit} disabled={state==="sending"} style={{ background:C.red, color:"#FFFFFF", border:"none", padding:"0.55rem 0.88rem", borderRadius:"0 3px 3px 0", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.07em", cursor:"pointer", whiteSpace:"nowrap", opacity:state==="sending"?0.6:1 }}>{state==="sending"?"...":"JOIN →"}</button>
+        <button onClick={submit} disabled={state==="sending"} style={{ background:C.ink, color:"#FFFFFF", border:"none", padding:"0.55rem 0.88rem", borderRadius:"0 3px 3px 0", fontSize:"10px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.07em", cursor:"pointer", whiteSpace:"nowrap", opacity:state==="sending"?0.6:1 }}>{state==="sending"?"...":"JOIN →"}</button>
       </div>
       {state==="error" && <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.red, marginTop:"0.4rem" }}>⚠ Subscription failed — please try again.</div>}
       <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, marginTop:"0.4rem" }}>No spam. Unsubscribe anytime.</div>
@@ -671,28 +685,18 @@ function SubscribeWidget() {
   );
 }
 
-function CoverageWidget({ articles, loading }) {
+function SentimentWidget() {
   return (
     <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:"3px", padding:"1.05rem" }}>
-      <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.textMuted, letterSpacing:"0.1em", marginBottom:"0.75rem", textTransform:"uppercase" }}>Edition Coverage</div>
-      {CATS.filter(c=>c.id!=="all").map(cat=>{
-        const n = loading ? 0 : articles.filter(a=>a.category.toLowerCase()===cat.id).length;
-        return (
-          <div key={cat.id} style={{ marginBottom:"0.58rem" }}>
-            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:"0.2rem" }}>
-              <div style={{ display:"flex", alignItems:"center", gap:"0.36rem" }}>
-                <div style={{ width:5, height:5, borderRadius:"50%", background:n>0?cat.color:C.border }} />
-                <span style={{ fontSize:"12px", fontFamily:C.mono, color:n>0?C.textSub:C.textMuted }}>{cat.label}</span>
-              </div>
-              <span style={{ fontSize:"10px", fontFamily:C.mono, color:n>0?cat.color:C.textMuted }}>{loading?"–":n}/2</span>
-            </div>
-            <div style={{ height:2, background:C.borderLight, borderRadius:2 }}>
-              <div style={{ height:"100%", width:`${Math.min(n/2,1)*100}%`, background:cat.color, borderRadius:2, opacity:n>0?1:0, transition:"width .8s ease" }} />
-            </div>
-          </div>
-        );
-      })}
-      <div style={{ marginTop:"0.6rem", paddingTop:"0.58rem", borderTop:`1px solid ${C.border}`, fontSize:"10px", fontFamily:C.mono, color:C.textMuted }}>{loading?"LOADING...": `${articles.length}/10 SLOTS FILLED`}</div>
+      <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.textMuted, letterSpacing:"0.1em", marginBottom:"0.45rem", textTransform:"uppercase" }}>Market Sentiment</div>
+      <div style={{ fontFamily:C.serif, fontSize:"1.1rem", fontWeight:700, color:C.green, marginBottom:"0.65rem" }}>Cautiously Optimistic</div>
+      <div style={{ display:"flex", alignItems:"center", gap:"0.45rem" }}>
+        <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>BEAR</span>
+        <div style={{ flex:1, height:"4px", background:C.border, borderRadius:2, position:"relative" }}>
+          <div style={{ position:"absolute", left:0, top:0, height:"100%", width:"65%", background:`linear-gradient(90deg, ${C.red}, ${C.amber}, ${C.green})`, borderRadius:2 }} />
+        </div>
+        <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>BULL</span>
+      </div>
     </div>
   );
 }
@@ -829,8 +833,6 @@ export default function ChinaPulse() {
     return [...list].sort((a,b)=>(a.slot||99)-(b.slot||99));
   }, [articles, selectedDate]);
 
-  const headlines = useMemo(()=>edition.slice(0,10).map(a=>a.headline).filter(Boolean), [edition]);
-
   const navigate = (p, catId, artId) => {
     setPage(p);
     if(catId !== undefined && catId !== null) setActiveCat(catId);
@@ -862,7 +864,7 @@ export default function ChinaPulse() {
         }
       `}</style>
 
-      <Header onNav={navigate} search={search} setSearch={setSearch} showSources={showSources} setShowSources={setShowSources} headlines={headlines} lastUpdated={lastUpdated} />
+      <Header onNav={navigate} search={search} setSearch={setSearch} showSources={showSources} setShowSources={setShowSources} lastUpdated={lastUpdated} />
       {showSources && <SourcesDrawer />}
 
       {page==="home"    && <HomePage    onNav={navigate} activeCat={activeCat} setActiveCat={setActiveCat} search={search} edition={edition} editionDates={editionDates} selectedDate={selectedDate} setSelectedDate={pickDate} loading={loading} error={error} usingSample={usingSample} />}

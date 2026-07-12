@@ -17,20 +17,38 @@ const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID || "appLJfM0uboPvSB0E";
 // Table referenced by permanent ID (name is "Imported table" — ID survives renames)
 const AIRTABLE_TABLE = "tblzRNwo2f1hIGpIF";
 
+// Tiers: "core" = the flagship Chinese sources from the product brief — the platform's
+// differentiation; "secondary" = English China media for balance; "fallback" = wire
+// coverage used only to plug category gaps. 要客研究院 is WeChat-only (no feed exists
+// anywhere) — add its pieces manually via the + Submit page.
 const FEEDS = [
-  { url: "https://pandaily.com/feed/",  sourceEN: "Pandaily",      sourceZH: "Pandaily",  hint: "tech" },
-  { url: "https://technode.com/feed/",  sourceEN: "TechNode",      sourceZH: "动点科技",   hint: "tech" },
-  { url: "https://www.sixthtone.com/rss", sourceEN: "Sixth Tone",  sourceZH: "第六声",     hint: "consumer" },
-  { url: "https://www.scmp.com/rss/4/feed", sourceEN: "SCMP",      sourceZH: "南华早报",   hint: "policy" },
-  { url: "https://www.scmp.com/rss/2/feed", sourceEN: "SCMP Business", sourceZH: "南华早报", hint: "retail" },
-  { url: "https://36kr.com/feed",       sourceEN: "36Kr",          sourceZH: "36氪",      hint: "consumer" },
-  { url: "https://news.google.com/rss/search?q=china+retail+e-commerce+consumer+when:2d&hl=en-US&gl=US&ceid=US:en", sourceEN: "Google News", sourceZH: "", hint: "retail" },
-  { url: "https://news.google.com/rss/search?q=china+luxury+brands+shopping+when:2d&hl=en-US&gl=US&ceid=US:en",     sourceEN: "Google News", sourceZH: "", hint: "consumer" },
-  { url: "https://news.google.com/rss/search?q=china+outbound+travel+tourism+visa+hotel+when:2d&hl=en-US&gl=US&ceid=US:en", sourceEN: "Google News", sourceZH: "", hint: "travel" },
-  { url: "https://news.google.com/rss/search?q=china+policy+regulation+economy+when:2d&hl=en-US&gl=US&ceid=US:en",  sourceEN: "Google News", sourceZH: "", hint: "policy" },
+  // ── Core Chinese sources ──────────────────────────────────────────────────
+  { type: "rss",         url: "https://rss.huxiu.com/",                sourceEN: "Huxiu",       sourceZH: "虎嗅",     hint: "business analysis", tier: "core", max: 6 },
+  { type: "rss",         url: "https://36kr.com/feed",                 sourceEN: "36Kr",        sourceZH: "36氪",     hint: "consumer/retail (skip pure tech)", tier: "core", max: 8 },
+  { type: "rss",         url: "https://luxe.co/feed",                  sourceEN: "Luxe.CO",     sourceZH: "华丽志",   hint: "luxury/consumer",   tier: "core", max: 10 },
+  { type: "winshang",    url: "http://news.winshang.com/",             sourceEN: "Winshang",    sourceZH: "赢商网",   hint: "retail",            tier: "core", max: 10 },
+  { type: "traveldaily", url: "https://www.traveldaily.cn/",           sourceEN: "TravelDaily", sourceZH: "环球旅讯", hint: "travel",            tier: "core", max: 10 },
+  { type: "rss",         url: "https://feeds.feedburner.com/jingdaily", sourceEN: "Jing Daily", sourceZH: "精日传媒", hint: "luxury/consumer",   tier: "core", max: 8 },
+  { type: "dtyicai",     url: "https://dt.yicai.com/api/getNewsList?page=1&pageSize=100", sourceEN: "DT Business Observation", sourceZH: "DT商业观察", hint: "consumer data analysis", tier: "core", max: 4 },
+  // ── Core macro & travel data sources ──────────────────────────────────────
+  { type: "nbs",         url: "https://www.stats.gov.cn/english/PressRelease/",              sourceEN: "National Bureau of Statistics", sourceZH: "国家统计局", hint: "official macro data (retail sales, CPI, PMI)", tier: "core", max: 6 },
+  { type: "pinchain",    url: "https://www.pinchain.com/article/category/tourism",           sourceEN: "Pinchain",    sourceZH: "品橙旅游", hint: "inbound/outbound travel",    tier: "core", max: 6 },
+  { type: "pinchain",    url: "https://www.pinchain.com/article/category/datacenter",        sourceEN: "Pinchain",    sourceZH: "品橙旅游", hint: "travel pax data",            tier: "core", max: 6 },
+  { type: "pinchain",    url: "https://www.pinchain.com/article/category/onlinetravel",      sourceEN: "Pinchain",    sourceZH: "品橙旅游", hint: "OTA / online travel reports", tier: "core", max: 5 },
+  { type: "dragontrail", url: "https://dragontrail.com.cn/resources/blog",                   sourceEN: "Dragon Trail", sourceZH: "龙途互动", hint: "Chinese traveler insights",  tier: "core", max: 4 },
+  // ── Secondary English sources ─────────────────────────────────────────────
+  { type: "rss", url: "https://www.cgtn.com/subscribe/rss/section/business.xml", sourceEN: "CGTN Business", sourceZH: "中国国际电视台", hint: "macro/business", tier: "secondary", max: 8 },
+  { type: "rss", url: "https://www.cgtn.com/subscribe/rss/section/travel.xml",   sourceEN: "CGTN Travel",   sourceZH: "中国国际电视台", hint: "travel",         tier: "secondary", max: 6 },
+  { type: "rss", url: "https://www.moodiedavittreport.com/feed/", sourceEN: "The Moodie Davitt Report", sourceZH: "穆迪·戴维特报告", hint: "duty free/travel retail — China-relevant only", tier: "secondary", max: 8 },
+  { type: "rss", url: "https://www.scmp.com/rss/2/feed",   sourceEN: "SCMP Business", sourceZH: "南华早报", hint: "retail/policy",    tier: "secondary", max: 8 },
+  { type: "rss", url: "https://www.scmp.com/rss/4/feed",   sourceEN: "SCMP",          sourceZH: "南华早报", hint: "policy",           tier: "secondary", max: 6 },
+  { type: "rss", url: "https://www.sixthtone.com/rss",     sourceEN: "Sixth Tone",    sourceZH: "第六声",   hint: "consumer culture", tier: "secondary", max: 5 },
+  { type: "rss", url: "https://pandaily.com/feed/",        sourceEN: "Pandaily",      sourceZH: "Pandaily", hint: "tech",             tier: "secondary", max: 4 },
+  // ── Fallback wires (capped at 2 picks per edition) ────────────────────────
+  { type: "rss", url: "https://news.google.com/rss/search?q=site:reuters.com+china+when:2d&hl=en-US&gl=US&ceid=US:en", sourceEN: "Reuters", sourceZH: "路透社", hint: "macro/wire summary", tier: "fallback", max: 8 },
 ];
 
-const MAX_ITEMS_PER_FEED = 12;
+const DEFAULT_MAX_ITEMS_PER_FEED = 12;
 const MAX_ITEM_AGE_HOURS = 48;
 
 // ─── RSS helpers (no dependencies) ───────────────────────────────────────────
@@ -50,36 +68,179 @@ function tagContent(xml, tag) {
   return m ? decodeEntities(m[1]) : "";
 }
 
-async function fetchFeed(feed) {
+async function fetchText(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
   try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 15000);
-    const res = await fetch(feed.url, {
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; ChinaPulseBot/1.0)" },
+    const res = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) ChinaPulseBot/1.0" },
       signal: controller.signal,
       redirect: "follow",
     });
+    if (!res.ok) return "";
+    return await res.text();
+  } finally {
     clearTimeout(timer);
-    if (!res.ok) return [];
-    const xml = await res.text();
-    const items = [];
-    const re = /<item[\s>][\s\S]*?<\/item>/gi;
-    let m;
-    while ((m = re.exec(xml)) && items.length < MAX_ITEMS_PER_FEED) {
-      const block = m[0];
-      const title = tagContent(block, "title");
-      const linkRaw = block.match(/<link[^>]*>([\s\S]*?)<\/link>/i);
-      const link = linkRaw ? decodeEntities(linkRaw[1]) : "";
-      const pubDate = tagContent(block, "pubDate");
-      const desc = tagContent(block, "description").slice(0, 500);
-      if (!title || !link) continue;
-      if (pubDate) {
-        const age = (Date.now() - new Date(pubDate).getTime()) / 36e5;
-        if (Number.isFinite(age) && age > MAX_ITEM_AGE_HOURS) continue;
-      }
-      items.push({ title, link, pubDate, description: desc, sourceEN: feed.sourceEN, sourceZH: feed.sourceZH, hint: feed.hint });
+  }
+}
+
+function makeItem(feed, title, link, pubDate = "", description = "") {
+  return { title, link, pubDate, description, sourceEN: feed.sourceEN, sourceZH: feed.sourceZH, hint: feed.hint, tier: feed.tier };
+}
+
+function parseRSS(xml, feed) {
+  const max = feed.max || DEFAULT_MAX_ITEMS_PER_FEED;
+  const items = [];
+  const re = /<item[\s>][\s\S]*?<\/item>/gi;
+  let m;
+  while ((m = re.exec(xml)) && items.length < max) {
+    const block = m[0];
+    const title = tagContent(block, "title");
+    const linkRaw = block.match(/<link[^>]*>([\s\S]*?)<\/link>/i);
+    const link = linkRaw ? decodeEntities(linkRaw[1]) : "";
+    const pubDate = tagContent(block, "pubDate");
+    const desc = tagContent(block, "description").slice(0, 500);
+    if (!title || !link) continue;
+    if (pubDate) {
+      const age = (Date.now() - new Date(pubDate).getTime()) / 36e5;
+      if (Number.isFinite(age) && age > MAX_ITEM_AGE_HOURS) continue;
     }
-    return items;
+    items.push(makeItem(feed, title, link, pubDate, desc));
+  }
+  return items;
+}
+
+// 赢商网 has no RSS; its news portal is server-rendered — article links look like
+// <a href="http://news.winshang.com/html/074/1083.html" target="_blank">标题</a>
+function parseWinshang(html, feed) {
+  const max = feed.max || DEFAULT_MAX_ITEMS_PER_FEED;
+  const items = [];
+  const seen = new Set();
+  const re = /<a\s+[^>]*href="(https?:\/\/news\.winshang\.com\/html\/\d+\/\d+\.html)"[^>]*>\s*([^<]{6,150}?)\s*<\/a>/g;
+  let m;
+  while ((m = re.exec(html)) && items.length < max) {
+    const link = m[1];
+    const title = decodeEntities(m[2]);
+    if (seen.has(link) || !title) continue;
+    seen.add(link);
+    items.push(makeItem(feed, title, link));
+  }
+  return items;
+}
+
+// 环球旅讯 (traveldaily.cn) has no RSS; its homepage is server-rendered Next.js.
+// Editorial cards look like <a href="/article/190381/"><div><img alt="标题">…</a>,
+// simple links like <a href="/article/190380" …>标题</a>. Anchors with the
+// "corporateNews" class are paid press releases — skipped.
+function parseTravelDaily(html, feed) {
+  const max = feed.max || DEFAULT_MAX_ITEMS_PER_FEED;
+  const items = [];
+  const seen = new Set();
+  const re = /href="\/article\/(\d+)\/?"[^>]*>([\s\S]{0,400}?)<\/a>/g;
+  let m;
+  while ((m = re.exec(html)) && items.length < max) {
+    if (/corporateNews/i.test(m[0])) continue;
+    const link = `https://www.traveldaily.cn/article/${m[1]}`;
+    if (seen.has(link)) continue;
+    const alt = m[2].match(/alt="([^"]{6,150})"/);
+    const title = decodeEntities(alt ? alt[1] : m[2]).slice(0, 150).trim();
+    if (title.length < 6) continue;
+    seen.add(link);
+    items.push(makeItem(feed, title, link));
+  }
+  return items;
+}
+
+// DT商业观察 (dt.yicai.com, a Yicai property) exposes its article list as a public
+// JSON endpoint — the same free call its own article page makes in the browser.
+// It publishes analysis pieces at low frequency, so a wider 14-day window applies
+// instead of MAX_ITEM_AGE_HOURS, and repeated titles in the raw list are deduped.
+function parseDTYicai(json, feed) {
+  const max = feed.max || DEFAULT_MAX_ITEMS_PER_FEED;
+  const rows = (JSON.parse(json).data || {}).data || [];
+  const cutoff = Number(new Date(Date.now() - 14 * 86400e3).toISOString().slice(0, 10).replace(/-/g, ""));
+  const items = [];
+  const seen = new Set();
+  for (const r of rows.sort((a, b) => b.createdateint - a.createdateint)) {
+    if (items.length >= max) break;
+    if (!r.newsid || !r.newstitle || r.createdateint < cutoff) continue;
+    const key = r.newstitle.trim();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    items.push(makeItem(feed, key, `https://dt.yicai.com/news/${r.newsid}.html`, r.createdate || "", (r.newsnotes || "").slice(0, 500)));
+  }
+  return items;
+}
+
+// 品橙旅游 (pinchain.com) category pages are server-rendered; article anchors carry
+// the headline in a title attribute: <a href="…/article/348608" title="标题 - 品橙旅游">
+function parsePinchain(html, feed) {
+  const max = feed.max || DEFAULT_MAX_ITEMS_PER_FEED;
+  const items = [];
+  const seen = new Set();
+  const re = /href="(?:https?:\/\/www\.pinchain\.com)?\/article\/(\d+)"[^>]*title="([^"]{6,150}?)(?:\s*-\s*品橙旅游)?"/g;
+  let m;
+  while ((m = re.exec(html)) && items.length < max) {
+    const link = `https://www.pinchain.com/article/${m[1]}`;
+    const title = decodeEntities(m[2]);
+    if (seen.has(link) || !title) continue;
+    seen.add(link);
+    items.push(makeItem(feed, title, link));
+  }
+  return items;
+}
+
+// Dragon Trail's English blog (Chinese-traveler insights) is server-rendered:
+// <a href="/resources/blog/slug"><h4>Title</h4></a>
+function parseDragonTrail(html, feed) {
+  const max = feed.max || DEFAULT_MAX_ITEMS_PER_FEED;
+  const items = [];
+  const seen = new Set();
+  const re = /<a\s+href="(\/resources\/blog\/[^"]+)"[^>]*>\s*<h4>([^<]{6,200})<\/h4>/g;
+  let m;
+  while ((m = re.exec(html)) && items.length < max) {
+    const link = `https://dragontrail.com.cn${m[1]}`;
+    const title = decodeEntities(m[2]);
+    if (seen.has(link) || !title) continue;
+    seen.add(link);
+    items.push(makeItem(feed, title, link));
+  }
+  return items;
+}
+
+// NBS English press-release list — links look like
+// <a href="./202607/t20260710_1964094.html">1.Consumer Price Index in June 2026</a>.
+// The release date is embedded in the filename (tYYYYMMDD_…); only the last 10 days
+// are kept, so monthly indicators (retail sales, CPI, PMI) enter the pool while fresh.
+function parseNBS(html, feed) {
+  const max = feed.max || DEFAULT_MAX_ITEMS_PER_FEED;
+  const cutoff = Number(new Date(Date.now() - 10 * 86400e3).toISOString().slice(0, 10).replace(/-/g, ""));
+  const items = [];
+  const seen = new Set();
+  const re = /href="\.\/(\d{6}\/t(\d{8})_\d+\.html)"[^>]*>\s*(?:\d+\.)?\s*([^<]{6,200})/g;
+  let m;
+  while ((m = re.exec(html)) && items.length < max) {
+    if (Number(m[2]) < cutoff) continue;
+    const link = `https://www.stats.gov.cn/english/PressRelease/${m[1]}`;
+    const title = decodeEntities(m[3]);
+    if (seen.has(link) || !title) continue;
+    seen.add(link);
+    items.push(makeItem(feed, title, link, `${m[2].slice(0, 4)}-${m[2].slice(4, 6)}-${m[2].slice(6)}`));
+  }
+  return items;
+}
+
+async function fetchFeed(feed) {
+  try {
+    const body = await fetchText(feed.url);
+    if (!body) return [];
+    if (feed.type === "winshang") return parseWinshang(body, feed);
+    if (feed.type === "traveldaily") return parseTravelDaily(body, feed);
+    if (feed.type === "dtyicai") return parseDTYicai(body, feed);
+    if (feed.type === "pinchain") return parsePinchain(body, feed);
+    if (feed.type === "dragontrail") return parseDragonTrail(body, feed);
+    if (feed.type === "nbs") return parseNBS(body, feed);
+    return parseRSS(body, feed);
   } catch (e) {
     console.error(`Feed failed: ${feed.url} — ${e.message}`);
     return [];
@@ -168,31 +329,50 @@ async function deepseekJSON(userPrompt, maxTokens, validate) {
 }
 
 async function generateEdition(items, dateStr) {
+  const tierLabel = { core: "CORE", secondary: "secondary", fallback: "wire" };
   const itemList = items.map((it, i) =>
-    `[${i + 1}] (${it.hint}) ${it.title}\n    source: ${it.sourceEN}${it.sourceZH ? ` / ${it.sourceZH}` : ""} | url: ${it.link}\n    ${it.description || "(no description)"}`
+    `[${i + 1}] [${tierLabel[it.tier] || "secondary"}] (${it.hint}) ${it.title}\n    source: ${it.sourceEN}${it.sourceZH ? ` / ${it.sourceZH}` : ""} | url: ${it.link}\n    ${it.description || "(no description)"}`
   ).join("\n\n");
 
   // Step 1: select 10 items, balanced across categories
   const selection = await deepseekJSON(
-    `Below are candidate news items collected in the last 48 hours from ChinaPulse's monitored feeds. Today's edition date is ${dateStr}.
+    `Below are candidate news items collected in the last 48 hours from ChinaPulse's monitored feeds. Many are in Chinese — that is expected; read them in Chinese, the edition is written in English. Today's edition date is ${dateStr}.
 
 ${itemList}
 
-Select EXACTLY 10 items for today's edition:
-- Exactly 2 per category: Consumer, Retail, Policy, Tech, Travel (the (hint) is guidance only — assign category by actual content).
-- Choose the most business-relevant, consequential stories. Skip duplicates and pure politics/sports.
-- slot 1-10 by importance; the slot-1 story has is_lead true, all others false.
-- tag: short label like TREND REPORT, REGULATION, ANALYSIS, MARKET MOVE, DEAL WATCH.
+Select EXACTLY 10 items for today's edition. Category quotas (assign category by actual content — the (hint) is guidance only):
+- Policy: exactly 2 — macro & policy: official data releases (NBS retail sales, CPI, PMI, GDP, trade), macroeconomic shifts, government regulation. If a fresh NBS monthly indicator is in the pool — especially Total Retail Sales of Consumer Goods — it MUST be one of the two.
+- Consumer: 2 or 3 — consumer behavior, spending shifts, brand strategy, lifestyle trends. NOT gadget launches or startup funding.
+- Retail: exactly 2 — commercial real estate, malls, e-commerce, luxury retail.
+- Travel: 2 or 3 — inbound/outbound travel, passenger data, visa policy, hotels, duty free (Hainan policy, airport concessions), and OTA reports (Trip.com/Ctrip, Tuniu, Tongcheng — golden week / CNY season reports get priority when present).
+- Tech: exactly 1 — the business of technology only (platform economics, AI commercialization, e-commerce infrastructure). Never product reviews or funding rounds.
+(Consumer + Travel must total 5, so the 10 add up.)
+
+Ordering — slots follow category blocks, not raw importance: Policy takes slots 1-2 (slot 1 = the most consequential macro story, is_lead true, all others false), then Consumer, then Retail, then Travel, and the single Tech story is always slot 10.
+
+Source rules:
+- SOURCE PRIORITY: items marked [CORE] come from ChinaPulse's flagship sources (虎嗅, 36氪, 华丽志, 赢商网, 环球旅讯, DT商业观察, Jing Daily, 国家统计局/NBS, 品橙旅游, Dragon Trail) — insight global readers cannot get from Western media. When a [CORE] item and another item are of similar relevance, ALWAYS pick the [CORE] one. Target at least 6 of the 10 selections from [CORE] items.
+- At most 2 selections total from [wire] items (Reuters), and only for macro/policy stories no [CORE] or [secondary] item covers.
+- The Moodie Davitt Report is global: select its items only when relevant to China, Hainan, Chinese travelers, or Asia-Pacific duty free.
+- Skip: corporate press releases and PR puff, promotional or membership pages, sports, pure politics, duplicates, and evergreen/undated pieces that don't read as news.
+- tag: short label like TREND REPORT, REGULATION, DATA RELEASE, ANALYSIS, MARKET MOVE, DEAL WATCH.
 
 Respond with JSON only, exactly this shape:
 {"selections": [{"item": <item number>, "category": "Consumer|Retail|Policy|Tech|Travel", "slot": 1, "is_lead": true, "tag": "TREND REPORT"}, ...10 entries total]}`,
     2000,
     (d) => {
       if (!Array.isArray(d.selections) || d.selections.length !== 10) throw new Error("need exactly 10 selections");
+      const counts = {};
       for (const s of d.selections) {
         if (!CATEGORIES.includes(s.category)) throw new Error(`bad category: ${s.category}`);
         if (!items[s.item - 1]) throw new Error(`bad item number: ${s.item}`);
+        counts[s.category] = (counts[s.category] || 0) + 1;
       }
+      if (counts.Policy !== 2) throw new Error(`need exactly 2 Policy, got ${counts.Policy || 0}`);
+      if (counts.Retail !== 2) throw new Error(`need exactly 2 Retail, got ${counts.Retail || 0}`);
+      if (counts.Tech !== 1) throw new Error(`need exactly 1 Tech, got ${counts.Tech || 0}`);
+      if (!(counts.Consumer >= 2 && counts.Consumer <= 3)) throw new Error(`need 2-3 Consumer, got ${counts.Consumer || 0}`);
+      if (!(counts.Travel >= 2 && counts.Travel <= 3)) throw new Error(`need 2-3 Travel, got ${counts.Travel || 0}`);
     },
   );
 
@@ -216,6 +396,7 @@ NOTES: ${it.description || "(none)"}`;
 ${brief}
 
 Per-article rules:
+- Some TITLEs/NOTES are in Chinese — every article you write is in English (translate names/terms naturally, keep brand names in their common English form).
 - headline: punchy, under 15 words, no clickbait.
 - summary: 2-3 sentences for the homepage feed.
 - body: 250-350 words of original English analysis in 3-4 paragraphs separated by blank lines (\\n\\n). Lead with what happened (attributed), then context, then implications for global business.
@@ -326,11 +507,16 @@ export default async function handler(req, res) {
       digest = { error: e.message };
     }
 
+    const itemsBySource = {};
+    for (const it of items) itemsBySource[it.sourceEN] = (itemsBySource[it.sourceEN] || 0) + 1;
+
     return res.status(200).json({
       ok: true,
       date: dateStr,
       itemsCollected: items.length,
+      itemsBySource,
       published: created.records.length,
+      publishedSources: articles.map(a => a.source_en),
       digest,
       headlines: articles.map(a => a.headline),
     });
