@@ -77,13 +77,17 @@ const C = {
   mono:"'Courier New',Courier,monospace",
 };
 
+// Colour discipline: BLACK for structure & information (categories, tags, pills,
+// tiles, borders); RED only for brand + emphasis (logo accent, LEAD badge, hover,
+// errors); GREEN only for live/positive signals (synced status, subscribe success,
+// market sentiment — the sentiment meter keeps its bear→bull gradient). No other hues.
 const CATS = [
-  { id:"all",      label:"All",      color:"#141414", glyph:"脉" },
-  { id:"policy",   label:"Macro",    color:"#1B5FA8", glyph:"宏" }, // Airtable category stays "Policy"; display-only label
-  { id:"consumer", label:"Consumer", color:"#1E7F4F", glyph:"消" },
-  { id:"retail",   label:"Retail",   color:"#B87A1E", glyph:"零" },
-  { id:"travel",   label:"Travel",   color:"#1B7A8A", glyph:"旅" },
-  { id:"tech",     label:"Tech",     color:"#6B3A8A", glyph:"科" },
+  { id:"all",      label:"All",      color:"#141414" },
+  { id:"policy",   label:"Macro",    color:"#141414" }, // Airtable category stays "Policy"; display-only label
+  { id:"consumer", label:"Consumer", color:"#141414" },
+  { id:"retail",   label:"Retail",   color:"#141414" },
+  { id:"travel",   label:"Travel",   color:"#141414" },
+  { id:"tech",     label:"Tech",     color:"#141414" },
 ];
 
 const catById = id => CATS.find(c=>c.id===(id||"").toLowerCase())||CATS[0];
@@ -98,7 +102,7 @@ const LEGAL = {
 // ─── HEADER ──────────────────────────────────────────────────────────────────
 function Header({ onNav, search, setSearch, showSources, setShowSources, lastUpdated }) {
   return (
-    <header style={{ position:"sticky", top:0, zIndex:90, background:"rgba(255,255,255,0.97)", backdropFilter:"blur(10px)", borderBottom:`1px solid ${C.border}` }}>
+    <header style={{ position:"sticky", top:0, zIndex:90, background:"rgba(255,255,255,0.97)", backdropFilter:"blur(10px)", borderBottom:`2px solid ${C.ink}` }}>
       <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 1.5rem" }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0.85rem 0 0.75rem", flexWrap:"wrap", gap:"0.6rem" }}>
           <div onClick={()=>onNav("home")} style={{ cursor:"pointer" }}>
@@ -181,37 +185,25 @@ function LoadingSkeleton() {
   );
 }
 
-// ─── CATEGORY VISUALS (design-level "imagery": glyph tiles, no photos) ────────
-// Subtle graph-paper pattern in the category colour — gives tiles a data-terminal
-// texture without any external assets.
-const gridPattern = color =>
-  `repeating-linear-gradient(0deg, transparent, transparent 11px, ${color}14 11px, ${color}14 12px),
-   repeating-linear-gradient(90deg, transparent, transparent 11px, ${color}14 11px, ${color}14 12px)`;
-
+// ─── CATEGORY VISUALS (photo-free, monochrome editorial) ─────────────────────
 function CatTile({ cat, slot }) {
   return (
-    <div style={{ width:92, alignSelf:"stretch", flexShrink:0, position:"relative", overflow:"hidden",
-      background:`linear-gradient(135deg, ${cat.color}0D, ${cat.color}26), ${C.panel2}`,
-      borderRight:`1px solid ${C.borderLight}`, display:"flex", alignItems:"center", justifyContent:"center" }}>
-      <div style={{ position:"absolute", inset:0, background:gridPattern(cat.color) }} />
-      <span style={{ fontFamily:C.serif, fontSize:"46px", fontWeight:700, color:cat.color, opacity:0.35, lineHeight:1, userSelect:"none" }}>{cat.glyph}</span>
-      <span style={{ position:"absolute", top:7, left:9, fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:cat.color, opacity:0.85 }}>{slot}</span>
+    <div style={{ width:92, alignSelf:"stretch", flexShrink:0, background:C.panel2,
+      borderRight:`1px solid ${C.borderLight}`, display:"flex", flexDirection:"column",
+      alignItems:"center", justifyContent:"center", gap:"0.3rem" }}>
+      <span style={{ fontFamily:C.serif, fontSize:"30px", fontWeight:700, color:C.ink, lineHeight:1, userSelect:"none" }}>{slot}</span>
+      <span style={{ fontFamily:C.mono, fontSize:"9px", fontWeight:700, color:C.textMuted, letterSpacing:"0.14em" }}>{cat.label.toUpperCase()}</span>
     </div>
   );
 }
 
 function LeadBanner({ cat, article }) {
   return (
-    <div style={{ position:"relative", height:88, overflow:"hidden",
-      background:`linear-gradient(105deg, ${cat.color}26 0%, ${cat.color}0D 55%, transparent 100%), ${C.panel2}`,
-      borderBottom:`1px solid ${C.borderLight}` }}>
-      <div style={{ position:"absolute", inset:0, background:gridPattern(cat.color) }} />
-      <span style={{ position:"absolute", right:-8, top:-28, fontFamily:C.serif, fontSize:"130px", fontWeight:700, color:cat.color, opacity:0.13, lineHeight:1, userSelect:"none" }}>{cat.glyph}</span>
-      <div style={{ position:"absolute", left:"1.3rem", bottom:"0.85rem" }}>
-        <span style={{ background:C.red, color:"#FFFFFF", fontSize:"10px", padding:"0.15rem 0.5rem", borderRadius:"2px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700, marginRight:"0.6rem" }}>LEAD</span>
-        <span style={{ fontFamily:C.mono, fontSize:"11px", fontWeight:700, color:cat.color, letterSpacing:"0.1em" }}>{cat.label.toUpperCase()}</span>
-        {article.tag && <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, marginLeft:"0.6rem", letterSpacing:"0.07em" }}>{article.tag}</span>}
-      </div>
+    <div style={{ background:C.ink, padding:"0.72rem 1.3rem", display:"flex", alignItems:"center", gap:"0.7rem" }}>
+      <span style={{ background:C.red, color:"#FFFFFF", fontSize:"10px", padding:"0.15rem 0.5rem", borderRadius:"2px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700 }}>LEAD</span>
+      <span style={{ fontFamily:C.mono, fontSize:"11px", fontWeight:700, color:"#FFFFFF", letterSpacing:"0.12em" }}>{cat.label.toUpperCase()}</span>
+      {article.tag && <span style={{ fontFamily:C.mono, fontSize:"10px", color:"rgba(255,255,255,0.6)", letterSpacing:"0.07em" }}>{article.tag}</span>}
+      <span style={{ marginLeft:"auto", fontFamily:C.serif, fontSize:"13px", fontStyle:"italic", color:"rgba(255,255,255,0.55)" }}>中国脉搏</span>
     </div>
   );
 }
@@ -266,7 +258,7 @@ function ExecBriefing({ articles, editionLabel }) {
   const pick = cats => articles.find(a=>cats.includes(a.category));
   const lead = articles.find(a=>a.isLead) || articles[0];
   const audiences = [
-    { id:"investors", icon:"📈", label:"For Investors",     sublabel:"VCs · Analysts · Fund Managers",     color:"#1B5FA8", article: pick(["policy"]) || lead },
+    { id:"investors", icon:"📈", label:"For Investors",     sublabel:"VCs · Analysts · Fund Managers",     color:"#141414", article: pick(["policy"]) || lead },
     { id:"brand",     icon:"🏢", label:"For Brand Leaders",  sublabel:"CMOs · China GMs · Regional VPs",    color:"#C8102E", article: pick(["consumer","retail"]) || lead },
     { id:"watchers",  icon:"🔍", label:"For China Watchers", sublabel:"Advisors · Consultants · Researchers", color:"#1E7F4F", article: pick(["tech","travel"]) || lead },
   ];
@@ -356,7 +348,7 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
 
         {/* sample-data banner */}
         {usingSample && (
-          <div style={{ background:"rgba(184,122,30,0.07)", border:`1px solid rgba(184,122,30,0.35)`, borderRadius:"3px", padding:"0.8rem 1.1rem", marginBottom:"1rem", fontFamily:C.mono, fontSize:"12px", color:C.amber }}>
+          <div style={{ background:"rgba(200,16,46,0.05)", border:`1px solid rgba(200,16,46,0.3)`, borderRadius:"3px", padding:"0.8rem 1.1rem", marginBottom:"1rem", fontFamily:C.mono, fontSize:"12px", color:C.red }}>
             ⚠ LIVE DATA UNAVAILABLE — showing sample edition. Check the Airtable connection.
           </div>
         )}
@@ -429,15 +421,12 @@ function ArticlePage({ articleId, articles, onNav }) {
           </div>
         </div>
       </div>
-      <div style={{ position:"relative", height:130, borderRadius:"3px", overflow:"hidden", marginBottom:"1.5rem",
-        background:`linear-gradient(105deg, ${cat.color}2E 0%, ${cat.color}10 60%, transparent 100%), ${C.panel2}`,
-        border:`1px solid ${C.border}` }}>
-        <div style={{ position:"absolute", inset:0, background:gridPattern(cat.color) }} />
-        <span style={{ position:"absolute", right:6, top:-42, fontFamily:C.serif, fontSize:"190px", fontWeight:700, color:cat.color, opacity:0.14, lineHeight:1, userSelect:"none" }}>{cat.glyph}</span>
-        <div style={{ position:"absolute", left:"1.3rem", bottom:"1rem" }}>
-          <div style={{ fontFamily:C.mono, fontSize:"11px", fontWeight:700, color:cat.color, letterSpacing:"0.12em", marginBottom:"0.2rem" }}>{cat.label.toUpperCase()} — 中国脉搏</div>
-          <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, letterSpacing:"0.07em" }}>CHINAPULSE DAILY INTELLIGENCE</div>
+      <div style={{ background:C.ink, borderRadius:"3px", padding:"0.85rem 1.3rem", marginBottom:"1.5rem", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+        <div>
+          <div style={{ fontFamily:C.mono, fontSize:"11px", fontWeight:700, color:"#FFFFFF", letterSpacing:"0.12em", marginBottom:"0.15rem" }}>{cat.label.toUpperCase()}</div>
+          <div style={{ fontFamily:C.mono, fontSize:"9px", color:"rgba(255,255,255,0.55)", letterSpacing:"0.09em" }}>CHINAPULSE DAILY INTELLIGENCE</div>
         </div>
+        <span style={{ fontFamily:C.serif, fontSize:"14px", fontStyle:"italic", color:"rgba(255,255,255,0.55)" }}>中国脉搏</span>
       </div>
       <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderLeft:`3px solid ${cat.color}`, borderRadius:"3px", padding:"1rem 1.2rem", marginBottom:"1.5rem" }}>
         <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:cat.color, letterSpacing:"0.1em", marginBottom:"0.4rem", textTransform:"uppercase" }}>Summary</div>
