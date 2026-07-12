@@ -273,12 +273,29 @@ async function editionExists(dateStr) {
 // reports stay eligible until the day they're actually used.
 const normUrl = u => (u || "").replace(/[?#].*$/, "").replace(/\/$/, "");
 
+// Includes unpublished records too — a story that was ever written counts as covered.
 async function recentlyCoveredUrls() {
-  const params = `?filterByFormula=${encodeURIComponent("{Published}=1")}&pageSize=100` +
+  const params = `?pageSize=100` +
     `&sort%5B0%5D%5Bfield%5D=Date&sort%5B0%5D%5Bdirection%5D=desc` +
     `&fields%5B%5D=${encodeURIComponent("Original URL")}`;
   const data = await airtable(`${encodeURIComponent(AIRTABLE_TABLE)}${params}`);
   return new Set(data.records.map(r => normUrl(r.fields["Original URL"])).filter(Boolean));
+}
+
+// A forced re-run publishes a fresh 10 for the same date; the previous same-day
+// records must be unpublished or the site shows 20 articles. keepIds = the run
+// that stays live.
+async function unpublishSameDay(dateStr, keepIds) {
+  const formula = encodeURIComponent(`AND({Published}=1, IS_SAME({Date}, '${dateStr}', 'day'))`);
+  const data = await airtable(`${encodeURIComponent(AIRTABLE_TABLE)}?filterByFormula=${formula}&pageSize=100`);
+  const stale = data.records.filter(r => !keepIds.has(r.id));
+  for (let i = 0; i < stale.length; i += 10) {
+    await airtable(encodeURIComponent(AIRTABLE_TABLE), {
+      method: "PATCH",
+      body: JSON.stringify({ records: stale.slice(i, i + 10).map(r => ({ id: r.id, fields: { "Published": false } })) }),
+    });
+  }
+  return stale.length;
 }
 
 // ─── DeepSeek generation ─────────────────────────────────────────────────────
@@ -464,11 +481,23 @@ export default async function handler(req, res) {
   if (!process.env.DEEPSEEK_API_KEY) return res.status(500).json({ error: "DEEPSEEK_API_KEY is not set" });
   if (!process.env.AIRTABLE_TOKEN) return res.status(500).json({ error: "AIRTABLE_TOKEN is not set" });
 
-  const force = new URL(req.url, "http://x").searchParams.get("force") === "1";
+  const params = new URL(req.url, "http://x").searchParams;
+  const force = params.get("force") === "1";
   // "today" in Hong Kong time
   const dateStr = new Date(Date.now() + 8 * 3600 * 1000).toISOString().slice(0, 10);
 
   try {
+    // Maintenance mode: keep only the most recent 10 published records for today,
+    // unpublish the rest (repairs duplicate editions left by pre-fix force runs).
+    // Free — no article generation happens.
+    if (params.get("cleanup") === "1") {
+      const formula = encodeURIComponent(`AND({Published}=1, IS_SAME({Date}, '${dateStr}', 'day'))`);
+      const data = await airtable(`${encodeURIComponent(AIRTABLE_TABLE)}?filterByFormula=${formula}&pageSize=100`);
+      const newest = [...data.records].sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime)).slice(0, 10);
+      const unpublished = await unpublishSameDay(dateStr, new Set(newest.map(r => r.id)));
+      return res.status(200).json({ ok: true, cleanup: true, date: dateStr, kept: newest.length, unpublished });
+    }
+
     if (!force && await editionExists(dateStr)) {
       return res.status(200).json({ ok: true, skipped: true, message: `Edition for ${dateStr} already published` });
     }
@@ -525,6 +554,15 @@ export default async function handler(req, res) {
       body: JSON.stringify({ records, typecast: true }),
     });
 
+    // On a forced re-run, retire the earlier same-day edition so the site never
+    // shows more than 10 articles for one date (non-fatal if it fails).
+    let unpublished = 0;
+    try {
+      unpublished = await unpublishSameDay(dateStr, new Set(created.records.map(r => r.id)));
+    } catch (e) {
+      console.error(`same-day unpublish failed: ${e.message}`);
+    }
+
     // 4. Email the daily digest to subscribers (non-fatal if Resend not configured)
     let digest = { sent: 0 };
     try {
@@ -551,6 +589,7 @@ export default async function handler(req, res) {
       date: dateStr,
       itemsCollected: items.length,
       alreadyCovered,
+      unpublished,
       itemsBySource,
       published: created.records.length,
       publishedSources: articles.map(a => a.source_en),
