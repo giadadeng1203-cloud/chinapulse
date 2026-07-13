@@ -10,38 +10,44 @@ const AIRTABLE_TABLE   = "tblzRNwo2f1hIGpIF";
 
 const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // re-fetch from Airtable every 10 minutes
 
-// Fetch all Published articles — the app groups them into daily editions
+// Airtable only serves the recent window; older editions are frozen as static
+// JSON under /archive (written daily by the pipeline) and fetched on demand.
+const CMS_WINDOW_DAYS = 45;
+
+const mapRecord = r => ({
+  id:         r.id,
+  slot:       r.fields["Slot"]            || 0,
+  category:   (r.fields["Category"]       || "consumer").toLowerCase(),
+  tag:        r.fields["Tag"]             || "",
+  isLead:     r.fields["Is Lead"]         || false,
+  source:     r.fields["Source EN"]       || "",
+  sourceZH:   r.fields["Source ZH"]       || "",
+  url:        r.fields["Original URL"]    || "#",
+  rawDate:    r.fields["Date"]            || "",
+  date:       r.fields["Date"]            ? formatDate(r.fields["Date"]) : "",
+  time:       r.fields["Time"]            || "",
+  readTime:   r.fields["Read Time"]       || "5 min",
+  headline:   r.fields["Headline"]        || "",
+  summary:    r.fields["Summary"]         || "",
+  body:       r.fields["Body"]            || "",
+  matters:    r.fields["Why It Matters"]  || "",
+  author:     r.fields["Author"]          || "ChinaPulse Editorial",
+});
+
+// Fetch recent Published articles — the app groups them into daily editions
 async function fetchArticles() {
+  const formula = encodeURIComponent(`AND({Published}=1, IS_AFTER({Date}, DATEADD(TODAY(), -${CMS_WINDOW_DAYS}, 'days')))`);
   const records = [];
   let offset = "";
   do {
-    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}?filterByFormula={Published}=1&pageSize=100${offset ? `&offset=${offset}` : ""}`;
+    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE)}?filterByFormula=${formula}&pageSize=100${offset ? `&offset=${offset}` : ""}`;
     const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
     if (!res.ok) throw new Error(`Airtable error: ${res.status}`);
     const data = await res.json();
     records.push(...data.records);
     offset = data.offset || "";
   } while (offset);
-
-  return records.map(r => ({
-    id:         r.id,
-    slot:       r.fields["Slot"]            || 0,
-    category:   (r.fields["Category"]       || "consumer").toLowerCase(),
-    tag:        r.fields["Tag"]             || "",
-    isLead:     r.fields["Is Lead"]         || false,
-    source:     r.fields["Source EN"]       || "",
-    sourceZH:   r.fields["Source ZH"]       || "",
-    url:        r.fields["Original URL"]    || "#",
-    rawDate:    r.fields["Date"]            || "",
-    date:       r.fields["Date"]            ? formatDate(r.fields["Date"]) : "",
-    time:       r.fields["Time"]            || "",
-    readTime:   r.fields["Read Time"]       || "5 min",
-    headline:   r.fields["Headline"]        || "",
-    summary:    r.fields["Summary"]         || "",
-    body:       r.fields["Body"]            || "",
-    matters:    r.fields["Why It Matters"]  || "",
-    author:     r.fields["Author"]          || "ChinaPulse Editorial",
-  }));
+  return records.map(mapRecord);
 }
 
 function formatDate(dateStr) {
@@ -674,13 +680,16 @@ export default function ChinaPulse() {
   const [usingSample,  setUsingSample]  = useState(false);
   const [lastUpdated,  setLastUpdated]  = useState("");
   const [selectedDate, setSelectedDate] = useState(null);
+  const [archiveDates, setArchiveDates] = useState([]);
   const userPickedDate = useRef(false);
+  const archiveFetches = useRef(new Set());
 
   const loadArticles = useCallback(async (isBackground=false) => {
     if (!isBackground) setLoading(true);
     try {
       const data = await fetchArticles();
       setArticles(data);
+      archiveFetches.current.clear(); // a full reload wipes merged-in archive editions — allow refetch
       setUsingSample(false);
       setError(null);
       setLastUpdated(new Date().toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}));
@@ -705,12 +714,38 @@ export default function ChinaPulse() {
     return () => { clearInterval(interval); document.removeEventListener("visibilitychange", onVisible); };
   }, [loadArticles]);
 
-  // group into editions by date, newest first
+  // static archive index (dates frozen as /archive/YYYY-MM-DD.json by the pipeline)
+  useEffect(() => {
+    fetch("/archive/index.json")
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && Array.isArray(d.dates)) setArchiveDates(d.dates); })
+      .catch(() => {});
+  }, []);
+
+  // an archived edition loads on demand when its date is selected
+  useEffect(() => {
+    if (!selectedDate || !archiveDates.includes(selectedDate)) return;
+    if (articles.some(a => a.rawDate === selectedDate) || archiveFetches.current.has(selectedDate)) return;
+    archiveFetches.current.add(selectedDate);
+    fetch(`/archive/${selectedDate}.json`)
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d || !Array.isArray(d.records)) return;
+        const mapped = d.records.map(mapRecord);
+        setArticles(prev => {
+          const have = new Set(prev.map(a => a.id));
+          return [...prev, ...mapped.filter(a => !have.has(a.id))];
+        });
+      })
+      .catch(() => {});
+  }, [selectedDate, archiveDates, articles]);
+
+  // group into editions by date, newest first (recent from Airtable + frozen archive)
   const editionDates = useMemo(() => {
-    const dates = [...new Set(articles.map(a=>a.rawDate).filter(Boolean))];
-    dates.sort((a,b)=>b.localeCompare(a));
-    return dates;
-  }, [articles]);
+    const dates = new Set(articles.map(a=>a.rawDate).filter(Boolean));
+    for (const d of archiveDates) dates.add(d);
+    return [...dates].sort((a,b)=>b.localeCompare(a));
+  }, [articles, archiveDates]);
 
   // default to the latest edition; follow new editions unless the user picked an archive date
   useEffect(() => {

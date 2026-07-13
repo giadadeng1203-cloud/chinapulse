@@ -33,6 +33,23 @@ Vercel → your project (`china-pulse-daily`) → **Settings → Environment Var
 | `CRON_SECRET` | Any random string, e.g. from https://generate-secret.vercel.app/32 |
 | `RESEND_API_KEY` | From https://resend.com (free — 3,000 emails/month) — powers welcome, daily-digest, and weekly-digest emails |
 | `EMAIL_FROM` | Optional. Sender address, e.g. `ChinaPulse <news@arcohk.com>` after verifying the arcohk.com domain in Resend; defaults to Resend's test sender |
+| `GITHUB_TOKEN` | Fine-grained GitHub PAT with **Contents: Read and write** on the `chinapulse` repo only (https://github.com/settings/personal-access-tokens/new). Powers the permanent static archive — until it's set, the archive step is skipped harmlessly |
+
+## Permanent archive & Airtable cleanup
+
+Airtable's free plan caps a base at 1,000 records, and the frontend shouldn't load
+years of articles — so Airtable only serves the **last 45 days** to the site, and the
+pipeline maintains a permanent archive in the repo:
+
+- Editions older than **7 days** (the hand-editing grace period) are frozen daily as
+  `public/archive/YYYY-MM-DD.json` + an `index.json`, committed via the GitHub API
+  (each commit auto-redeploys the site so the files go live on Vercel's CDN).
+- Airtable records older than **60 days** are deleted — only after their date is
+  confirmed in the archive index (retired/unpublished records are deleted too).
+- The site merges both worlds: recent editions come from Airtable live; picking an
+  older date in the Editions Archive fetches its static JSON on demand.
+- Manual test / one-off run: `/api/daily-refresh?key=CRON_SECRET&archive=1` (free,
+  no article generation).
 
 ## Email subscriptions
 

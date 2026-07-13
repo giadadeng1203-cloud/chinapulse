@@ -298,6 +298,98 @@ async function unpublishSameDay(dateStr, keepIds) {
   return stale.length;
 }
 
+// ─── GitHub static archive ───────────────────────────────────────────────────
+// Editions older than ARCHIVE_GRACE_DAYS are frozen as static JSON files in the
+// repo (public/archive/YYYY-MM-DD.json, served by Vercel's CDN). Airtable records
+// older than AIRTABLE_RETENTION_DAYS are then deleted — but only once their date
+// is safely archived — keeping the base permanently under the 1,000-record free cap.
+const GITHUB_REPO = process.env.GITHUB_REPO || "giadadeng1203-cloud/chinapulse";
+const ARCHIVE_GRACE_DAYS = 7;      // editions younger than this can still be hand-edited in Airtable
+const AIRTABLE_RETENTION_DAYS = 60;
+
+async function gh(path, options = {}) {
+  const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/${path}`, {
+    ...options,
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+      Accept: "application/vnd.github+json",
+      "User-Agent": "ChinaPulseBot/1.0",
+      ...options.headers,
+    },
+  });
+  if (res.status === 404) return null;
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(`GitHub ${res.status}: ${JSON.stringify(body.message || body).slice(0, 200)}`);
+  return body;
+}
+
+async function ghReadJSON(path) {
+  const f = await gh(`contents/${encodeURIComponent(path).replace(/%2F/g, "/")}?ref=main`);
+  return f ? { sha: f.sha, data: JSON.parse(Buffer.from(f.content, "base64").toString("utf8")) } : null;
+}
+
+async function ghWriteJSON(path, data, message, sha) {
+  return gh(`contents/${encodeURIComponent(path).replace(/%2F/g, "/")}`, {
+    method: "PUT",
+    body: JSON.stringify({
+      message,
+      content: Buffer.from(JSON.stringify(data, null, 1)).toString("base64"),
+      branch: "main",
+      ...(sha ? { sha } : {}),
+    }),
+  });
+}
+
+async function archiveAndPrune() {
+  if (!process.env.GITHUB_TOKEN) return { skipped: "GITHUB_TOKEN not set" };
+  const cutoffArchive = new Date(Date.now() - ARCHIVE_GRACE_DAYS * 86400e3).toISOString().slice(0, 10);
+  const cutoffDelete = new Date(Date.now() - AIRTABLE_RETENTION_DAYS * 86400e3).toISOString().slice(0, 10);
+
+  const idx = await ghReadJSON("public/archive/index.json");
+  const index = idx ? idx.data : { dates: [] };
+
+  // Read the whole table (published + retired records)
+  const all = [];
+  let offset = "";
+  do {
+    const page = await airtable(`${encodeURIComponent(AIRTABLE_TABLE)}?pageSize=100${offset ? `&offset=${offset}` : ""}`);
+    all.push(...page.records);
+    offset = page.offset || "";
+  } while (offset);
+
+  // Freeze finished editions that aren't archived yet
+  const byDate = {};
+  for (const r of all) {
+    const d = r.fields["Date"];
+    if (d && r.fields["Published"]) (byDate[d] = byDate[d] || []).push(r);
+  }
+  const archived = [];
+  for (const d of Object.keys(byDate).sort()) {
+    if (d >= cutoffArchive || index.dates.includes(d)) continue;
+    const records = byDate[d]
+      .sort((a, b) => (a.fields["Slot"] || 0) - (b.fields["Slot"] || 0))
+      .map(r => ({ id: r.id, fields: r.fields }));
+    await ghWriteJSON(`public/archive/${d}.json`, { date: d, records }, `Archive edition ${d}`);
+    index.dates.push(d);
+    archived.push(d);
+  }
+  if (archived.length) {
+    index.dates = [...new Set(index.dates)].sort().reverse();
+    await ghWriteJSON("public/archive/index.json", index, `Archive index: add ${archived.join(", ")}`, idx ? idx.sha : undefined);
+  }
+
+  // Prune Airtable: past retention AND (archived date OR retired record)
+  const doomed = all.filter(r => {
+    const d = r.fields["Date"];
+    return d && d < cutoffDelete && (index.dates.includes(d) || !r.fields["Published"]);
+  });
+  for (let i = 0; i < doomed.length; i += 10) {
+    const qs = doomed.slice(i, i + 10).map(r => `records[]=${r.id}`).join("&");
+    await airtable(`${encodeURIComponent(AIRTABLE_TABLE)}?${qs}`, { method: "DELETE" });
+  }
+  return { archived, pruned: doomed.length };
+}
+
 // ─── DeepSeek generation ─────────────────────────────────────────────────────
 // DeepSeek's JSON mode has no strict schema enforcement, so every call is
 // validated and retried once. Writing is split into two batches of 5 articles
@@ -521,6 +613,13 @@ export default async function handler(req, res) {
       return res.status(200).json({ ok: true, manual: true, date: dateStr, published: created.records.length, unpublished: stale.length });
     }
 
+    // Maintenance mode: archive finished editions to GitHub + prune old Airtable
+    // records, without generating anything. Free.
+    if (params.get("archive") === "1") {
+      const result = await archiveAndPrune();
+      return res.status(200).json({ ok: true, archiveRun: true, ...result });
+    }
+
     // Maintenance mode: keep only the most recent 10 published records for today,
     // unpublish the rest (repairs duplicate editions left by pre-fix force runs).
     // Free — no article generation happens.
@@ -597,7 +696,17 @@ export default async function handler(req, res) {
       console.error(`same-day unpublish failed: ${e.message}`);
     }
 
-    // 4. Email the daily digest to subscribers (non-fatal if Resend not configured)
+    // 4. Freeze old editions into the GitHub archive + prune old Airtable records
+    //    (non-fatal; skipped until GITHUB_TOKEN is configured)
+    let archive = {};
+    try {
+      archive = await archiveAndPrune();
+    } catch (e) {
+      console.error(`archive/prune failed: ${e.message}`);
+      archive = { error: e.message };
+    }
+
+    // 5. Email the daily digest to subscribers (non-fatal if Resend not configured)
     let digest = { sent: 0 };
     try {
       digest = await sendDigest({
@@ -624,6 +733,7 @@ export default async function handler(req, res) {
       itemsCollected: items.length,
       alreadyCovered,
       unpublished,
+      archive,
       itemsBySource,
       published: created.records.length,
       publishedSources: articles.map(a => a.source_en),
