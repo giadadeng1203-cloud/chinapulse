@@ -100,7 +100,7 @@ const LEGAL = {
 };
 
 // ─── HEADER ──────────────────────────────────────────────────────────────────
-function Header({ onNav, search, setSearch, showSources, setShowSources, lastUpdated }) {
+function Header({ onNav, search, setSearch, lastUpdated }) {
   return (
     <header style={{ position:"sticky", top:0, zIndex:90, background:"rgba(255,255,255,0.97)", backdropFilter:"blur(10px)", borderBottom:`2px solid ${C.ink}` }}>
       <div style={{ maxWidth:1200, margin:"0 auto", padding:"0 1.5rem" }}>
@@ -122,8 +122,6 @@ function Header({ onNav, search, setSearch, showSources, setShowSources, lastUpd
               <input placeholder="Search..." value={search} onChange={e=>setSearch(e.target.value)}
                 style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:"3px", color:C.text, padding:"0.42rem 0.75rem 0.42rem 1.8rem", fontSize:"13px", fontFamily:C.mono, outline:"none", width:150 }} />
             </div>
-            <button onClick={()=>setShowSources(!showSources)} style={{ background:showSources?"rgba(200,16,46,0.07)":C.panel, border:`1px solid ${showSources?C.red:C.border}`, color:showSources?C.red:C.textSub, padding:"0.42rem 0.78rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>SOURCES</button>
-            <button onClick={()=>onNav("submit")} style={{ background:C.ink, color:"#FFFFFF", border:"none", padding:"0.42rem 0.88rem", borderRadius:"3px", cursor:"pointer", fontSize:"11px", fontFamily:C.mono, fontWeight:700, letterSpacing:"0.05em" }}>+ SUBMIT</button>
           </div>
         </div>
       </div>
@@ -186,24 +184,14 @@ function LoadingSkeleton() {
 }
 
 // ─── CATEGORY VISUALS (photo-free, monochrome editorial) ─────────────────────
-function CatTile({ cat, slot }) {
+function CatTile({ cat, slot, isLead }) {
   return (
     <div style={{ width:92, alignSelf:"stretch", flexShrink:0, background:C.panel2,
       borderRight:`1px solid ${C.borderLight}`, display:"flex", flexDirection:"column",
       alignItems:"center", justifyContent:"center", gap:"0.3rem" }}>
       <span style={{ fontFamily:C.serif, fontSize:"30px", fontWeight:700, color:C.ink, lineHeight:1, userSelect:"none" }}>{slot}</span>
       <span style={{ fontFamily:C.mono, fontSize:"9px", fontWeight:700, color:C.textMuted, letterSpacing:"0.14em" }}>{cat.label.toUpperCase()}</span>
-    </div>
-  );
-}
-
-function LeadBanner({ cat, article }) {
-  return (
-    <div style={{ background:C.ink, padding:"0.72rem 1.3rem", display:"flex", alignItems:"center", gap:"0.7rem" }}>
-      <span style={{ background:C.red, color:"#FFFFFF", fontSize:"10px", padding:"0.15rem 0.5rem", borderRadius:"2px", fontFamily:C.mono, letterSpacing:"0.1em", fontWeight:700 }}>LEAD</span>
-      <span style={{ fontFamily:C.mono, fontSize:"11px", fontWeight:700, color:"#FFFFFF", letterSpacing:"0.12em" }}>{cat.label.toUpperCase()}</span>
-      {article.tag && <span style={{ fontFamily:C.mono, fontSize:"10px", color:"rgba(255,255,255,0.6)", letterSpacing:"0.07em" }}>{article.tag}</span>}
-      <span style={{ marginLeft:"auto", fontFamily:C.serif, fontSize:"13px", fontStyle:"italic", color:"rgba(255,255,255,0.55)" }}>中国脉搏</span>
+      {isLead && <span style={{ fontFamily:C.mono, fontSize:"8px", fontWeight:700, color:C.red, letterSpacing:"0.14em" }}>LEAD</span>}
     </div>
   );
 }
@@ -212,30 +200,6 @@ function LeadBanner({ cat, article }) {
 function ArticleRow({ article, index, onClick, isLast }) {
   const cat = catById(article.category);
   const [hovered, setHovered] = useState(false);
-  const body = (
-    <div style={{ flex:1, minWidth:0, padding:"1.1rem 1.3rem" }}>
-      <div style={{ display:"flex", alignItems:"center", gap:"0.55rem", marginBottom:"0.5rem", flexWrap:"wrap" }}>
-        {article.tag && <span style={{ background:"transparent", color:cat.color, border:`1px solid ${cat.color}55`, padding:"0.1rem 0.42rem", borderRadius:"2px", fontSize:"10px", fontFamily:C.mono, letterSpacing:"0.07em", fontWeight:700 }}>{article.tag}</span>}
-        <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{cat.label.toUpperCase()}</span>
-        <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:"0.45rem" }}>
-          <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{article.time}{article.time?" · ":""}{article.readTime}</span>
-        </div>
-      </div>
-      <h3 style={{ fontFamily:C.serif, fontSize:article.isLead?"20px":"16px", fontWeight:700, lineHeight:1.35, color:hovered?C.red:C.text, margin:"0 0 0.55rem", letterSpacing:"-0.01em", transition:"color 0.15s" }}>
-        {article.headline}
-      </h3>
-      <p style={{ fontFamily:C.serif, fontSize:"14px", lineHeight:"1.72", color:C.textSub, margin:"0 0 0.55rem", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
-        {article.summary}
-      </p>
-      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
-        <div style={{ display:"flex", alignItems:"center", gap:"0.4rem" }}>
-          <div style={{ width:5, height:5, borderRadius:"50%", background:cat.color }} />
-          <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{article.source}</span>
-        </div>
-        <span style={{ fontSize:"11px", fontFamily:C.mono, fontWeight:700, color:hovered?C.red:C.textMuted, transition:"color 0.15s" }}>READ →</span>
-      </div>
-    </div>
-  );
   return (
     <div onClick={onClick}
       onMouseEnter={()=>setHovered(true)}
@@ -244,10 +208,21 @@ function ArticleRow({ article, index, onClick, isLast }) {
         borderBottom: isLast?"none":`1px solid ${C.borderLight}`,
         background: hovered ? C.panelHover : C.panel,
         cursor:"pointer", transition:"background 0.15s ease",
-        animation:`fadeUp .4s ease ${index*0.05}s both` }}>
-      {article.isLead
-        ? <div><LeadBanner cat={cat} article={article} />{body}</div>
-        : <div style={{ display:"flex", alignItems:"stretch" }}><CatTile cat={cat} slot={String(article.slot||index+1).padStart(2,"0")} />{body}</div>}
+        animation:`fadeUp .4s ease ${index*0.05}s both`,
+        display:"flex", alignItems:"stretch" }}>
+      <CatTile cat={cat} slot={String(article.slot||index+1).padStart(2,"0")} isLead={article.isLead} />
+      <div style={{ flex:1, minWidth:0, padding:"1.1rem 1.3rem" }}>
+        <h3 style={{ fontFamily:C.serif, fontSize:"16.5px", fontWeight:700, lineHeight:1.35, color:hovered?C.red:C.text, margin:"0 0 0.55rem", letterSpacing:"-0.01em", transition:"color 0.15s" }}>
+          {article.headline}
+        </h3>
+        <p style={{ fontFamily:C.serif, fontSize:"14px", lineHeight:"1.72", color:C.textSub, margin:"0 0 0.55rem", display:"-webkit-box", WebkitLineClamp:2, WebkitBoxOrient:"vertical", overflow:"hidden" }}>
+          {article.summary}
+        </p>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+          <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{article.source}</span>
+          <span style={{ fontSize:"11px", fontFamily:C.mono, fontWeight:700, color:hovered?C.red:C.textMuted, transition:"color 0.15s" }}>{article.readTime} · READ →</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -258,9 +233,9 @@ function ExecBriefing({ articles, editionLabel }) {
   const pick = cats => articles.find(a=>cats.includes(a.category));
   const lead = articles.find(a=>a.isLead) || articles[0];
   const audiences = [
-    { id:"investors", icon:"📈", label:"For Investors",     sublabel:"VCs · Analysts · Fund Managers",     color:"#141414", article: pick(["policy"]) || lead },
-    { id:"brand",     icon:"🏢", label:"For Brand Leaders",  sublabel:"CMOs · China GMs · Regional VPs",    color:"#C8102E", article: pick(["consumer","retail"]) || lead },
-    { id:"watchers",  icon:"🔍", label:"For China Watchers", sublabel:"Advisors · Consultants · Researchers", color:"#1E7F4F", article: pick(["tech","travel"]) || lead },
+    { id:"finance",  label:"Finance",  sublabel:"Markets · Investors · Funds",      color:"#141414", article: pick(["policy"]) || lead },
+    { id:"brands",   label:"Brands",   sublabel:"Consumer · Retail · Luxury",       color:"#C8102E", article: pick(["consumer","retail"]) || lead },
+    { id:"domestic", label:"Domestic", sublabel:"Policy · Society · Ground Trends", color:"#1E7F4F", article: pick(["tech","travel"]) || lead },
   ];
   return (
     <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderTop:`3px solid ${C.ink}`, borderRadius:"3px", marginBottom:"1.4rem", overflow:"hidden" }}>
@@ -276,9 +251,8 @@ function ExecBriefing({ articles, editionLabel }) {
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(220px,1fr))", gap:"0.85rem" }}>
             {audiences.map(a=>(
               <div key={a.id} style={{ background:C.panel2, border:`1px solid ${C.border}`, borderTop:`3px solid ${a.color}`, borderRadius:"3px", padding:"0.9rem 1rem" }}>
-                <div style={{ display:"flex", alignItems:"center", gap:"0.4rem", marginBottom:"0.15rem" }}>
-                  <span style={{ fontSize:"14px" }}>{a.icon}</span>
-                  <span style={{ fontFamily:C.mono, fontSize:"10px", color:a.color, fontWeight:700, letterSpacing:"0.04em" }}>{a.label.toUpperCase()}</span>
+                <div style={{ marginBottom:"0.15rem" }}>
+                  <span style={{ fontFamily:C.mono, fontSize:"10px", color:a.color, fontWeight:700, letterSpacing:"0.09em" }}>{a.label.toUpperCase()}</span>
                 </div>
                 <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, marginBottom:"0.5rem" }}>{a.sublabel}</div>
                 {a.article ? (
@@ -382,7 +356,7 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
       {/* SIDEBAR */}
       <div style={{ display:"flex", flexDirection:"column", gap:"1rem", position:"sticky", top:90 }} className="cp-sidebar">
         <SubscribeWidget />
-        <SentimentWidget />
+        <SourcesWidget />
         <ArchiveWidget editionDates={editionDates} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
     </main>
@@ -405,10 +379,6 @@ function ArticlePage({ articleId, articles, onNav }) {
       <button onClick={()=>onNav("home")} style={{ background:"none", border:"none", cursor:"pointer", fontFamily:C.mono, fontSize:"12px", fontWeight:700, color:C.textMuted, letterSpacing:"0.04em", marginBottom:"1.5rem", display:"flex", alignItems:"center", gap:"0.38rem", padding:0 }}>
         ← BACK TO EDITION
       </button>
-      <div style={{ display:"flex", alignItems:"center", gap:"0.6rem", marginBottom:"0.85rem" }}>
-        {article.tag && <span style={{ color:cat.color, border:`1px solid ${cat.color}55`, padding:"0.12rem 0.5rem", borderRadius:"2px", fontSize:"10px", fontFamily:C.mono, letterSpacing:"0.08em", fontWeight:700 }}>{article.tag}</span>}
-        <span style={{ fontSize:"11px", color:C.textMuted, fontFamily:C.mono }}>{cat.label.toUpperCase()}</span>
-      </div>
       <h1 style={{ fontFamily:C.serif, fontSize:"28px", fontWeight:700, lineHeight:1.28, color:C.text, margin:"0 0 1rem", letterSpacing:"-0.02em" }}>
         {article.headline}
       </h1>
@@ -674,17 +644,26 @@ function SubscribeWidget() {
   );
 }
 
-function SentimentWidget() {
+// Sources card — replaces the old Market Sentiment mock (no methodology behind it)
+// and the old header SOURCES drawer. Doubles as attribution transparency.
+function SourcesWidget() {
+  const sources = [
+    ["Huxiu", "虎嗅"], ["36Kr", "36氪"], ["Luxe.CO", "华丽志"], ["Winshang", "赢商网"],
+    ["TravelDaily", "环球旅讯"], ["Pinchain", "品橙旅游"], ["DT Business", "DT商业观察"],
+    ["NBS", "国家统计局"], ["Jing Daily", "精日传媒"], ["SCMP", "南华早报"], ["Reuters", "路透社"], ["CGTN", ""],
+  ];
   return (
     <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:"3px", padding:"1.05rem" }}>
-      <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.textMuted, letterSpacing:"0.1em", marginBottom:"0.45rem", textTransform:"uppercase" }}>Market Sentiment</div>
-      <div style={{ fontFamily:C.serif, fontSize:"1.1rem", fontWeight:700, color:C.green, marginBottom:"0.65rem" }}>Cautiously Optimistic</div>
-      <div style={{ display:"flex", alignItems:"center", gap:"0.45rem" }}>
-        <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>BEAR</span>
-        <div style={{ flex:1, height:"4px", background:C.border, borderRadius:2, position:"relative" }}>
-          <div style={{ position:"absolute", left:0, top:0, height:"100%", width:"65%", background:`linear-gradient(90deg, ${C.red}, ${C.amber}, ${C.green})`, borderRadius:2 }} />
-        </div>
-        <span style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted }}>BULL</span>
+      <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.textMuted, letterSpacing:"0.1em", marginBottom:"0.65rem", textTransform:"uppercase" }}>Coverage Sources</div>
+      <div style={{ display:"flex", flexWrap:"wrap", gap:"0.3rem" }}>
+        {sources.map(([en,zh])=>(
+          <span key={en} style={{ background:C.panel2, border:`1px solid ${C.borderLight}`, borderRadius:"2px", padding:"0.18rem 0.5rem", fontSize:"10.5px", fontFamily:C.sans, color:C.textSub }}>
+            <span style={{ fontWeight:600, color:C.text }}>{en}</span>{zh && <span style={{ color:C.textMuted }}> {zh}</span>}
+          </span>
+        ))}
+      </div>
+      <div style={{ marginTop:"0.7rem", paddingTop:"0.6rem", borderTop:`1px solid ${C.borderLight}`, fontSize:"10px", fontFamily:C.mono, color:C.textMuted, lineHeight:1.6 }}>
+        10 ORIGINAL BRIEFS DAILY · EVERY STORY ATTRIBUTED &amp; LINKED TO ITS SOURCE
       </div>
     </div>
   );
@@ -709,58 +688,11 @@ function ArchiveWidget({ editionDates, selectedDate, setSelectedDate }) {
   );
 }
 
-function SourcesDrawer() {
-  const sources = [
-    { en:"Huxiu", zh:"虎嗅", url:"https://www.huxiu.com" },
-    { en:"36Kr", zh:"36氪", url:"https://36kr.com" },
-    { en:"36Kr Future Commerce", zh:"36氪未来消费", url:"https://36kr.com" },
-    { en:"Winshang", zh:"赢商网", url:"https://www.winshang.com" },
-    { en:"Huali Zhi", zh:"华丽志", url:"https://www.hualizhi.com" },
-    { en:"TravelDaily CN", zh:"环球旅讯", url:"https://www.traveldaily.cn" },
-    { en:"Jing Daily", zh:"Jing Daily", url:"https://jingdaily.com" },
-    { en:"Luxe.co", zh:"Luxe.co", url:"https://luxe.co" },
-    { en:"Pandaily", zh:"Pandaily", url:"https://pandaily.com" },
-    { en:"TechNode", zh:"动点科技", url:"https://technode.com" },
-    { en:"Sixth Tone", zh:"第六声", url:"https://www.sixthtone.com" },
-    { en:"ConCall", zh:"ConCall", url:"https://www.concall.cn" },
-    { en:"CEO Brand Watch", zh:"CEO品牌观察", url:"https://mp.weixin.qq.com" },
-    { en:"Fashion Business Daily", zh:"时尚商业Daily", url:"https://mp.weixin.qq.com" },
-    { en:"iziRetail", zh:"iziRetail热点", url:"https://mp.weixin.qq.com" },
-    { en:"DT Business", zh:"DT商业观察", url:"https://www.dtcj.com" },
-    { en:"Guangzi Consumption", zh:"光仔看消费", url:"https://mp.weixin.qq.com" },
-    { en:"Unicorn Mall", zh:"独角Mall", url:"https://mp.weixin.qq.com" },
-    { en:"Tang Fashion Watch", zh:"唐小唐时尚观察", url:"https://mp.weixin.qq.com" },
-    { en:"Local Retail Watch", zh:"本土零售观察", url:"https://mp.weixin.qq.com" },
-    { en:"Alibaba Research", zh:"阿里研究院", url:"https://www.aliresearch.com" },
-    { en:"Yaoke Research", zh:"要客研究院", url:"https://www.yaoke.com" },
-    { en:"Caixin", zh:"财新", url:"https://www.caixin.com" },
-    { en:"SCMP", zh:"南华早报", url:"https://www.scmp.com" },
-    { en:"Reuters", zh:"Reuters", url:"https://www.reuters.com" },
-  ];
-  return (
-    <div style={{ background:C.panel, borderBottom:`1px solid ${C.border}`, padding:"0.9rem 1.5rem", animation:"fadeUp .2s ease" }}>
-      <div style={{ maxWidth:1200, margin:"0 auto" }}>
-        <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.red, letterSpacing:"0.1em", marginBottom:"0.65rem", textTransform:"uppercase" }}>Monitored Sources — {sources.length} Feeds</div>
-        <div style={{ display:"flex", flexWrap:"wrap", gap:"0.38rem" }}>
-          {sources.map(s=>(
-            <a key={s.en} href={s.url} target="_blank" rel="noopener noreferrer"
-              style={{ background:C.panel2, border:`1px solid ${C.border}`, borderRadius:"3px", padding:"0.28rem 0.62rem", fontSize:"11px", fontFamily:C.sans, textDecoration:"none", display:"inline-flex", gap:"0.38rem", alignItems:"center" }}>
-              <span style={{ color:C.text, fontWeight:600 }}>{s.en}</span>
-              <span style={{ color:C.textMuted, fontFamily:C.mono, fontSize:"10px" }}>{s.zh}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 // ─── ROOT APP ─────────────────────────────────────────────────────────────────
 export default function ChinaPulse() {
   const [page,         setPage]         = useState("home");
   const [activeCat,    setActiveCat]    = useState("all");
   const [articleId,    setArticleId]    = useState(null);
-  const [showSources,  setShowSources]  = useState(false);
   const [search,       setSearch]       = useState("");
   const [articles,     setArticles]     = useState([]);
   const [loading,      setLoading]      = useState(true);
@@ -853,8 +785,7 @@ export default function ChinaPulse() {
         }
       `}</style>
 
-      <Header onNav={navigate} search={search} setSearch={setSearch} showSources={showSources} setShowSources={setShowSources} lastUpdated={lastUpdated} />
-      {showSources && <SourcesDrawer />}
+      <Header onNav={navigate} search={search} setSearch={setSearch} lastUpdated={lastUpdated} />
 
       {page==="home"    && <HomePage    onNav={navigate} activeCat={activeCat} setActiveCat={setActiveCat} search={search} edition={edition} editionDates={editionDates} selectedDate={selectedDate} setSelectedDate={pickDate} loading={loading} error={error} usingSample={usingSample} />}
       {page==="article" && <ArticlePage onNav={navigate} articleId={articleId} articles={articles} />}
