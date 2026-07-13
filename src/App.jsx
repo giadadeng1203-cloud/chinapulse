@@ -356,7 +356,6 @@ function HomePage({ onNav, activeCat, setActiveCat, search, edition, editionDate
       {/* SIDEBAR */}
       <div style={{ display:"flex", flexDirection:"column", gap:"1rem", position:"sticky", top:90 }} className="cp-sidebar">
         <SubscribeWidget />
-        <SourcesWidget />
         <ArchiveWidget editionDates={editionDates} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
     </main>
@@ -640,31 +639,6 @@ function SubscribeWidget() {
       </div>
       {state==="error" && <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.red, marginTop:"0.4rem" }}>⚠ Subscription failed — please try again.</div>}
       <div style={{ fontFamily:C.mono, fontSize:"10px", color:C.textMuted, marginTop:"0.4rem" }}>No spam. Unsubscribe anytime.</div>
-    </div>
-  );
-}
-
-// Sources card — replaces the old Market Sentiment mock (no methodology behind it)
-// and the old header SOURCES drawer. Doubles as attribution transparency.
-function SourcesWidget() {
-  const sources = [
-    ["Huxiu", "虎嗅"], ["36Kr", "36氪"], ["Luxe.CO", "华丽志"], ["Winshang", "赢商网"],
-    ["TravelDaily", "环球旅讯"], ["Pinchain", "品橙旅游"], ["DT Business", "DT商业观察"],
-    ["NBS", "国家统计局"], ["Jing Daily", "精日传媒"], ["SCMP", "南华早报"], ["Reuters", "路透社"], ["CGTN", ""],
-  ];
-  return (
-    <div style={{ background:C.panel, border:`1px solid ${C.border}`, borderRadius:"3px", padding:"1.05rem" }}>
-      <div style={{ fontFamily:C.mono, fontSize:"10px", fontWeight:700, color:C.textMuted, letterSpacing:"0.1em", marginBottom:"0.65rem", textTransform:"uppercase" }}>Coverage Sources</div>
-      <div style={{ display:"flex", flexWrap:"wrap", gap:"0.3rem" }}>
-        {sources.map(([en,zh])=>(
-          <span key={en} style={{ background:C.panel2, border:`1px solid ${C.borderLight}`, borderRadius:"2px", padding:"0.18rem 0.5rem", fontSize:"10.5px", fontFamily:C.sans, color:C.textSub }}>
-            <span style={{ fontWeight:600, color:C.text }}>{en}</span>{zh && <span style={{ color:C.textMuted }}> {zh}</span>}
-          </span>
-        ))}
-      </div>
-      <div style={{ marginTop:"0.7rem", paddingTop:"0.6rem", borderTop:`1px solid ${C.borderLight}`, fontSize:"10px", fontFamily:C.mono, color:C.textMuted, lineHeight:1.6 }}>
-        10 ORIGINAL BRIEFS DAILY · EVERY STORY ATTRIBUTED &amp; LINKED TO ITS SOURCE
-      </div>
     </div>
   );
 }
