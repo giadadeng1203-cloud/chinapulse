@@ -100,7 +100,7 @@ export function welcomeHtml(email, frequency) {
     </p>
     <p style="margin:0 0 24px;"><a href="${SITE_URL}" style="background:#C8102E;color:#FFFFFF;font-family:Arial,sans-serif;font-size:13px;font-weight:bold;text-decoration:none;padding:10px 22px;display:inline-block;">READ TODAY'S EDITION →</a></p>
   </td></tr>`;
-  return emailShell(inner, `You subscribed with ${email} at china-pulse-daily.vercel.app · <a href="${unsubscribeUrl(email)}" style="color:#8A8880;">Unsubscribe</a>`);
+  return emailShell(inner, `You're receiving this because you subscribed at china-pulse-daily.vercel.app · Questions? <a href="mailto:info@arcohk.com" style="color:#8A8880;">info@arcohk.com</a> · <a href="${unsubscribeUrl(email)}" style="color:#8A8880;">Unsubscribe</a>`);
 }
 
 export function digestHtml({ title, intro, articles, recipientEmail }) {
@@ -128,7 +128,7 @@ export function digestHtml({ title, intro, articles, recipientEmail }) {
   <tr><td style="padding:18px 24px 26px;" align="center">
     <a href="${SITE_URL}" style="background:#C8102E;color:#FFFFFF;font-family:Arial,sans-serif;font-size:13px;font-weight:bold;text-decoration:none;padding:10px 22px;display:inline-block;">READ THE FULL EDITION →</a>
   </td></tr>`;
-  return emailShell(inner, `You're receiving this at ${recipientEmail} because you subscribed at china-pulse-daily.vercel.app · <a href="${unsubscribeUrl(recipientEmail)}" style="color:#8A8880;">Unsubscribe</a>`);
+  return emailShell(inner, `You're receiving this because you subscribed at china-pulse-daily.vercel.app · Questions? <a href="mailto:info@arcohk.com" style="color:#8A8880;">info@arcohk.com</a> · <a href="${unsubscribeUrl(recipientEmail)}" style="color:#8A8880;">Unsubscribe</a>`);
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
