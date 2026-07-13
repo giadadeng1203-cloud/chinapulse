@@ -438,7 +438,7 @@ ${brief}
 
 Per-article rules:
 - Some TITLEs/NOTES are in Chinese — every article you write is in English (translate names/terms naturally, keep brand names in their common English form).
-- headline: punchy, under 15 words, no clickbait.
+- headline: written as a native Bloomberg/FT editor would — natural, idiomatic English. NEVER translate the Chinese title literally or word-for-word; extract what the story is about and write a fresh English headline from scratch. Under 15 words, no clickbait, no Chinglish.
 - summary: 2-3 sentences for the homepage feed.
 - body: 250-350 words of original English analysis in 3-4 paragraphs separated by blank lines (\\n\\n). Lead with what happened (attributed), then context, then implications for global business.
 - why_it_matters: 2-3 sentences of concrete takeaway for investors/brand leaders.
@@ -487,6 +487,40 @@ export default async function handler(req, res) {
   const dateStr = new Date(Date.now() + 8 * 3600 * 1000).toISOString().slice(0, 10);
 
   try {
+    // Manual editorial mode: POST { articles: [...], removeSlots: [...] } —
+    // publishes editor-supplied, fully written articles into today's edition and
+    // retires the published records occupying the removed slots. No DeepSeek call.
+    if (params.get("manual") === "1" && req.method === "POST") {
+      const body = typeof req.body === "object" && req.body !== null ? req.body : JSON.parse(req.body || "{}");
+      const arts = Array.isArray(body.articles) ? body.articles : [];
+      const removeSlots = new Set(Array.isArray(body.removeSlots) ? body.removeSlots : []);
+      if (!arts.length) return res.status(400).json({ error: "no articles in body" });
+      const records = arts.map(a => ({
+        fields: {
+          "Headline": a.headline, "Summary": a.summary, "Body": a.body,
+          "Why It Matters": a.why_it_matters, "Category": a.category, "Tag": a.tag,
+          "Source EN": a.source_en, "Source ZH": a.source_zh || a.source_en,
+          "Original URL": a.original_url, "Date": dateStr, "Time": "06:00",
+          "Slot": a.slot, "Is Lead": !!a.is_lead, "Published": true,
+          "Read Time": a.read_time || "4 min", "Author": "ChinaPulse Editorial",
+        },
+      }));
+      const created = await airtable(encodeURIComponent(AIRTABLE_TABLE), {
+        method: "POST", body: JSON.stringify({ records, typecast: true }),
+      });
+      const createdIds = new Set(created.records.map(r => r.id));
+      const formula = encodeURIComponent(`AND({Published}=1, IS_SAME({Date}, '${dateStr}', 'day'))`);
+      const data = await airtable(`${encodeURIComponent(AIRTABLE_TABLE)}?filterByFormula=${formula}&pageSize=100`);
+      const stale = data.records.filter(r => !createdIds.has(r.id) && removeSlots.has(r.fields.Slot));
+      for (let i = 0; i < stale.length; i += 10) {
+        await airtable(encodeURIComponent(AIRTABLE_TABLE), {
+          method: "PATCH",
+          body: JSON.stringify({ records: stale.slice(i, i + 10).map(r => ({ id: r.id, fields: { "Published": false } })) }),
+        });
+      }
+      return res.status(200).json({ ok: true, manual: true, date: dateStr, published: created.records.length, unpublished: stale.length });
+    }
+
     // Maintenance mode: keep only the most recent 10 published records for today,
     // unpublish the rest (repairs duplicate editions left by pre-fix force runs).
     // Free — no article generation happens.
