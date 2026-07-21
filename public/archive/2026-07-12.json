@@ -1,0 +1,206 @@
+{
+ "date": "2026-07-12",
+ "records": [
+  {
+   "id": "rectKNlmjaBWutenK",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://technode.com/2026/07/10/cxmt-sets-july-16-subscription-date-for-star-market-ipo/",
+    "Headline": "China's CXMT Sets July 16 for $4B STAR Market IPO",
+    "Is Lead": true,
+    "Read Time": "4 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Tech",
+    "Source EN": "TechNode",
+    "Slot": 1,
+    "Tag": "DEAL WATCH",
+    "Source ZH": "动点科技",
+    "Body": "CXMT, China's leading DRAM producer, has moved closer to its highly anticipated initial public offering on the STAR Market, with subscriptions set for July 16. The company plans to raise RMB29.5 billion ($4 billion) in what would be one of the largest semiconductor IPOs in China this year. According to TechNode, the underwriting syndicate includes six major banks: CICC and CITIC Securities as joint sponsors, with Guotai Haitong, Guoyuan Securities, Huatai United, and China Merchants Securities as joint lead underwriters. Notably, several of these underwriters are also CXMT shareholders, giving them a dual interest in both fee income and equity gains.\n\nThe IPO comes at a pivotal time for China's memory chip industry. CXMT is the nation's only major DRAM manufacturer, competing against global giants Samsung, SK Hynix, and Micron. The company's listing on the STAR Market, which was created to support tech firms with less stringent profitability requirements, reflects Beijing's strategic push to build domestic memory chip capabilities amid ongoing US export controls.\n\nFor global investors, the CXMT IPO presents both opportunity and risk. The company's valuation will be closely watched as a bellwether for China's semiconductor ambitions. However, geopolitical tensions and potential technology restrictions could weigh on its long-term prospects. The listing also highlights the deepening ties between Chinese investment banks and strategic tech companies, as several underwriters stand to benefit from both advisory fees and stock appreciation.",
+    "Why It Matters": "CXMT's IPO is a key test of investor appetite for Chinese memory chip makers and a barometer for the STAR Market's ability to support large-scale tech listings. Global memory chip buyers should watch for how CXMT uses the proceeds to expand production and narrow the gap with Samsung and SK Hynix.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "ChangXin Memory Technologies (CXMT), China's largest DRAM maker, has set July 16 as the subscription date for its STAR Market IPO, aiming to raise RMB29.5 billion ($4 billion). The company has assembled a six-bank underwriting syndicate including CICC and CITIC Securities, in a listing that underscores Beijing's push for semiconductor self-sufficiency."
+   }
+  },
+  {
+   "id": "rec0q7m9eE3vhHwpx",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://pandaily.com/china-weekly-breakthroughs-rocket-sugon-tianwen-jul2026",
+    "Headline": "China Achieves Rocket Net Recovery, AI Supercluster, Asteroid Mission in One Week",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Tech",
+    "Source EN": "Pandaily",
+    "Slot": 2,
+    "Tag": "TECHNOLOGY BREAKTHROUGH",
+    "Source ZH": "Pandaily",
+    "Body": "China has achieved multiple major technological breakthroughs in a single week, cementing its position in space and high-performance computing. According to Pandaily, the country completed the world-first rocket net recovery, a technique that could enable cost-effective reuse of launch vehicles. Simultaneously, China activated a 100,000-card AI supercluster, which will support large-scale AI model training and inference. Additionally, the Tianwen-2 probe successfully reached its target asteroid, marking a milestone in deep space exploration.\n\nThe rocket net recovery method involves capturing descending rocket stages with a large net, offering a potentially cheaper alternative to traditional landing legs or drone ships. This innovation could accelerate China's commercial space sector and reduce launch costs.\n\nThe 100,000-card AI supercluster, likely built using domestic GPUs, underscores China's determination to build sovereign AI computing capacity despite US chip export restrictions. The cluster will serve research institutions and AI startups, helping to close the gap with US counterparts.\n\nThe Tianwen-2 asteroid mission adds to China's growing deep space portfolio, following earlier lunar and Mars successes. These achievements demonstrate China's ability to execute complex, multi-domain projects simultaneously.",
+    "Why It Matters": "The rocket net recovery and AI supercluster signal China's push to dominate both space access and AI infrastructure. Investors should monitor cost reductions in launch services and the competitiveness of domestic AI chips. The asteroid mission strengthens China's credentials in deep space science.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "In a landmark week, China completed the world's first rocket net recovery, activated a 100,000-card AI supercluster, and reached an asteroid with the Tianwen-2 probe. These breakthroughs highlight rapid progress in space and AI infrastructure."
+   }
+  },
+  {
+   "id": "recNoZLhajkWoSN5f",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://pandaily.com/minimax-lockup-crash-fundraise-ai-market-jul2026",
+    "Headline": "MiniMax Stock Plunges 24% on Lock-Up Expiry, Then Raises $2.2B in Hours",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Tech",
+    "Source EN": "Pandaily",
+    "Slot": 3,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "Pandaily",
+    "Body": "MiniMax, a Chinese AI startup, experienced a dramatic market event when its shares plunged 24% on the expiry of a lock-up period, only to raise $2.2 billion HKD in a rapid follow-on offering within 48 hours. According to Pandaily, this episode reveals a fundamental split in how markets value AI platform companies versus AI product companies. MiniMax, known for its AI model platform, saw investor uncertainty around valuation after insiders were free to sell.\n\nThe quick fundraise suggests that despite the volatility, there remains strong institutional demand for AI assets with platform potential. The $2.2 billion HKD injection will likely fund further model development and expansion into enterprise applications.\n\nThis event mirrors broader market trends in China's AI sector, where valuations have fluctuated wildly as investors grapple with monetization timelines. The contrast between MiniMax's crash-and-raise saga and the steady performance of peer companies like Zhipu (which stabilized after its lock-up expiry) underscores the market's preference for companies with clear product revenue streams.",
+    "Why It Matters": "The MiniMax episode illustrates the volatility and selective investor appetite in China's AI sector. Companies with strong platform lock-in may face more speculative swings, while those with product revenue are favored. Portfolio managers should differentiate between AI platform and AI product business models.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "AI startup MiniMax saw its shares crash 24% when a lock-up period expired, only to raise $2.2 billion HKD in a rapid follow-on offering within 48 hours. The event highlights a growing divide between AI platform companies and AI product companies in the market."
+   }
+  },
+  {
+   "id": "recr9hW461NK1LMo8",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://36kr.com/p/3890553690192384?f=rss",
+    "Headline": "SK Hynix Lists on Nasdaq, Surges 13% on Debut; CXMT Reveals Underwriters",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Consumer",
+    "Source EN": "36Kr",
+    "Slot": 4,
+    "Tag": "DEAL WATCH",
+    "Source ZH": "36氪",
+    "Body": "SK Hynix successfully listed on the Nasdaq on July 10, with shares surging nearly 13% on the first day. According to 36Kr, the Korean memory chip giant's US listing opens a new financing channel, complementing its existing presence on the Korea Exchange. The move follows similar steps by other Asian tech firms seeking deeper access to US capital markets.\n\nIn China, CXMT revealed its underwriting syndicate for the upcoming STAR Market IPO, with six major banks including CICC, CITIC Securities, and Guoyuan Securities. The inclusion of local Anhui-based Guoyuan Securities highlights the regional government's support. Several underwriters are also CXMT shareholders, aligning their interests with the IPO's success.\n\nThese twin events illustrate the divergent approaches of memory chip leaders: SK Hynix tapping global markets, while CXMT leans on domestic exchanges and state-backed investors. SK Hynix's strong Nasdaq debut bodes well for investor sentiment globally, while CXMT's IPO will test domestic appetite for high-tech listings. The contrasting strategies also reflect ongoing geopolitical tensions, with Chinese firms increasingly reliant on local capital.",
+    "Why It Matters": "SK Hynix's Nasdaq listing provides a liquidity event for global investors and may pressure peers to follow. CXMT's IPO, if successful, could set a valuation benchmark for Chinese memory chip makers. Both events are bellwethers for the semiconductor capital market.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "SK Hynix made its Nasdaq debut on July 10, rising nearly 13%, while CXMT disclosed a six-bank underwriting syndicate for its STAR Market IPO. The developments highlight contrasting capital-raising strategies in global memory chips."
+   }
+  },
+  {
+   "id": "rec18cM8l1PBLhVqg",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://36kr.com/p/3891132709206784?f=rss",
+    "Headline": "Zhipu Founder Says AI Coding Bet Paid Off After Market Cap Hits Trillion HKD",
+    "Read Time": "4 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Consumer",
+    "Source EN": "36Kr",
+    "Slot": 5,
+    "Tag": "COMPANY STRATEGY",
+    "Source ZH": "36氪",
+    "Body": "Zhipu founder Tang Jie published an internal letter titled \"The Giant Wave Has Come\" on July 11, outlining the company's remarkable growth. According to 36Kr, Zhipu's market capitalization has increased tenfold from its listing six months ago, surpassing HK$1 trillion in June 2026—nearly three times Baidu's market cap and exceeding Xiaomi's. The stock price stabilized after the first lock-up expiry on July 8.\n\nTang attributed the success to a timely bet on AI coding abilities. In early 2025, Zhipu reallocated resources to focus on enhancing its models' coding and reasoning capabilities. This decision was driven by the realization that DeepSeek's R1 model marked the end of the chat-centric paradigm. Tang described it as a 'bet' on coding and reasoning—capabilities that synergize with agent-based applications.\n\nThe strategy has paid off handsomely. AI coding has become a major revenue driver, with Zhipu's tools adopted by enterprises for automated software development. The company's focus on agent-compatible models also positions it well as the industry moves toward autonomous AI agents.\n\nZhipu's trajectory serves as a case study in strategic pivoting within China's fiercely competitive AI landscape. While many AI startups struggled with monetization, Zhipu's bet on a specific technical direction delivered both market validation and financial returns.",
+    "Why It Matters": "Zhipu's success validates the strategy of betting on AI coding and reasoning over general chat. Investors should watch for similar pivots among AI firms. The company's trillion-HKD market cap signals that China's AI sector can produce large winners despite regulatory and competitive pressures.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Zhipu founder Tang Jie's internal letter reveals that the company's strategic pivot to AI coding in 2025 drove a 10x market cap increase to over HK$1 trillion. The bet on coding and reasoning abilities, made after DeepSeek's R1 model, has proven successful as AI coding becomes central to agent ecosystems."
+   }
+  },
+  {
+   "id": "rec2axoCcsDG8KOP9",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://news.google.com/rss/articles/CBMiogFBVV95cUxORWN4bUxva1BIWGtjYzBDZ3pzMGJRRzZsZ2dMUV9qUjd4V2d0SVljSW9mWGtvOVNyMTNQRmNIREo0RldPRGFnUmZNa1ZVaURvOFZmblU3Y1NxVF9FZW5VRVFtTEw4VFFVb1V3MUtmdXV0ZXhHaTRYYXlYY1hvTUswUTl2c1hKREFtd3VLcGhuWFVvc1NPWk1GNmF6ei1Qd0pRTVE?oc=5",
+    "Headline": "China unveils five-year plan to overhaul retail sector",
+    "Read Time": "4 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Retail",
+    "Source EN": "Yahoo Finance",
+    "Slot": 6,
+    "Tag": "POLICY",
+    "Source ZH": "雅虎财经",
+    "Body": "According to Yahoo Finance, China has outlined a comprehensive five-year plan to reshape its retail industry, emphasizing digital transformation and the integration of online and offline channels. The plan, released by the Ministry of Commerce, sets targets for improving supply-chain efficiency and fostering new retail formats such as livestream e-commerce and smart stores. It also encourages the adoption of big data and AI to better match supply with demand.\n\nThe roadmap comes as China's retail sales growth has slowed amid shifting consumer preferences and economic headwinds. The policy aims to boost domestic consumption and create a more resilient retail infrastructure, which could help stabilize the sector's contribution to GDP. The plan also includes measures to strengthen intellectual property protection and reduce logistics costs, addressing longstanding pain points for retailers.\n\nFor foreign brands and investors, the plan signals continued regulatory support for retail innovation but also implies tighter oversight on data usage and competition. Multinational retailers may need to accelerate their digitalization efforts in China to align with the government's vision. The plan could also benefit logistics and tech firms that provide solutions for smart retail, as investments in infrastructure and technology are prioritized.",
+    "Why It Matters": "This roadmap provides a clear policy direction for retailers and investors navigating China's evolving consumer market. Companies that align with the government's digitalization and efficiency goals may gain advantages in market access and operational support.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "China's government released a five-year roadmap aimed at transforming the retail industry, focusing on digitalization and consumption upgrading. The plan targets a more efficient and innovation-driven retail ecosystem by 2030."
+   }
+  },
+  {
+   "id": "recp4OImNnfH7HKV3",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPRUNNTVNVXzJTN3FSaDhQSU5FTzhEdldaaHdva194ZVgxM1AxWV90QmhJbmpzejMyQUxRUVBsZTFvVzU3NER3M1h3T2d6R1FpcjR0NkVsYkluMS01SW9vbVM5UE5oR3kwMXFNV0tuaGYxT2ljVVlmcGJqRjVXMDlhZTdPZ0hSS3hl?oc=5",
+    "Headline": "Shein secures China's nod for Hong Kong IPO",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Retail",
+    "Source EN": "Reuters",
+    "Slot": 7,
+    "Tag": "DEAL WATCH",
+    "Source ZH": "路透社",
+    "Body": "According to Reuters, Shein has finally received approval from China's securities regulator to proceed with its long-awaited initial public offering in Hong Kong, after two previous attempts faced delays. The company, known for its ultra-fast fashion supply chain and massive social media following, is expected to file its prospectus soon. The IPO could be one of the largest in Hong Kong this year, potentially raising billions of dollars.\n\nThe approval marks a significant milestone for Shein, which has faced increased regulatory scrutiny in China and geopolitical tensions over its supply chain origins. The company's rapid growth has made it a target for criticism over labor practices and environmental impact, but its business model continues to attract investors. The IPO will test market sentiment toward Chinese e-commerce firms amid a broader slowdown in tech listings.\n\nFor global investors, Shein's listing offers exposure to a unique retail model that has disrupted traditional fashion. However, risks remain, including potential trade barriers and regulatory crackdowns on fast fashion. The IPO's success could pave the way for other Chinese consumer brands to list in Hong Kong, boosting the city's status as a financial hub.",
+    "Why It Matters": "Shein's IPO opening provides a rare opportunity for investors to gain direct exposure to China's fast-fashion powerhouse. The IPO's reception will signal market confidence in Chinese tech and consumer companies amid ongoing regulatory and geopolitical uncertainties.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Fast-fashion giant Shein has won Chinese regulatory approval for its Hong Kong IPO on its third attempt. The listing could value the company at over $60 billion and provide a major test of investor appetite for Chinese tech IPOs."
+   }
+  },
+  {
+   "id": "recwDrNADvHzPpD2X",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.scmp.com/news/china/diplomacy/article/3360235/formal-china-us-g2-framework-key-guarantee-world-peace-top-beijing-adviser?utm_source=rss_feed",
+    "Headline": "Top Beijing adviser proposes formal US-China G2 framework",
+    "Read Time": "4 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Policy",
+    "Source EN": "South China Morning Post",
+    "Slot": 8,
+    "Tag": "ANALYSIS",
+    "Source ZH": "南华早报",
+    "Body": "According to the South China Morning Post, Zheng Yongnian, a prominent adviser to the Chinese government, has proposed the establishment of a formal US-China G2 framework. Speaking at a conference, Zheng argued that the world faces four intertwined crises: geopolitical conflicts, societal polarization, global economic imbalances, and the weakening of the UN-centered governance system. He claimed that an institutionalized mechanism for US-China coordination could offer a \"structural guarantee\" for world peace.\n\nZheng's remarks come at a time of heightened tensions between the two superpowers, but also after a period of diplomatic engagement. In May, Presidents Trump and Xi met in Beijing, agreeing to stabilize relations. However, Washington has since blacklisted dozens of Chinese companies, undermining that detente. The G2 proposal is not new—similar ideas have been floated by Chinese scholars for years—but it underscores Beijing's desire for a more predictable and less confrontational relationship with the US.\n\nFor global businesses, a formal G2 framework could reduce uncertainty in trade and technology cooperation. However, the US has shown little interest in such a structure, preferring alliances with like-minded democracies. The proposal is unlikely to gain traction in Washington under the current administration, but it signals China's willingness to engage on global governance issues. Companies should watch for any shifts in bilateral rhetoric that could affect supply chains and market access.",
+    "Why It Matters": "While a formal G2 is improbable soon, the proposal reflects Beijing's strategic thinking and could influence future diplomatic overtures. Investors should monitor US-China relations for signs of institutionalized cooperation, which would reduce geopolitical risk and open new economic opportunities.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Chinese political scientist Zheng Yongnian advocates for an institutionalized G2 structure between the US and China, arguing it could provide a 'structural guarantee' for global peace amid multiple crises. The proposal reflects growing calls within China for stable bilateral relations."
+   }
+  },
+  {
+   "id": "recE6RF0ujJVIwz0a",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.scmp.com/news/china/diplomacy/article/3360197/china-accuses-us-ignoring-trump-xi-rapport-and-targeting-chinese-firms?utm_source=rss_feed",
+    "Headline": "China blasts US for blacklisting firms, ignoring Trump-Xi consensus",
+    "Read Time": "4 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Policy",
+    "Source EN": "South China Morning Post",
+    "Slot": 9,
+    "Tag": "REGULATION",
+    "Source ZH": "南华早报",
+    "Body": "According to the South China Morning Post, China's foreign ministry on Friday condemned the Pentagon's decision to add more than 60 Chinese companies to a blacklist of “Chinese military companies operating in the United States.” The list includes major firms like Alibaba, Baidu, and BYD. Beijing argued that Washington's action \"disregards the consensus\" reached between Presidents Trump and Xi during their May meeting in Beijing, which was aimed at de-escalating tensions.\n\nChina claimed the blacklisting harms normal business operations and violates international trade rules. In response, Beijing has already imposed export controls on several US firms and warned of further measures. The escalation comes despite the earlier agreement to stabilize relations, highlighting the fragility of US-China detente. The blacklist restricts US investment in and transactions with the named companies, affecting their access to American capital and technology.\n\nFor global investors, the renewed tensions create uncertainty for companies caught in the crossfire. Alibaba and BYD, both with significant international exposure, may face operational hurdles. The dispute also threatens to derail broader trade negotiations. Multinational corporations should prepare for potential disruptions to supply chains and review their exposure to blacklisted entities. The incident underscores the persistent volatility in US-China relations, despite diplomatic overtures.",
+    "Why It Matters": "The blacklist directly impacts major Chinese firms and could trigger further retaliatory measures, affecting global supply chains and investment flows. Investors should reassess exposure to blacklisted entities and brace for continued bilateral friction.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "China accuses the United States of undermining the positive momentum from the Trump-Xi meeting by blacklisting over 60 Chinese companies, including Alibaba and BYD. Beijing warns of retaliation and vows to protect its firms' interests."
+   }
+  },
+  {
+   "id": "rec3Yqvjr7xnUYgZ3",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBQYTFZcTk4YzByV3FzQ2ZQT3RFS2JRVThFVmYxMmhqeUJteDRDVzJncU5zMThXOVN5UmZkVDJ0eG5wQlFDTmFWSW11eG82UElxNTgyRElOcjExSFBfb3VYQXFkSTF0ckhWSldRNURBTGlNVTZLY2VlNllzcHRLQQ?oc=5",
+    "Headline": "Visa-free entry expansion lures foreign tourists beyond big cities",
+    "Read Time": "4 min",
+    "Time": "06:00",
+    "Date": "2026-07-12",
+    "Category": "Travel",
+    "Source EN": "China Daily",
+    "Slot": 10,
+    "Tag": "TREND REPORT",
+    "Source ZH": "中国日报",
+    "Body": "According to China Daily, China's relaxed visa-free transit policies and the expansion of visa exemption arrangements with more countries are driving foreign visitors to explore less-visited destinations. The policy, which now covers 24-hour, 72-hour, and 144-hour visa-free transit for citizens of many countries, has made it easier for travelers to spontaneously visit cities like Chengdu, Xi'an, and Kunming. Data from travel platforms show a surge in searches and bookings for these emerging destinations.\n\nThe shift reflects a deliberate strategy by Chinese authorities to distribute tourism revenue more evenly and reduce overcrowding in major cities. Local governments in smaller cities have invested in tourism infrastructure, including English signage and payment systems, to accommodate international visitors. The trend also aligns with China's broader goal of promoting cultural exchanges and presenting a more open image to the world.\n\nFor global travel brands and hospitality firms, this diversification opens new markets and investment opportunities. Hotels, airlines, and tour operators can tap into growing demand in China's lesser-known regions. However, challenges remain in terms of service standards and connectivity. Companies that localize their offerings and partner with regional governments may gain a competitive edge. The visa policy changes are likely to sustain the growth of inbound tourism, which is still recovering from the pandemic.",
+    "Why It Matters": "The expansion of visa-free policies is reshaping China's inbound tourism landscape, creating opportunities for businesses in second-tier cities and beyond. Investors should monitor tourist flow data and consider partnerships with local tourism boards to capitalize on this trend.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "China's expanded visa waiver policies are encouraging more foreign tourists to visit second- and third-tier cities, diversifying travel patterns beyond traditional hubs like Beijing and Shanghai. The trend benefits local economies and signals China's push to boost inbound tourism."
+   }
+  }
+ ]
+}
