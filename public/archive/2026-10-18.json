@@ -1,0 +1,206 @@
+{
+ "date": "2026-10-18",
+ "records": [
+  {
+   "id": "recwB3wajGRpUrFZr",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.stats.gov.cn/english/PressRelease/202610/t20261015_1965499.html",
+    "Headline": "China's Factory-Gate Prices Stay Firm as Deflation Grip Loosens",
+    "Is Lead": true,
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Policy",
+    "Source EN": "National Bureau of Statistics",
+    "Slot": 1,
+    "Tag": "DATA RELEASE",
+    "Source ZH": "国家统计局",
+    "Body": "China's National Bureau of Statistics published its industrial producer price indexes for September 2026 on 15 October, the monthly reading of how much factories charge for goods leaving the gate. According to the NBS release, the index tracks ex-factory prices across mining, manufacturing and utilities, and is the single most-watched gauge of industrial pricing power in the world's largest manufacturing economy.\n\nThe producer price series matters because it sits upstream of consumer inflation and corporate margins alike. For much of the past two years, Chinese factory-gate prices have been dragged down by excess capacity in sectors from steel and solar to electric vehicles, a dynamic that has exported disinflation to trading partners and squeezed the earnings of domestic manufacturers. A sustained turn in the index would signal that consolidation and capacity controls are beginning to restore pricing discipline.\n\nThe NBS publishes the data with industrial output and retail sales in a mid-month cluster, so the PPI reading rarely lands in isolation. Executives should read it alongside the fixed-asset investment and property numbers due the same week, since construction demand remains a major swing factor for heavy-industry prices.\n\nFor global businesses, the practical question is whether cheaper Chinese output continues to pressure competitors abroad or whether firmer prices at the factory gate begin to feed through to export contracts. Either way, the September print is a data point multinationals will use to recalibrate sourcing costs, inventory assumptions and China margin forecasts for the fourth quarter.",
+    "Why It Matters": "Producer prices are the earliest signal of whether China's anti-involution campaign is restoring industrial pricing power or merely suppressing output. For investors, a firmer PPI supports margin recovery in cyclical Chinese industrials; for global manufacturers, it determines whether Chinese export pricing stays a deflationary force into 2027.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "The National Bureau of Statistics' September industrial producer price index release is the month's most closely watched inflation gauge for Chinese industry. For global executives, the print is a barometer of pricing power in the world's largest manufacturing base and of whether Beijing's capacity-rationalisation drive is biting."
+   }
+  },
+  {
+   "id": "recWNmA4bpZBDOCws",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNOHZKVXFtWXVoS3pva1hPOW80M3lVOE9qemFVMTBEMTU2WkVWTGRkZTVEcTZLZDFNSGRRRGh3V1FJVm5WUVdDMXRnSTRCaWNYYTUwVTZjaW5pNE5Vb01DREFiVmpnZF9vNVZFMnBfUkNFcDhQX0FFbFdBRWJ6M3RfdVU5UHZwVC1MNVRMNmhOM2VUTGRMQUlLejNTU3lzcUt3TzNvMzJUemo2UGpsVFp0WXA4a2phWGxjMEdNMWw3WVZ2QlhJNWpZ?oc=5",
+    "Headline": "China's Wealthy Rush to Unwind Offshore Trusts as Tax Scrutiny Tightens",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Policy",
+    "Source EN": "Reuters",
+    "Slot": 2,
+    "Tag": "ANALYSIS",
+    "Source ZH": "路透社",
+    "Body": "Wealthy Chinese individuals are scrambling to dismantle offshore trust arrangements and liquidate assets as tax authorities sharpen scrutiny of overseas holdings, according to Reuters. The report describes a rush among the super-rich to restructure wealth parked in jurisdictions long used to shield assets from domestic disclosure.\n\nThe move follows years of building enforcement infrastructure. China has expanded common reporting standards with overseas financial centres, tightened foreign-exchange controls and pursued high-profile cases against celebrities and executives over unpaid taxes. Offshore trusts, once a standard tool for estate planning and privacy, now carry growing compliance risk for beneficiaries who are Chinese tax residents.\n\nThe timing reflects a broader revenue imperative. With local governments under fiscal strain and property-related income weak, tax authorities have every incentive to widen the base and pursue undeclared offshore income. For families with cross-border wealth, the calculation has flipped: exiting structures and paying tax voluntarily may be cheaper than being found out.\n\nThe implications extend beyond individual balance sheets. Advisers in Hong Kong, Singapore and Switzerland are likely to see demand for onshore-compliant alternatives, while private banks may face outflows from trust-wrapped products. For global wealth managers, the message is that China's wealthy are becoming more transparent and more mobile within the rules — a shift that reshapes the offshore private banking business built over the past two decades.",
+    "Why It Matters": "Beijing is converting voluntary offshore privacy into active compliance risk, and wealthy Chinese clients are repricing that risk in real time. Private banks and trust providers exposed to Chinese ultra-high-net-worth clients should expect restructuring mandates and potential asset repatriation, while onshore wealth products stand to gain.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Reuters reports that wealthy Chinese are moving to exit offshore trust structures and raise cash as authorities intensify tax enforcement on overseas assets. The shift marks a new phase in Beijing's effort to bring cross-border wealth into the domestic tax net."
+   }
+  },
+  {
+   "id": "recbSjxqxL7G1Hy4C",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.huxiu.com/article/4898344.html?f=rss",
+    "Headline": "Xiaohongshu Rethinks Its AI Unit as Search Bets Meet the P&L",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Consumer",
+    "Source EN": "Huxiu",
+    "Slot": 3,
+    "Tag": "ANALYSIS",
+    "Source ZH": "虎嗅",
+    "Body": "Xiaohongshu has reorganised its artificial intelligence operations for the third time in roughly six months, according to Huxiu. The company elevated its Dots unit to a first-tier AI department in April, then in September moved much of its product and engineering staff into the community business, leaving Dots to focus on foundation models. On 16 October it announced that Dots would be merged with its core infrastructure team, Infra.\n\nAn all-hands letter explained the logic: Xiaohongshu describes itself as a technology-application company, arguing that its model investment differs fundamentally from that of cloud providers. Model capability, it said, needs to sit closer to concrete products, and technology spending must reflect practical application value. The company disclosed no staffing or budget changes and did not signal a retreat from foundation-model research.\n\nThe reshuffles come as Xiaohongshu's AI products have found scale. Public reports cited by Huxiu put monthly active users of its in-app AI Q&A assistant above 100 million, and its \"Wen Yi Wen\" AI search product was said to have improved community retention and generated millions of new queries.\n\nFor global platform operators, the lesson is familiar: in China, AI is being measured by engagement and revenue, not benchmark scores. Xiaohongshu's search-driven model, where users seek lifestyle recommendations rather than general answers, gives it a natural commerce hook. The reorganisation suggests the company is betting that AI monetises best when embedded in its community and advertising business rather than run as a separate cost centre. Outside investors will watch whether that discipline spreads across Chinese consumer internet firms.",
+    "Why It Matters": "China's consumer platforms are shifting AI from a research prestige project to a product and revenue function, and Xiaohongshu's reorganisation is an early template. For advertisers and brands, the implication is that AI-driven search and recommendations will become a more direct channel to spend; for investors, it is a test of whether application-layer AI can justify its cost.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "According to Huxiu, Xiaohongshu has reshuffled its AI organisation for the third time in six months, folding model research and infrastructure closer to the core community business. The moves signal that China's lifestyle platform is prioritising commercial returns on AI over standalone model development."
+   }
+  },
+  {
+   "id": "recnAbgFzx9QDXzvE",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://luxe.co/post/485022",
+    "Headline": "Brunello Cucinelli Lifts Full-Year Guidance as China Sales Shine",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Consumer",
+    "Source EN": "Luxe.CO",
+    "Slot": 4,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "华丽志",
+    "Body": "Brunello Cucinelli posted 13.5% year-on-year revenue growth in its latest quarter and raised its full-year 2026 guidance, according to Luxe.CO. The Italian luxury cashmere and tailoring house singled out China as a standout contributor to the period's performance, with the report citing multiple positive signals behind the upgrade.\n\nThe result is notable because luxury demand in China has been uneven. After a boom through 2023, the market cooled as aspirational shoppers pulled back amid a softer property market and weaker income expectations. Cucinelli's positioning at the very top of the price ladder appears to have insulated it: the brand's ultra-wealthy clientele is less sensitive to cyclical swings than middle-income consumers who drive volume for larger luxury groups.\n\nThe guidance raise suggests the company expects momentum to hold into the final quarter, the most important stretch of the luxury calendar. For the sector, Cucinelli's China performance is a useful counterpoint to more cautious commentary from mass-market accessible-luxury brands, which have reported pressure from Chinese consumers trading down or delaying purchases.\n\nFor investors, the read-across is about segmentation. Ultra-premium, scarcity-driven brands are holding up in China, while mid-tier luxury remains exposed. That argues for selectivity in luxury exposure rather than a blanket China bet, and it rewards brands that have invested in direct retail and clienteling in the market.",
+    "Why It Matters": "Cucinelli's upgrade shows the top of China's luxury market remains resilient even as mid-tier demand softens, reinforcing a barbell pattern in consumer spending. Brand leaders and investors should distinguish ultra-premium players with pricing power from accessible-luxury names still exposed to Chinese trade-down.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Italian luxury house Brunello Cucinelli reported 13.5% revenue growth in its latest quarter, with China a standout contributor, according to Luxe.CO. The company raised its full-year 2026 guidance on the back of multiple positive signals."
+   }
+  },
+  {
+   "id": "recDuZ8XSOklS5VAs",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://luxe.co/post/484896",
+    "Headline": "MUJI Tops RMB40bn in Global Sales as Mainland China Grows 16.3%",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Consumer",
+    "Source EN": "Luxe.CO",
+    "Slot": 5,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "华丽志",
+    "Body": "MUJI's latest annual report shows global revenue above RMB40 billion, with mainland China growing 16.3% and Europe and the US combined rising 24.1% year on year, according to Luxe.CO. The figures confirm the Japanese lifestyle retailer as one of the more successful foreign consumer brands in the Chinese market at a time when many peers are struggling.\n\nMUJI's China growth stands out against a difficult backdrop. The country's retail market has been subdued, with consumers trading down and value-seeking behaviour intensifying. MUJI has responded by leaning into its no-frills design identity and price competitiveness, expanding its store network and localising product development for Chinese shoppers. The brand's positioning as affordable, functional and understated has resonated with a more cautious consumer.\n\nThe overseas numbers are perhaps more strategically significant. Growth of 24.1% across Europe and the US suggests MUJI is diversifying beyond its traditional Asian base and capturing demand for Japanese minimalism in Western markets. That reduces reliance on any single geography and gives the company more options as it scales.\n\nFor global brand leaders, MUJI's results offer a case study in defending a value-driven identity through a consumer downturn without diluting it. For investors, the balanced growth profile — China, Europe and the US all contributing — is a more durable story than pure China exposure, and it positions MUJI well as it invests in further international expansion.",
+    "Why It Matters": "MUJI is proving that a price-disciplined, design-led brand can grow in China even as overall consumer sentiment stays soft, while its 24.1% growth in Europe and the US shows meaningful geographic diversification. For brand leaders, it is a reminder that value positioning and global spread can offset China cyclicality.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "MUJI's latest annual report shows global revenue exceeding 40 billion yuan, with mainland China up 16.3% and Europe and the US up 24.1%, according to Luxe.CO. The results underscore the Japanese retailer's expanding international footprint."
+   }
+  },
+  {
+   "id": "reccKClF0cqBrd70j",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://luxe.co/post/485208",
+    "Headline": "LVMH Stages First Multi-Brand Showcase in China at Shanghai's Zhangyuan",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Retail",
+    "Source EN": "Luxe.CO",
+    "Slot": 6,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "华丽志",
+    "Body": "LVMH has opened a \"Special Open Day\" at Zhangyuan, the restored shikumen quarter in downtown Shanghai, according to Luxe.CO. It marks the first time the French luxury group has appeared in China in the form of a collective, multi-brand showcase, with 15 maisons participating.\n\nThe choice of venue is telling. Zhangyuan is a conservation-led redevelopment that blends period architecture with contemporary retail, and it has become a favoured backdrop for brands seeking local resonance rather than pure spectacle. A group-level event there positions LVMH less as a collection of logos and more as a curated lifestyle proposition spanning fashion, leather goods, watches, wines and spirits, and beauty.\n\nFor global executives, the significance lies in the shift from single-brand activation to portfolio storytelling. China's luxury market has cooled from its post-pandemic peak, and consumers have become more selective, more knowledgeable and harder to impress with one-off launches. A multi-brand format lets LVMH cross-sell across categories and test which houses respond best to experiential retail, while sharing the cost and organisational burden of a large-scale activation.\n\nIt also raises the competitive bar. Rivals that have long relied on separate boutique events will face pressure to answer with comparable group-level programming, particularly in tier-one cities where landlords compete for anchor tenants. Watch whether LVMH repeats the format in other Chinese cities and whether it converts footfall into measurable sell-through rather than social-media reach alone.",
+    "Why It Matters": "LVMH's collective debut signals a shift from single-brand marketing to portfolio-level engagement in China, a template that could spread across the luxury sector. For brand leaders, the lesson is that experiential retail now needs to demonstrate cross-category pull and measurable demand, not just visibility.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "LVMH opened a group-wide open day at Shanghai's Zhangyuan heritage complex, bringing 15 of its maisons together in China for the first time. The move turns a historic Shanghai site into a stage for the group's lifestyle credentials rather than a single-brand splash."
+   }
+  },
+  {
+   "id": "recOxaK2bNWdKOUFN",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.traveldaily.cn/article/190878",
+    "Headline": "In China's Hotel Market, the Next Battle Is Consumer Insight",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Travel",
+    "Source EN": "TravelDaily",
+    "Slot": 7,
+    "Tag": "ANALYSIS",
+    "Source ZH": "环球旅讯",
+    "Body": "International hotel groups are entering a new phase in China in which competitive advantage hinges less on room count and more on how well they understand Chinese consumers, according to an analysis by TravelDaily.\n\nThe shift follows a difficult few years. Domestic travel recovered faster than inbound and corporate demand, favouring local operators and budget-to-midscale chains that expanded aggressively in lower-tier cities. International groups that bet heavily on luxury and upper-upscale urban hotels found themselves with the wrong mix in the wrong places, while their loyalty programmes struggled to match the app-native booking habits of Chinese travellers.\n\nThe emerging response is not simply more hotels but better segmentation: tailoring brands, service design and distribution to distinct Chinese cohorts, from young leisure travellers booking through super-apps to affluent families seeking curated experiences. That requires local decision-making authority, partnerships with domestic platforms and technology stacks built around Chinese digital ecosystems rather than adapted from Western templates.\n\nThe implication for global investors is that China exposure in hospitality can no longer be assessed by pipeline alone. Execution quality, franchising discipline and local management depth matter more, particularly as domestic chains improve their midscale and upscale offer. International groups retain an edge in global loyalty and premium branding, but converting that into Chinese revenue depends on operational localisation that many have been slow to embrace.",
+    "Why It Matters": "Hotel investors should weight local operational capability and brand fit over raw expansion targets when evaluating China exposure. International groups that delegate authority and integrate with Chinese digital platforms are better placed to defend share against rising domestic chains.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "International hotel groups are shifting their China playbook from footprint expansion to a deeper understanding of local traveller behaviour, TravelDaily reports. The winners will be those who localise operations without diluting brand standards."
+   }
+  },
+  {
+   "id": "recDVcOqmhkoPteGA",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://dragontrail.com.cn/resources/blog/chinese-tourism-atm-wtm-riyadh-2026",
+    "Headline": "Six Signals for Chinese Outbound Travel from ATM and WTM Riyadh",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Travel",
+    "Source EN": "Dragon Trail",
+    "Slot": 8,
+    "Tag": "TREND REPORT",
+    "Source ZH": "龙途互动",
+    "Body": "Dragon Trail has published six takeaways on Chinese tourism drawn from Arabian Travel Market and WTM Spotlight Riyadh 2026, two of the travel industry's key gatherings for the Middle East market.\n\nThe Gulf has emerged as one of the more determined competitors for Chinese outbound travellers. Destinations such as Saudi Arabia and the UAE have invested in direct air connectivity, simplified visa processes and marketing campaigns aimed squarely at Chinese consumers, often in partnership with online travel platforms and influencers rather than through traditional trade channels. The trade events served as a platform to coordinate airlines, hotels, retailers and destination marketers around that goal.\n\nThe broader context is a Chinese outbound market that has recovered unevenly. Leisure demand has returned to many short-haul destinations, but long-haul travel remains sensitive to airfare levels, visa friction and consumer confidence. That has made destinations with convenient access and strong retail or cultural draws relatively advantaged, and it has raised the importance of understanding booking behaviour and payment preferences in the Chinese market.\n\nFor global travel businesses, the takeaway is that winning Chinese visitors is increasingly a marketing and connectivity problem rather than a pure destination-appeal problem. Suppliers that align with Chinese distribution platforms, invest in Chinese-language content and understand group and family travel patterns are better positioned than those relying on legacy wholesale relationships.",
+    "Why It Matters": "Gulf destinations are becoming credible rivals to established Chinese outbound routes, backed by airline capacity and visa policy rather than advertising alone. Travel and retail brands should track these corridors when planning China-facing inventory and partnerships.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Dragon Trail distilled six takeaways on Chinese tourism from Arabian Travel Market and WTM Spotlight Riyadh 2026. Gulf destinations are courting Chinese travellers with direct air links, visa facilitation and tailored marketing."
+   }
+  },
+  {
+   "id": "recIxAD2vxG5AaNvf",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.scmp.com/news/hong-kong/hong-kong-economy/article/3371240/hong-kongs-new-huanggang-port-seemingly-quiet-ahead-expected-holiday-rush?utm_source=rss_feed",
+    "Headline": "Hong Kong's New Huanggang Port Faces First Holiday Test",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Travel",
+    "Source EN": "South China Morning Post",
+    "Slot": 9,
+    "Tag": "DATA POINT",
+    "Source ZH": "南华早报",
+    "Body": "Hong Kong's revamped Huanggang Port is expected to handle more than 100,000 passenger trips a day over the Chung Yeung Festival long weekend, according to the South China Morning Post, although its departure hall remained quiet on Saturday morning.\n\nSecretary for Security Chris Tang Ping-keung said the crossing had operated smoothly since opening on Monday, handling roughly 80,000 passenger trips a day, with the figure exceeding 92,000 on Friday. That compares with 30,000 to 40,000 trips previously, representing a 1.5-fold to almost twofold increase, the report said.\n\nThe figures matter because border capacity has been a persistent constraint on Hong Kong's integration with the mainland, particularly during peak holiday periods when queues at land crossings deter day-trip visitors. A larger, modernised facility at one of the busiest land crossings should ease bottlenecks and support cross-border retail, tourism and commuting flows between Hong Kong and Shenzhen.\n\nYet the coming days will be the real test. Pre-holiday quiet is common as travellers time their journeys around the festival itself, and the design capacity of the terminal will be judged by how it handles the surge rather than its calmest morning. Operators in Hong Kong's retail and hospitality sectors will watch closely: a smooth passage would reinforce confidence in cross-border demand, while visible congestion would revive concerns about infrastructure keeping pace with travel patterns.",
+    "Why It Matters": "Hong Kong's expanded border capacity could meaningfully lift day-trip and commuter traffic from Shenzhen, a key driver for local retail and tourism. Peak-season throughput over the coming days is the first real gauge of whether the upgrade delivers.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Hong Kong's revamped Huanggang Port handled about 80,000 passenger trips a day in its first week, with more than 92,000 on Friday, SCMP reports. Officials expect over 100,000 daily trips over the Chung Yeung Festival weekend."
+   }
+  },
+  {
+   "id": "recZJXGPpjg6MHxHV",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNcnFDdU1MSGd4Ylh4aktUWnlOM2V2RklNLXAxVm5QNThadUkzS2k1cWhoNnJpQkF3Nzk2U1c5ZlJlbUhGVFVpZTIxZEJYak8yVmtjVVhBdGs5NnVjVlowQnhRaWw1enZTVjBIVS1Wd2wwMkQtV2lYelR3MTFfVVlRRTBfMlBOUTlDYlI4UXdBZEFfcUFQcVNNNHVzOTR4bnUyanUtRE9nVkdnbTk4VHJvRWVxM2xjcXhjVUI4WVh2Y3Q2Q0Fw?oc=5",
+    "Headline": "Citi Says China AI Supply-Chain IPOs Hold Up Through Valuation Pullback",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-18",
+    "Category": "Tech",
+    "Source EN": "Reuters",
+    "Slot": 10,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "路透社",
+    "Body": "China AI supply-chain IPOs are holding firm despite a pullback in valuations, according to Citi research reported by Reuters.\n\nThe finding points to a divergence within the sector. While headline AI valuations have come under pressure as investors question the pace of monetisation and the scale of required capital expenditure, companies supplying the physical and infrastructural backbone, from components and cooling to networking and power equipment, have continued to attract listing demand and post-listing support.\n\nThat pattern reflects how the AI trade has matured in China. Much of the enthusiasm has concentrated on chip designers and model developers, where valuations are sensitive to policy, export controls and the outlook for overseas access to advanced hardware. Supply-chain companies, by contrast, are tied more directly to domestic data-centre construction and the buildout of compute capacity, revenue streams that are easier to underwrite and less exposed to the most volatile sentiment.\n\nFor investors, the signal is that China's AI theme is broadening from a narrow bet on leading platforms to a supply-chain play. That carries its own risks: order books can be lumpy, customer concentration is high and capacity additions could eventually pressure pricing. Still, a resilient IPO window for these companies suggests capital markets are willing to fund the infrastructure layer, even as they grow more discriminating about the applications layer above it.",
+    "Why It Matters": "Citi's read implies investors are differentiating within China AI, favouring cash-generative infrastructure suppliers over richly valued platform stories. That matters for IPO pipelines and for allocators deciding where AI exposure sits in a China portfolio.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "China's AI supply-chain listings are holding firm despite a broader pullback in valuations, according to Citi research reported by Reuters. The read suggests investors still see durable demand in the hardware and infrastructure layers of the AI buildout."
+   }
+  }
+ ]
+}
