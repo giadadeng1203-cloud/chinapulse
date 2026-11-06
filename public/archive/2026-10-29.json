@@ -1,0 +1,206 @@
+{
+ "date": "2026-10-29",
+ "records": [
+  {
+   "id": "reclWHvBkrMO5VRXG",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.stats.gov.cn/english/PressRelease/202610/t20261028_1965704.html",
+    "Headline": "China's Industrial Profits Return to Growth Through September",
+    "Is Lead": true,
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Policy",
+    "Source EN": "National Bureau of Statistics",
+    "Slot": 1,
+    "Tag": "DATA RELEASE",
+    "Source ZH": "国家统计局",
+    "Body": "China's National Bureau of Statistics published its January-to-September report on industrial enterprise profits on October 28, covering companies with annual main-business revenue above the designated threshold — the cohort that anchors the country's industrial economy. According to the NBS, the release tracks profit growth across mining, manufacturing and utilities, alongside revenue and balance-sheet indicators for the sector.\n\nThe profit gauge has become one of the most closely watched numbers in Beijing's monthly data calendar. Industrial earnings collapsed during the 2022-2023 producer-price deflation and have only partially recovered, even as export volumes hit records. Weak margins sit at the heart of the government's push to curb destructive price competition among manufacturers — the campaign widely known as \"anti-involution\" — and its effort to shift growth away from volume toward value.\n\nThe NBS publishes the release in English and Chinese simultaneously, with profits broken down by ownership type and industry. Economists typically focus on the gap between revenue growth and profit growth: when sales rise faster than earnings, it signals that price wars are still eating into corporate returns. The split between state-owned and private firms, and between upstream mining and downstream manufacturing, also matters, because squeezed downstream margins have been a persistent drag.\n\nFor global investors, the print feeds directly into earnings expectations for Chinese industrials and into the deflation debate. Sustained profit recovery would support capital spending and hiring; another soft month would reinforce the case for further stimulus and for caution on cyclical China exposure.",
+    "Why It Matters": "Industrial profits are the cleanest read on whether China's price-war crackdown and stimulus are restoring corporate margins. A durable rebound would justify re-rating cyclical Chinese industrials; another weak print argues for patience.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "The National Bureau of Statistics released January-to-September profit figures for industrial enterprises above designated size, the country's key gauge of manufacturing and mining earnings. The report lands as Beijing tries to lift factory-gate prices and corporate margins out of a multi-year slump."
+   }
+  },
+  {
+   "id": "reccsnjLKwp2YLRdB",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.huxiu.com/article/4901262.html?f=rss",
+    "Headline": "Why China Put Its Computing Hubs in Its Least Obvious Cities",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Policy",
+    "Source EN": "Huxiu",
+    "Slot": 2,
+    "Tag": "ANALYSIS",
+    "Source ZH": "虎嗅",
+    "Body": "China's eight national computing hubs, designated in 2022 by the National Development and Reform Commission and other agencies, are moving from blueprint to operating infrastructure, according to a CCTV report on October 28 relayed by Huxiu. Zhangjiakou, near Beijing, now keeps one-way network latency under 2 milliseconds; Hohhot's Horinger county runs on more than 85% green power; and Qingyang in Gansu has become a significant base for large-model training and token computation. The hubs span Beijing-Tianjin-Hebei, the Yangtze River Delta, the Greater Bay Area, Chengdu-Chongqing, Inner Mongolia, Guizhou, Gansu and Ningxia, with ten data-center clusters inside them.\n\nThe obvious question is why these places rather than Beijing, Shanghai, Shenzhen or Hangzhou, which dominate China's technology industry. The answer, as the Huxiu analysis notes, is that site selection weighed energy distribution, industrial structure, network latency, climate and competition among local governments. Cool northern and western locations cut cooling costs; cheap renewables in Inner Mongolia and Ningxia cut power bills; and fiber routes to major demand centers keep latency low enough for training and inference.\n\nThat logic has been reshaped by generative AI. The original clusters were designed around internet, cloud and storage workloads; today the scarce inputs are accelerator capacity, stable electricity and land for gigawatt-scale campuses. Western hubs with surplus power have gained strategic value, while the eastern hubs retain the advantage in customers and talent.\n\nFor foreign firms, the network matters as a map of where Chinese compute capacity — and its energy constraints — will concentrate.",
+    "Why It Matters": "China's compute buildout is being allocated by energy and latency, not by tech-cluster prestige. Suppliers of power equipment, cooling and networking should watch western hubs; companies dependent on Chinese cloud capacity should track where new clusters are landing.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Four years after Beijing designated eight national computing hubs, state broadcaster CCTV showcased progress from Zhangjiakou to Qingyang. The geography reveals that energy, latency and land — not tech prowess — drove the choices."
+   }
+  },
+  {
+   "id": "recunr8M7tald14qi",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.huxiu.com/article/4901266.html?f=rss",
+    "Headline": "Starbucks Ends Its Open-Door Era in China",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Consumer",
+    "Source EN": "Huxiu",
+    "Slot": 3,
+    "Tag": "ANALYSIS",
+    "Source ZH": "虎嗅",
+    "Body": "Starbucks has confirmed that from October 22 it will formally require customers to make a purchase to use seating in its mainland China stores, according to a Huxiu account of the rollout. The policy arrived messily: on October 19, unopened signage reading \"business space, please consume to be seated\" circulated online, staff gave conflicting instructions, and the company initially denied the reports. By October 21 it had confirmed the nationwide rule, saying reasonable customer needs would still be handled flexibly.\n\nThe three-day sequence — denial, ambiguity, then confirmation — drew heavy scrutiny, but the underlying shift is bigger. Starbucks built its China brand on the \"third space\" promise: a place to sit without buying anything. That model has been strained by episodes such as a widely shared incident in Huzhou, where three women reportedly sat from opening until midday without buying anything and left a juice bottle to hold their table, then argued with a paying customer who took the seat.\n\nThe change comes as Starbucks fights for share against Luckin Coffee and Cotti, which compete on price and convenience rather than lounge space. In a market where store economics are squeezed, every unpaid seat carries a cost. Requiring purchases is a defensive move to protect capacity — but it also erodes the brand's differentiator at the very moment rivals are undercutting it on price.\n\nThe episode is a mirror for foreign consumer brands in China: premium positioning built on experience is hard to sustain when local competitors reset price expectations.",
+    "Why It Matters": "Starbucks is trading brand warmth for store-level discipline in its second-largest market. Investors should watch whether the policy lifts transaction density without alienating the loyal customers who still pay for the experience.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Starbucks confirmed it will require purchases for seating nationwide from October 22, after days of contradictory signals. The retreat from the \"third space\" image reflects pressure from customers who occupy tables without buying."
+   }
+  },
+  {
+   "id": "recvKh75JITZSUCnZ",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://luxe.co/post/486785",
+    "Headline": "Luxury Tax-Free Sales Rise 5% as Chinese Spending Falls 18%",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Consumer",
+    "Source EN": "Luxe.CO",
+    "Slot": 4,
+    "Tag": "TREND REPORT",
+    "Source ZH": "华丽志",
+    "Body": "Global Blue, the tax-free shopping specialist, reported that global luxury tax-free purchases rose 5% in the first half of the year, according to Luxe.CO. The recovery was powered by two customer groups: ultra-high-net-worth individuals and American tourists. The same data showed Chinese consumers' overall tax-free spending down 18%.\n\nThe split captures a structural shift in luxury demand. After years in which Chinese shoppers — at home, in Europe and across Asia — supplied the industry's growth engine, their pullback is now the single largest drag on the category. Analysts have attributed the weakness to a softer domestic economy, a strong preference for saving, and the redirection of spending toward experiences and domestic brands. The 18% decline is a stark figure for an industry that had grown accustomed to Chinese buyers as a permanent growth reserve.\n\nGlobal Blue's data also shows demand is becoming narrower and more concentrated: the ultra-wealthy keep spending regardless of the cycle, and American tourists have been buoyed by a strong dollar. That mix is less resilient than a broad middle-class recovery, and it skews spending toward top-tier brands and destinations.\n\nFor luxury houses, the message is that Asia-Pacific growth can no longer be assumed. Brands with heavy China exposure will need to lean on the US and the very top of the wealth curve, while watching whether Chinese outbound travel and spending stabilize.",
+    "Why It Matters": "A 5% global gain masks an 18% decline in Chinese tax-free spending. Luxury investors should not treat the headline recovery as broad-based — it rests on two narrow customer groups, and China remains the key risk.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Global Blue reported a 5% first-half increase in worldwide luxury tax-free shopping, driven by ultra-high-net-worth shoppers and American tourists. Chinese consumers' overall tax-free spending fell 18%, a sharp reversal for the industry's biggest buyer group."
+   }
+  },
+  {
+   "id": "rechhtEZsX8BurAxE",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.huxiu.com/article/4901264.html?f=rss",
+    "Headline": "On Running's Mbappé Deal Backfires in China",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Consumer",
+    "Source EN": "Huxiu",
+    "Slot": 5,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "虎嗅",
+    "Body": "On Running is facing its first major crisis since the company was founded, one month after signing football star Kylian Mbappé, according to a Huxiu report from GymSquare. The World Cup winner's recent remarks, which were widely viewed in China as inappropriate, triggered a rapid backlash: within two days, Chinese brands including Dongpeng Beverage's hydration label and Mengniu Dairy announced they were ending their partnerships, and Xiaohongshu said its collaboration had expired at the end of 2024 and restricted Mbappé's account.\n\nReal Madrid issued an apology for the discomfort the player's remarks caused the Chinese public, and La Liga followed with its own apology; Mbappé himself apologized on October 27. But On, the brand most deeply involved, has only removed Mbappé-related promotional material from its Chinese social channels, with no official statement from headquarters.\n\nThat silence is costly. On's Asia-Pacific growth has been exceptional: full-year fiscal 2025 revenue in the region reached 511.1 million Swiss francs, up 96.4%, according to the report, and even after decelerating in the second quarter of fiscal 2026, constant-currency growth was still 61.4%. The Mbappé signing was meant to push the brand into football and broaden its appeal beyond running — a breakout plan now stalled, at least in Asia-Pacific.\n\nFor global brands, the episode is a reminder that celebrity partnerships carry political and reputational risk in China, and that local teams often move faster than headquarters.",
+    "Why It Matters": "On's Asia-Pacific business is growing faster than any other region, and the Mbappé controversy tests whether a Western brand can manage a China crisis without a local response plan. Watch whether headquarters issues a statement — and how competitors exploit the gap.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "A month after signing Kylian Mbappé, On has run into its first major crisis after the footballer's remarks about China triggered a backlash. Chinese brands cut ties, and the Swiss sportswear maker has stayed silent at headquarters."
+   }
+  },
+  {
+   "id": "recoMfrSFwQ9gwAIU",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.huxiu.com/article/4901263.html?f=rss",
+    "Headline": "Apple's Foldable Debut Draws Waiting Lists — And Early Screen Complaints",
+    "Read Time": "4 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Retail",
+    "Source EN": "Huxiu",
+    "Slot": 6,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "虎嗅",
+    "Body": "Apple has finally entered the foldable segment — roughly seven years after rivals began commercialising the form factor — and it is already the market's largest single variable. According to TrendForce estimates cited by Cailianshe (via Huxiu), global foldable shipments will grow just 0.5% in 2026, but Apple's first foldable, the iPhone Duo, is projected to ship about 5 million units in its first year, capturing roughly 24.8% of the global market and reordering brand share at speed.\n\nThe demand signal is unusually strong. A Cailianshe reporter visiting an Apple store in Shenzhen's Yitian Holiday Plaza on 28 October found no stock on hand, with online orders not expected to deliver until late January 2027. A person at a core Apple supplier said customers had added more than 2 million units to orders and that the company was running production flat out. The mainland China starting price is 15,999 yuan.\n\nQuality is now the swing factor. Users on Chinese and overseas social platforms have reported hinges tightening after repeated opening and closing, and inner displays cracking along the crease or showing anomalies. On 27 October Apple acknowledged that a very small number of iPhone Duo units had inner-screen problems and advised affected owners to contact support.\n\nThe read-across for global markets is twofold. First, Apple's entry could expand the foldable category rather than simply cannibalise it, lifting component suppliers for hinges and flexible displays. Second, Apple is absorbing the reliability costs that Samsung and Chinese vendors spent years learning — a premium-price launch with visible durability complaints is a reputational risk precisely where Apple's pricing power is strongest.",
+    "Why It Matters": "Apple's foldable validates the category and hands its supply chain an unexpected volume upgrade, but early screen and hinge complaints will be watched closely by carriers, retailers and warranty providers. Brands and investors should track whether Apple converts this launch demand into sustained share — or whether durability issues push buyers back to slab phones.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Apple's first foldable phone is sold out across stores and online orders now stretch into late January 2027, with a supply chain source telling Cailianshe that customer orders were raised by over two million units. But launch-week users have flagged hinge stiffness and inner-screen cracks along the fold, testing Apple's quality reputation in its costliest category yet."
+   }
+  },
+  {
+   "id": "rec5YuM9orqZ8SrwE",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.traveldaily.cn/article/190923",
+    "Headline": "European Airfares Face Their Steepest Climb on Record Next Year",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Travel",
+    "Source EN": "TravelDaily",
+    "Slot": 7,
+    "Tag": "ANALYSIS",
+    "Source ZH": "环球旅讯",
+    "Body": "Europe's airlines are heading into next year with fares expected to post the largest increase on record, according to TravelDaily (环球旅讯). The report frames the move as a structural shift rather than a seasonal spike: constrained capacity, elevated input costs and rising regulatory and airport charges are all feeding into ticket pricing across the continent.\n\nThe timing matters. European aviation has spent the past two years rebuilding balance sheets after the pandemic, and carriers have shown discipline in keeping supply below pre-2019 levels on many routes. That discipline, combined with engine maintenance bottlenecks and aircraft delivery delays, limits how quickly airlines can add seats to meet recovering demand. When demand outruns supply, fares absorb the difference.\n\nCost pressure is layered on top. Sustainable aviation fuel mandates, carbon pricing and rising airport fees all raise the unit cost of flying in Europe faster than in most other regions. Airlines have limited room to absorb those costs, so a growing share lands on the passenger.\n\nFor Asian travellers, and particularly for China's outbound market, the implication is that Europe becomes a more expensive destination even as visa access and flight connectivity improve. Tour operators that price packages months in advance face margin risk; carriers flying China–Europe routes may find yield opportunities but also demand sensitivity among price-conscious leisure travellers. Corporate travel budgets will need revisiting, and destination marketing boards may need to work harder to keep Europe competitive against cheaper alternatives in Asia and the Middle East.",
+    "Why It Matters": "Fare inflation in Europe is a margin issue for airlines, tour operators and corporate travel managers alike. Investors in travel and hospitality should model lower European leisure volumes from Asia and watch whether capacity constraints ease in time for the 2027 summer season.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "TravelDaily reports that European ticket prices are set for their largest increase in history next year, as capacity constraints, higher operating costs and regulatory charges converge on the continent's carriers. The squeeze will be felt most acutely by long-haul travellers and outbound Chinese tour operators."
+   }
+  },
+  {
+   "id": "recCYIunkoaNru0mw",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.traveldaily.cn/article/190878",
+    "Headline": "Global Hotel Groups Rethink China: Local Insight Beats Brand Reach",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Travel",
+    "Source EN": "TravelDaily",
+    "Slot": 8,
+    "Tag": "ANALYSIS",
+    "Source ZH": "环球旅讯",
+    "Body": "International hotel groups operating in China are entering a new phase in which competitive advantage comes less from brand scale and more from how well they understand local consumers, according to an analysis by TravelDaily (环球旅讯). The shift reflects a market where domestic travel has recovered faster than inbound or outbound demand, and where local hotel operators have sharpened their product considerably.\n\nThe old model was straightforward: bring a global brand, a loyalty programme and a standardised service promise into China's fastest-growing cities. That worked while supply was scarce and international travel was aspirational. It works less well now. Chinese travellers have become more value-conscious and more segmented — leisure families, young city breakers, business travellers extending trips — and each segment expects different things from a hotel, from design and food to digital check-in and member pricing.\n\nDomestic chains have exploited this faster than many international groups, using local data, aggressive pricing and rapid refurbishment cycles. International brands still hold an edge in upper-upscale and luxury, and in corporate accounts and global distribution, but that edge is narrower than it was.\n\nThe strategic response is visible: more localised brands, more conversions of independent properties, more co-branding with Chinese platforms, and loyalty programmes recalibrated for domestic spend. For global investors, China's hotel market remains vast but is no longer a simple growth story — returns now depend on execution at the city and segment level, and on whether global groups can delegate enough decision-making to local teams.",
+    "Why It Matters": "Brand heritage alone no longer sells rooms in China. Hotel investors and operators should assess local teams' autonomy, domestic loyalty engagement and segment-specific product rather than headline room counts when valuing China exposure.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "International hotel chains are shifting their China playbook from expansion to consumer understanding, TravelDaily reports, as domestic travellers and local brands reshape demand. The winners will be those that adapt service, pricing and loyalty programmes to Chinese preferences rather than exporting global templates."
+   }
+  },
+  {
+   "id": "recPSWiJ0w8uOpm2W",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://www.pinchain.com/article/352313",
+    "Headline": "Trip.com's New Survey Shows Sustainable Travel Going Mainstream in China",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Travel",
+    "Source EN": "Pinchain",
+    "Slot": 9,
+    "Tag": "TREND REPORT",
+    "Source ZH": "品橙旅游",
+    "Body": "Trip.com Group has released its 2026 Sustainable Travel Consumer Report, according to Pinchain (品橙旅游), offering one of the clearest industry gauges of how Chinese consumers think about the environmental and social footprint of their trips. The report arrives as China's outbound market continues to normalise and as domestic destinations compete on experience quality rather than price alone.\n\nThe significance lies in who is doing the asking. Trip.com is China's largest online travel platform, and its consumer research tends to shape how hotels, airlines and destination marketers position products. Previous editions of the group's sustainability work have emphasised traveller interest in low-impact transport, eco-certified accommodation and community benefits — themes that are increasingly visible in how Chinese platforms merchandise travel.\n\nFor the industry, the report matters less as a snapshot of sentiment than as a signal of commercial direction. Booking platforms can steer demand through labelling, filters and default options, and suppliers that can document credible sustainability credentials may gain visibility. That creates pressure on hotels and tour operators to invest in verifiable standards rather than vague green claims, and opportunities for destinations that can tell a concrete story about conservation or rural revitalisation.\n\nCaveats remain: consumers may express strong preferences in surveys while proving more price-sensitive at checkout, particularly in a softer economic climate. The test for Trip.com and its peers is whether sustainability features actually shift bookings, not just survey responses.",
+    "Why It Matters": "Sustainability is becoming a merchandising lever on China's dominant travel platform, not just a reputational one. Hotels, airlines and destinations should prepare verifiable credentials to win visibility — and investors should watch whether green labelling translates into measurable booking share.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Trip.com Group has published its 2026 Sustainable Travel Consumer Report, per Pinchain, charting how Chinese travellers weigh environmental and community impact when booking. The findings signal that sustainability messaging is moving from niche marketing to a mainstream factor in itinerary and supplier choice."
+   }
+  },
+  {
+   "id": "recucgbYntW5wSAjq",
+   "fields": {
+    "Published": true,
+    "Original URL": "https://pandaily.com/ant-group-ling-3-1-flash-1019-ling-3-1-flash-base-open-source-personal-agent-aa-index-44",
+    "Headline": "Ant Open-Sources a New Ling Model as It Chases the Personal AI Agent",
+    "Read Time": "3 min",
+    "Time": "06:00",
+    "Date": "2026-10-29",
+    "Category": "Tech",
+    "Source EN": "Pandaily",
+    "Slot": 10,
+    "Tag": "MARKET MOVE",
+    "Source ZH": "Pandaily",
+    "Body": "Ant Group's Ling team has open-sourced Ling-3.1-flash-1019, a post-trained update that scores 44 on the Artificial Analysis Intelligence Index, together with the underlying Ling-3.1-flash-base model, according to Pandaily. Both are released to the public, with the base model under the MIT licence — one of the most permissive terms available.\n\nThe choice of licence is the strategic tell. Releasing a base model under MIT removes nearly every barrier to commercial use, fine-tuning and redistribution. That encourages developers to build on Ant's stack rather than a rival's, and it lets companies in regulated or privacy-sensitive markets adapt the model in-house. For Ant, the payoff is ecosystem gravity rather than direct licence revenue.\n\nThe stated ambition — personal agents — points at a market where Ant already has distribution advantages: payments, wealth management and everyday services inside Alipay. A capable, cheap, openly licensed model gives Ant a way to seed agent products across third-party apps and devices without asking partners to depend on a closed API.\n\nThe 44 score is respectable for a compact 'flash'-class model but not frontier-level; Ant is competing on cost, speed and openness rather than raw benchmark leadership. That is a sensible position in a crowded Chinese model market where DeepSeek, Alibaba's Qwen and others have already pushed open weights hard. Ant's differentiator is the consumer and financial services surface area it can attach agents to — and the compliance questions that come with it.",
+    "Why It Matters": "An MIT-licensed base model from a major fintech lowers the cost of building AI agents for any developer, including outside China. Investors should watch whether Ant converts open-source adoption into Alipay ecosystem lock-in, and whether permissive Chinese model licences accelerate global developer migration.",
+    "Author": "ChinaPulse Editorial",
+    "Summary": "Ant Group's Ling team has released Ling-3.1-flash-1019, a post-trained update scoring 44 on the Artificial Analysis Intelligence Index, alongside its Ling-3.1-flash-base model under the MIT licence. The permissive release positions Ant to win developers building consumer-facing personal agents."
+   }
+  }
+ ]
+}
